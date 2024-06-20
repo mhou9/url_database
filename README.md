@@ -12,9 +12,10 @@ The NYC Department of Education maintains a comprehensive list of all public sch
 ## Project Overview 
 
 Project Source: Open Source website (https://schoolsearch.schools.nyc/)
+
 To achieve our objective, we will follow these steps: 
 
-1. Web Crawling: Utilize a Python web crawler to extract information about each individual school's website URL, borough, and district information from the NYC Schools website. The output will be in the form of a JSON file. 
+1. Web Crawling: Utilize a Python web crawler to extract information about each individual school's website URL, name, district information, grade levels, the borough it is located in, as well as the latitude ane longitude (to be plotted on a map) from the NYC Schools website. The output will be in the form of a JSON file. 
 
 2. Database Creation: Create a MySQL database to store the collected information about NYC public schools. We will develop a Python script to read the JSON file generated from the web crawling process and populate the database with the relevant data. 
 
@@ -38,7 +39,7 @@ To achieve our objective, we will follow these steps:
   
 ## Usage Setup Commands
 
-1. clone this repo: git clone https://github.com/mhou9/url_database.git
+1. Clone this repo: git clone https://github.com/mhou9/url_database.git
 2. 
 
 ## Contributors 
