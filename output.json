@@ -1,0 +1,42 @@
+{
+    "Parkside Preparatory Academy": {
+        "Grade": "06,07,08,SE",
+        "District": "17",
+        "Borough": "Brooklyn",
+        "School Website": "https://parksideprepacademy.ss11.sharpschool.com/",
+        "Domain_1": "parksideprepacademy.org",
+        "Domain_2": "parksideprepacademy.com"
+    },
+    "P.S. 001 The Bergen": {
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "15",
+        "Borough": "Brooklyn",
+        "School Website": "None",
+        "Domain_1": "None",
+        "Domain_2": "None"
+    },
+    "P.S. 005 Dr. Ronald McNair": {
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "16",
+        "Borough": "Brooklyn",
+        "School Website": "None",
+        "Domain_1": "None",
+        "Domain_2": "None"
+    },
+    "P.S. 003 The Bedford Village": {
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "13",
+        "Borough": "Brooklyn",
+        "School Website": "https://www.ps3brooklyn.org/",
+        "Domain_1": "ps3brooklyn.org",
+        "Domain_2": "ps3brooklyn.com"
+    },
+    "P.S. K004": {
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "19",
+        "Borough": "Brooklyn",
+        "School Website": "https://www.p4brooklyn.org/",
+        "Domain_1": "p4brooklyn.org",
+        "Domain_2": "p4brooklyn.com"
+    }
+}
