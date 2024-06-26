@@ -4,8 +4,8 @@ from selenium.webdriver.common.by import By
 import json
 from selenium.common.exceptions import NoSuchElementException
 from urllib.parse import urlparse
-from geopy.geocoders import Here #EMFSMes4qAjPG6GIaFqtAt8DN_-Dh0KeqV-7zgdrmSU
-from geopy.exc import GeocoderTimedOut
+# from geopy.geocoders import Here #EMFSMes4qAjPG6GIaFqtAt8DN_-Dh0KeqV-7zgdrmSU
+from geopy.geocoders import Nominatim
 
 import re
 
@@ -41,6 +41,60 @@ school_item_dict = {} #dict that stores all the info
 no_url = set() # store a list of school that return None when trying to locate its school url, which means it doesn't has its own url attached
 all_links = set() #get all links from the first layer
 
+def format_address(address):
+    # Case 1 : 511 7th Ave, Brooklyn, NY 11215         -- 7 Avenue to 7th Avenue
+    # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004
+
+    regex1 = r'''
+        (?P<HouseNumber>[\w-]+)\s+                              # Matches '717 ' or '90-05'
+        (?P<Direction>([news]|(?:North|East|West|South))?)\b\s*?    # Matches 'N ' or ' ' or 'North '
+        (?P<StreetName>[0-9]+)\s*                               # Matches anything but only numeric
+        (?P<StreetDesignator>\w*)\s*?                           # Optionally Matches 'ST '
+        ,\s+                                                    # Force a comma after the street
+        (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
+        (?P<TownName>.*),\s+                                    # Matches 'MANKATO, '
+        (?P<State>[A-Z]{2}),?\s+                                # Matches 'MN ' and 'MN, '
+        (?P<ZIP>\d{5})                                          # Matches '56001'
+    '''
+    regex1 = re.compile(regex1, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
+    match1 = regex1.match(address) #store a match object that record detail info of the matched string, else None
+
+    regex2 = r'''
+        (?P<HouseNumber>[\w-]+)\s+                              # Matches '717 ' or '90-05'
+        (?P<Direction>([news]|(?:North|East|West|South))?)\b\s*?    # Matches 'N ' or ' ' or 'North '
+        (?P<StreetName>[0-9]+)\s*                               # Matches anything but only numeric
+        (?P<StreetDesignator>\w*)\s*?                           # Optionally Matches 'ST '
+        ,\s+                                                    # Force a comma after the street
+        (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
+        (?P<TownName>.*),\s+                                    # Matches 'MANKATO, '
+        (?P<State>[A-Z]{2}),?\s+                                # Matches 'MN ' and 'MN, '
+        (?P<ZIP>\d{5})                                          # Matches '56001'
+    '''
+    regex2 = re.compile(regex2, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
+    match2 = regex2.match(address)
+
+    # address is incorrect
+    if match1:
+        #modify and then check
+        street = match1.group('StreetName')
+        street_Ones = int(street) % 10
+        if street_Ones == 1:
+            street = street + 'st'
+        elif street_Ones == 2:
+            street = street + 'nd'
+        elif street_Ones == 3:
+            street = street + 'rd'
+        else: 
+            street = street + 'th'
+        
+        address = match1.expand(fr'\g<HouseNumber> \g<Direction> {street} \g<StreetDesignator> \g<TownName> \g<State> \g<ZIP>')
+        print("After fixed: " + address)
+        return address
+    else: 
+        return address
+    
+    
+
 # insert (school_url, grades, district, borough) into the specific dictionary of each school
 # input: the url of each school for second layer crawling
 #        dictionary that we store the info that we got from each school
@@ -51,6 +105,21 @@ def website_crawler(url):
         school_name = driver.find_element(By.CSS_SELECTOR, 'div.module-header h1.title')
         # for each item, create a new dictionary with school name as the key if it doesn't exist, key, value
         school_dict = school_item_dict.setdefault(school_name.text.strip(), {})
+
+        address = driver.find_element(By.CSS_SELECTOR, 'div.module-header a')
+        
+        geolocator = Nominatim(user_agent="my_request")
+        address_x = address.text.split('\n')[0].strip().strip()
+        loc = format_address("10 South Street, Slip 7, Manhattan, NY 10004")# 90-05 161st St Jamaica, NY 11432
+        print("reach")
+        location = geolocator.geocode(loc)
+        if location != None:
+            print(location.address + "\n")
+            school_dict["Latitude"] = location.latitude #1st pair
+            school_dict["Longitude"] = location.longitude  #2nd pair
+        else:
+            print("NOOOOOOOOOOOOOOOOOOOOOOOOOO\n")
+            print(address_x)
     
         other_info = driver.find_element(By.CSS_SELECTOR, 'div#tab-panel-01 ul.box-list')
 
@@ -73,22 +142,13 @@ def website_crawler(url):
             url = school_url_elements.get_attribute("href")
             school_dict["School Website"] = url # 6th pair
             domain = urlparse(url).netloc.replace('www.', '').split('.')
-            if domain == "google":
-                domain = url.split('/')
-                if len(domain) >= 4 and domain[2] == "sites.google.com":
-                    school_dict["Domain_1"] = domain[4] + ".org"
-                    school_dict["Domain_2"] = domain[4] + ".com"
-                elif len(domain) >= 3 and domain[2] == "sites.google.com":
-                    school_dict["Domain_1"] = domain[3] + ".org"
-                    school_dict["Domain_2"] = domain[3]+ ".com"
-            else:
-                school_dict["Domain_1"] = domain[0] + ".org"
-                school_dict["Domain_2"] = domain[0] + ".com"
+            if domain == "google": #skip
+                school_dict["Domain_1"] = "None"
+                school_dict["Domain_2"] = "None"
 
     except NoSuchElementException as e:
         schools_name = driver.find_element(By.CSS_SELECTOR, 'div.module.school-detail h1.title')
         no_url.add(schools_name.text)
-        print(schools_name.text)
         school_dict["School Website"] = "None"
         school_dict["Domain_1"] = "None"
         school_dict["Domain_2"] = "None"
@@ -102,9 +162,6 @@ for item in schools_item:
     # grab all the a tag within each school item, which should be one per each
     a_tag = item.find_element(By.CSS_SELECTOR, 'h2.title a')
     all_links.add(a_tag.get_attribute('href'))
-    
-    # school_dict["Latitude"] = item.get_attribute('data-lat') #1st pair
-    # school_dict["Longitude"] = item.get_attribute('data-lng') #2nd pair
 
 
 # call the 2nd layer of crawling to complete storing rest of the info for this school
