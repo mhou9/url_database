@@ -10,6 +10,8 @@ import getpass
 import folium
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
+from bs4 import BeautifulSoup
+
 
 
 def get_driver():
@@ -110,41 +112,73 @@ def extract_domain(url):
 
 def get_school_info(driver, school_url):
     """
-    Function to retrieve school information from a given school URL, including the address.
+    Function to retrieve school information from a given school URL, including the address and Google Maps URL.
     """
+    # Navigate to the provided school URL
     driver.get(school_url)
+    # Wait for 2 seconds to allow the page to load
     time.sleep(2)
+    
+    # Initialize a dictionary to store school information
     school_info = {'url': school_url}
+    
     try:
+        # Retrieve the school name from the page
         school_info['name'] = driver.find_element(By.CLASS_NAME, 'title').text
+        
         try:
+            # Locate the element for the school's personal website
             school_website_element = driver.find_element(By.XPATH, "//li[a[contains(@class, 'more') and contains(text(), 'School Website')]]/a")
+            # Extract the URL of the school's personal website
             school_info['personal_website'] = school_website_element.get_attribute('href')
+            # Extract the domain name from the personal website URL
             school_info['domain_name'] = extract_domain(school_info['personal_website']) if school_info['personal_website'] else None
         except:
+            # Set personal website and domain name to None if not found
             school_info['personal_website'] = None
             school_info['domain_name'] = None
+        
         try:
+            # Retrieve the geographic district information
             school_info['district'] = driver.find_element(By.XPATH, "//span[strong[contains(text(), 'Geographic District')]]").text.split(':')[1].strip()
         except:
+            # Set district to None if not found
             school_info['district'] = None
+        
         try:
+            # Retrieve the grades information
             school_info['grades'] = driver.find_element(By.XPATH, "//span[strong[contains(text(), 'Grades')]]").text.split(':')[1].strip()
         except:
+            # Set grades to None if not found
             school_info['grades'] = None
+        
         try:
+            # Retrieve the borough information
             school_info['borough'] = driver.find_element(By.XPATH, "//span[strong[contains(text(), 'Borough')]]").text.split(':')[1].strip()
         except:
+            # Set borough to None if not found
             school_info['borough'] = None
+        
         try:
+            # Locate the address element which contains a link to Google Maps
             address_element = driver.find_element(By.XPATH, "//a[@class='more'][contains(@href, 'maps.google.com')]")
+            # Extract the full address text
             full_address = address_element.text
-            clean_address = re.sub(r'\s*\(.*\)$', '', full_address)  # Clean the address
+            # Clean the address by removing any text in parentheses
+            clean_address = re.sub(r'\s*\(.*\)$', '', full_address)
+            # Store the cleaned address
             school_info['address'] = clean_address
+            # Extract the Google Maps URL from the address element
+            school_info['google_maps_url'] = address_element.get_attribute('href')
         except:
+            # Set address and Google Maps URL to None if not found
             school_info['address'] = None
+            school_info['google_maps_url'] = None
     except Exception as e:
+        # Print an error message if there is an issue retrieving the school information
         print(f"Error retrieving school info for {school_url}: {str(e)}")
+    
+    # Return the dictionary containing the school information
     return school_info
 
 
@@ -211,7 +245,9 @@ def initialize_database(connection):
             district VARCHAR(50),
             grades VARCHAR(50),
             borough VARCHAR(50),
-            address VARCHAR(255)
+            address VARCHAR(255),
+            google_maps_url VARCHAR(255)
+
         )
         """
         
@@ -231,110 +267,81 @@ def initialize_database(connection):
 
 def insert_school_info(connection, school_info):
     """
-    Function to insert school information into the database.
-
-    Args:
-        connection (mysql.connector.connection.MySQLConnection): The connection object to the MySQL database.
-        school_info (dict): A dictionary containing school information to be inserted into the database.
-
-    Returns:
-        bool: True if insertion is successful, False otherwise.
+    Insert or update school information into the database.
     """
     try:
-        # Create a cursor object to interact with the database
+        # Create a new cursor to interact with the database
         cursor = connection.cursor()
-
-        # SQL query to insert school information into the 'schools' table
-        sql = """INSERT INTO schools 
-                 (url, name, personal_website, domain_name, district, grades, borough, address)
-                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
         
-        # Tuple of values to be inserted into the query
-        values = (
-            school_info['url'],
-            school_info['name'],
-            school_info['personal_website'],
-            school_info['domain_name'],
-            school_info['district'],
-            school_info['grades'],
-            school_info['borough'],
-            school_info['address']
-        )
+        # SQL query to insert a new record or update an existing record in the schools table
+        insert_query = """
+        INSERT INTO schools (name, personal_website, domain_name, district, grades, borough, address, google_maps_url, url)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+        personal_website=VALUES(personal_website), domain_name=VALUES(domain_name), district=VALUES(district),
+        grades=VALUES(grades), borough=VALUES(borough), address=VALUES(address), google_maps_url=VALUES(google_maps_url), url=VALUES(url)
+        """
         
-        # Execute the SQL query with the provided values
-        cursor.execute(sql, values)
+        # Execute the SQL query with the provided school information
+        cursor.execute(insert_query, (
+            school_info['name'], school_info.get('personal_website'), school_info.get('domain_name'),
+            school_info.get('district'), school_info.get('grades'), school_info.get('borough'),
+            school_info.get('address'), school_info.get('google_maps_url'), school_info['url']
+        ))
         
-        # Commit the transaction to make the changes persistent in the database
+        # Commit the transaction to save the changes to the database
         connection.commit()
         
-        # Close the cursor to free up resources
+        # Close the cursor
         cursor.close()
-        
-        # Return True to indicate successful insertion
-        return True
-    
-    except Error as e:
-        # Handle any errors that occur during the insertion process
-        print(f"Error inserting data into MySQL table: {e}")
-        return False
+    except mysql.connector.Error as e:
+        # Print an error message if there is an issue inserting the school information
+        print(f"Error inserting school info: {e}")
 
+    
 def extract_corrected_address(driver, google_maps_url):
     """
     Function to extract the corrected address from a Google Maps page.
-
-    Args:
-    - driver: Selenium WebDriver instance.
-    - google_maps_url (str): URL of the Google Maps page containing the address.
-
-    Returns:
-    - str: Corrected address if found, None if extraction fails.
     """
-    # Navigate to the provided Google Maps URL
     driver.get(google_maps_url)
-    
-    # Wait for the page to load (assuming a fixed delay here; better to use WebDriverWait in real applications)
-    time.sleep(3)
-    
+    time.sleep(3)  # Wait for the page to load
     try:
-        # Attempt to find and extract the corrected address element
+        # Try the primary selector
         corrected_address = driver.find_element(By.CSS_SELECTOR, 'span.DkEaL').text
         return corrected_address
-    except Exception as e:
-        # Handle any exceptions that occur during address extraction
-        print(f"Error extracting corrected address from Google Maps: {str(e)}")
-        return None
+    except Exception as e1:
+        print(f"Primary selector failed: {str(e1)}")
+        try:
+            # Try an alternative selector
+            corrected_address = driver.find_element(By.XPATH, "//h1[@class='DUwDvf lfPIob']").text
+            city_zip_code = driver.find_element(By.XPATH, "//h2[@class='bwoZTb fontBodyMedium']").text
+            return f"{corrected_address}, {city_zip_code}"
+        except Exception as e2:
+            print(f"Alternative selector failed: {str(e2)}")
+            try:
+                # Fallback to another possible pattern
+                corrected_address = driver.find_element(By.XPATH, "//div[@aria-label='Address']//span[@class='DkEaL']").text
+                return corrected_address
+            except Exception as e3:
+                print(f"Fallback selector failed: {str(e3)}")
+                return None
 
 
 def geocode_with_retry(address, retries=5, delay=2):
     """
     Function to geocode an address with retry mechanism.
-
-    Args:
-    - address (str): The address to geocode.
-    - retries (int): Number of retries in case of failure.
-    - delay (int): Delay in seconds between retries.
-
-    Returns:
-    - Location: Geopy Location object or None if geocoding fails.
     """
-    # Initialize the geolocator with a user agent
     geolocator = Nominatim(user_agent="nyc_schools_map")
-    
-    # Attempt geocoding with retries
     for attempt in range(retries):
         try:
             location = geolocator.geocode(address, timeout=10)
             if location:
                 return location
         except (GeocoderTimedOut, GeocoderServiceError) as e:
-            # Handle specific geocoding errors with retry logic
             print(f"Geocoding attempt {attempt + 1} failed for address: {address} with error: {e}. Retrying in {delay} seconds...")
             time.sleep(delay)
         except Exception as e:
-            # Handle any other unexpected errors during geocoding attempts
             print(f"Unknown error during geocoding attempt {attempt + 1} for address: {address}: {e}")
-    
-    # Print failure message if geocoding fails after all retries
     print(f"Geocoding failed for address: {address} after {retries} retries.")
     return None
 
@@ -342,43 +349,27 @@ def geocode_with_retry(address, retries=5, delay=2):
 def plot_schools_on_map(connection, driver):
     """
     Function to plot the schools on a map using Folium.
-
-    Args:
-    - connection: MySQL database connection object.
-    - driver: Selenium WebDriver instance.
-
-    This function fetches school data from the database, attempts geocoding,
-    and plots markers on a Folium map. It also handles address correction using
-    Google Maps if initial geocoding fails.
     """
     try:
-        # Connect to the database and fetch all school data
         cursor = connection.cursor(dictionary=True)
         fetch_query = "SELECT * FROM schools"
         cursor.execute(fetch_query)
         schools_data = cursor.fetchall()
         cursor.close()
 
-        # Initialize a new Folium map centered on NYC
         nyc_map = folium.Map(location=[40.7128, -74.0060], zoom_start=10)
 
-        # Initialize counters for successful geocodes and total addresses
         successful_geocodes = 0
         total_addresses = len(schools_data)
         
-        # Iterate over each school's data
         for school in schools_data:
             if school['address']:
-                # Attempt geocoding the school's address
                 location = geocode_with_retry(school['address'])
-                
                 # If geocoding fails and a Google Maps URL is available, try to extract and geocode the corrected address
-                if not location and 'url' in school:
-                    corrected_address = extract_corrected_address(driver, school['url'])
+                if not location and 'google_maps_url' in school and school['google_maps_url']:
+                    corrected_address = extract_corrected_address(driver, school['google_maps_url'])
                     if corrected_address:
                         location = geocode_with_retry(corrected_address)
-                
-                # If location is found, add a marker to the map
                 if location:
                     folium.Marker(
                         [location.latitude, location.longitude],
@@ -387,16 +378,13 @@ def plot_schools_on_map(connection, driver):
                     ).add_to(nyc_map)
                     successful_geocodes += 1
                 else:
-                    # Print message if geocoding fails
                     print(f"Failed to geocode address: {school['address']}")
 
-        # Save the generated map as an HTML file
         nyc_map.save("nyc_schools_map.html")
         print(f"Map has been saved as nyc_schools_map.html")
         print(f"Successfully plotted {successful_geocodes} out of {total_addresses} addresses.")
 
     except Exception as e:
-        # Handle any exceptions during map plotting
         print(f"Error plotting schools on map: {e}")
 
 
@@ -430,7 +418,7 @@ def main():
             time.sleep(3)
             
             # Scroll the inner div of the webpage three times
-            scroll_inner_div(driver, 1)
+            scroll_inner_div(driver, 4)
             
             # Extract school information from the first page of search results
             school_outer_info = get_school_outer_info(driver)
