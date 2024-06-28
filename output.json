@@ -1,33 +1,7 @@
 {
-    "P.S. 005 Dr. Ronald McNair": {
-        "Latitude": 40.705172149999996,
-        "Longitude": -73.79899426277119,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
-        "District": "16",
-        "Borough": "Brooklyn",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None"
-    },
-    "Parkside Preparatory Academy": {
-        "Latitude": 40.705172149999996,
-        "Longitude": -73.79899426277119,
-        "Grade": "06,07,08,SE",
-        "District": "17",
-        "Borough": "Brooklyn",
-        "School Website": "https://parksideprepacademy.ss11.sharpschool.com/"
-    },
-    "P.S. 003 The Bedford Village": {
-        "Latitude": 40.705172149999996,
-        "Longitude": -73.79899426277119,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
-        "District": "13",
-        "Borough": "Brooklyn",
-        "School Website": "https://www.ps3brooklyn.org/"
-    },
     "P.S. 001 The Bergen": {
-        "Latitude": 40.705172149999996,
-        "Longitude": -73.79899426277119,
+        "Latitude": 40.6361274,
+        "Longitude": -74.01008278463931,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
@@ -35,12 +9,38 @@
         "Domain_1": "None",
         "Domain_2": "None"
     },
+    "Parkside Preparatory Academy": {
+        "Latitude": 40.6361274,
+        "Longitude": -74.01008278463931,
+        "Grade": "06,07,08,SE",
+        "District": "17",
+        "Borough": "Brooklyn",
+        "School Website": "https://parksideprepacademy.ss11.sharpschool.com/"
+    },
+    "P.S. 003 The Bedford Village": {
+        "Latitude": 40.6361274,
+        "Longitude": -74.01008278463931,
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "13",
+        "Borough": "Brooklyn",
+        "School Website": "https://www.ps3brooklyn.org/"
+    },
     "P.S. K004": {
-        "Latitude": 40.705172149999996,
-        "Longitude": -73.79899426277119,
+        "Latitude": 40.6361274,
+        "Longitude": -74.01008278463931,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.p4brooklyn.org/"
+    },
+    "P.S. 005 Dr. Ronald McNair": {
+        "Latitude": 40.6361274,
+        "Longitude": -74.01008278463931,
+        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "District": "16",
+        "Borough": "Brooklyn",
+        "School Website": "None",
+        "Domain_1": "None",
+        "Domain_2": "None"
     }
 }

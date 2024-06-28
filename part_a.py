@@ -6,6 +6,9 @@ from selenium.common.exceptions import NoSuchElementException
 from urllib.parse import urlparse
 # from geopy.geocoders import Here #EMFSMes4qAjPG6GIaFqtAt8DN_-Dh0KeqV-7zgdrmSU
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderUnavailable
+from retrying import retry
+from word2number import w2n
 
 import re
 
@@ -40,18 +43,80 @@ inner_container = driver.find_element(By.CSS_SELECTOR, '.iScroll')
 school_item_dict = {} #dict that stores all the info
 no_url = set() # store a list of school that return None when trying to locate its school url, which means it doesn't has its own url attached
 all_links = set() #get all links from the first layer
+issue = set()
+
+def add_numeric_id(street):
+    street_Ones = int(street) % 10
+    print(street_Ones)
+    if street_Ones == 0 or (int(street) % 100) in [11, 12, 13]:
+        street = street + 'th'
+    elif street_Ones == 1:
+        street = street + 'st'
+    elif street_Ones == 2:
+        street = street + 'nd'
+    elif street_Ones == 3:
+        street = street + 'rd'
+    else: 
+        street = street + 'th'
+    return street
+
+def convert_word_to_numeric(word):
+    try:
+        word = word.strip().title()
+
+        #ordinal conversion
+        ordinal_mapping = {
+            "First": "1st",
+            "Second": "2nd",
+            "Third": "3rd",
+            "Fourth": "4th",
+            "Fifth": "5th",
+            "Sixth": "6th",
+            "Seventh": "7th",
+            "Eighth": "8th",
+            "Ninth": "9th",
+            "Tenth": "10th",
+            "Eleventh": "11th",
+            "Twelfth": "12th",
+            "Thirteenth": "13th",
+            "Fourteenth": "14th",
+            "Fifteenth": "15th",
+            "Sixteenth": "16th",
+            "Seventeenth": "17th",
+            "Eighteenth": "18th",
+            "Nineteenth": "19th",
+            "Twentieth": "20th",
+            "Twenty-First": "21st",
+            "Twenty-Second": "22nd",
+            "Twenty-Third": "23rd",
+            "Twenty-Fourth": "24th",
+            "Twenty-Fifth": "25th",
+            # Add more ordinal conversions as needed
+        }
+        if word.endswith(("st", "nd", "rd", "th")):
+            if word in ordinal_mapping:
+                return ordinal_mapping[word]
+            else:
+                return word  # Return the original word if not found in the mapping
+        else:
+            number = w2n.word_to_num(word)
+            if number:
+                number = add_numeric_id(str(number))
+                return number
+    except ValueError:
+        return False
 
 def format_address(address):
-    # Case 1 : 511 7th Ave, Brooklyn, NY 11215         -- 7 Avenue to 7th Avenue
-    # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004
+    # Case 1 : 511 7 Ave, Brooklyn, NY 11215, 8-21 Bay 25 Street, Queens, NY 11691  -- 7 Avenue to 7th Avenue, detect Bay as direction
+    # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
 
     regex1 = r'''
         (?P<HouseNumber>[\w-]+)\s+                              # Matches '717 ' or '90-05'
-        (?P<Direction>([news]|(?:North|East|West|South))?)\b\s*?    # Matches 'N ' or ' ' or 'North '
-        (?P<StreetName>[0-9]+)\s*                               # Matches anything but only numeric
-        (?P<StreetDesignator>\w*)\s*?                           # Optionally Matches 'ST '
+        (?P<Direction>([news]|North|East|West|South|Bay|Brighton|Kings)?)\b\s*?    # Matches 'N ' or ' ' or 'North '
+        (?P<StreetName>[0-9]+)\s*                               # Matches ONLY numeric
+        (?P<StreetDesignator>Street|Avenue|Road|Lane|Drive|Walk)\s*  # Matches 'Street ' or 'Avenue '
         ,\s+                                                    # Force a comma after the street
-        (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
+        # (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
         (?P<TownName>.*),\s+                                    # Matches 'MANKATO, '
         (?P<State>[A-Z]{2}),?\s+                                # Matches 'MN ' and 'MN, '
         (?P<ZIP>\d{5})                                          # Matches '56001'
@@ -60,40 +125,72 @@ def format_address(address):
     match1 = regex1.match(address) #store a match object that record detail info of the matched string, else None
 
     regex2 = r'''
-        (?P<HouseNumber>[\w-]+)\s+                              # Matches '717 ' or '90-05'
-        (?P<Direction>([news]|(?:North|East|West|South))?)\b\s*?    # Matches 'N ' or ' ' or 'North '
-        (?P<StreetName>[0-9]+)\s*                               # Matches anything but only numeric
-        (?P<StreetDesignator>\w*)\s*?                           # Optionally Matches 'ST '
-        ,\s+                                                    # Force a comma after the street
-        (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
-        (?P<TownName>.*),\s+                                    # Matches 'MANKATO, '
-        (?P<State>[A-Z]{2}),?\s+                                # Matches 'MN ' and 'MN, '
-        (?P<ZIP>\d{5})                                          # Matches '56001'
+        (?P<HouseNumber>[\w-]+)\s+                                  # Matches '717 ' or '90-05'
+        #(?P<Direction>(?:[news]|(?:North|East|West|South))?)\b\s+?  # Matches 'N ' or '' or 'North '
+        (?P<StreetName>[A-Za-z0-9]+)\s*                             # Matches anything, later check if it is only numeric
+        (?:\s+(Street|Avenue|Road|Lane|Drive|Walk|Blvd.))?                     # Matches 'Street ' or 'Avenue '
+        ,\s+                                                        # Force a comma after the street
+        (?:Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
+        # Not neccssary detail
+        (?P<TownName>.*),\s+                                        # Matches 'MANKATO, '
+        (?P<State>[A-Z]{2}),?\s+                                    # Matches 'MN ' and 'MN, '
+        (?P<ZIP>\d{5})                                              # Matches '56001'
     '''
     regex2 = re.compile(regex2, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match2 = regex2.match(address)
 
     # address is incorrect
     if match1:
-        #modify and then check
         street = match1.group('StreetName')
-        street_Ones = int(street) % 10
-        if street_Ones == 1:
-            street = street + 'st'
-        elif street_Ones == 2:
-            street = street + 'nd'
-        elif street_Ones == 3:
-            street = street + 'rd'
-        else: 
-            street = street + 'th'
-        
-        address = match1.expand(fr'\g<HouseNumber> \g<Direction> {street} \g<StreetDesignator> \g<TownName> \g<State> \g<ZIP>')
+        street = add_numeric_id(street)
+        direction = match1.group('Direction')
+        # 133 Kings 1 Walk, Brooklyn, NY, 11233
+        if direction == "Kings":
+            direction = "Kingsborough"
+        address = match1.expand(fr'\g<HouseNumber> {direction} {street} \g<StreetDesignator>, \g<TownName>, \g<State>, \g<ZIP>')
         print("After fixed: " + address)
         return address
+    elif match2:
+        street = match2.group('StreetName')
+        if street.isdigit():
+            street = add_numeric_id(street)
+        
+        # case where street number is written in word
+        if convert_word_to_numeric(street) != False:
+            street = convert_word_to_numeric(street)
+        # 285 Delancy Street, Manhattan, NY 10002
+        if street == "Delancy":
+            street = "Delancey"
+        # 271 Seabreeze Avenue, Brooklyn, NY, 11224
+        elif street == "Seabreeze":
+            street = "Sea Breeze"
+
+        street_designator = match2.group(3)
+        if street_designator != None:
+            address = match2.expand(fr'\g<HouseNumber> {street} {street_designator}, \g<TownName>, \g<State>, \g<ZIP>')
+        else:
+            address = match2.expand(fr'\g<HouseNumber> {street}, \g<TownName>, \g<State>, \g<ZIP>')
+        print("After fixed2: " + address)
+        return address
     else: 
+        print("no match")
         return address
     
+# after address is not getting match after I already reformatted, then check for house number inconsistance 
+# 4360-78 Broadway, Manhattan, NY 10033             -- 4360-78 to 4360
+# 1962-84 Linden Blvd., Brooklyn, NY 11207
+def recheck_address(address):
+
+    return address
+
     
+@retry(stop_max_attempt_number=5, wait_fixed=3000)
+def geocode_with_retry(geolocator, location):
+    try:
+        return geolocator.geocode(location, timeout=10)
+    except GeocoderUnavailable as e:
+        print(f"GeocoderUnavailable: {e}")
+        raise
 
 # insert (school_url, grades, district, borough) into the specific dictionary of each school
 # input: the url of each school for second layer crawling
@@ -110,17 +207,42 @@ def website_crawler(url):
         
         geolocator = Nominatim(user_agent="my_request")
         address_x = address.text.split('\n')[0].strip().strip()
-        loc = format_address("10 South Street, Slip 7, Manhattan, NY 10004")# 90-05 161st St Jamaica, NY 11432
+
+        address_x = "757 60 Street, Brooklyn, NY, 11220"
+        
+        loc = format_address(address_x)
         print("reach")
-        location = geolocator.geocode(loc)
+        location = geocode_with_retry(geolocator, loc)
         if location != None:
             print(location.address + "\n")
             school_dict["Latitude"] = location.latitude #1st pair
             school_dict["Longitude"] = location.longitude  #2nd pair
+
+        # Special case where formatted address will also not able to be convert
+        elif address_x == "1180 Rev. J.A. Polite Ave., Bronx, NY 10459":
+            school_dict["Latitude"] = "40.8278547454867" #1st pair
+            school_dict["Longitude"] = "-73.89699654561372"  #2nd pair
+
+        # This school does't have the correct house number recorded
+        elif address_x == "2157336 New Utrecht Avenue, Brooklyn, NY, 11214":
+            school_dict["Latitude"] = "40.61349543855342" #1st pair
+            school_dict["Longitude"] = "-74.00095981607727"  #2nd pair
+        elif address_x == "3296 620 Amsterdam Avenue, Manhattan, NY, 10024":
+            school_dict["Latitude"] = "40.790603849295216" #1st pair
+            school_dict["Longitude"] = "-73.97312802020215"  #2nd pair
+        elif address_x == "3298 561 Utica Avenue, Brooklyn, NY, 11203":
+            school_dict["Latitude"] = "40.65994388616899" #1st pair
+            school_dict["Longitude"] = "-73.93088973213067"  #2nd pair
+
         else:
+            school_dict["Latitude"] = "00000000000000000000000" #1st pair
+            school_dict["Longitude"] = "0000000000000000000000000"  #2nd pair
+            issue.add(school_name.text.strip())
             print("NOOOOOOOOOOOOOOOOOOOOOOOOOO\n")
             print(address_x)
-    
+            print(issue)
+            print("\n\n\n")
+            
         other_info = driver.find_element(By.CSS_SELECTOR, 'div#tab-panel-01 ul.box-list')
 
         # Grade store
@@ -166,7 +288,8 @@ for item in schools_item:
 
 # call the 2nd layer of crawling to complete storing rest of the info for this school
 # sending in the DOE link and the value which is the inner dictionary
-for link in all_links:
+sorted_links = sorted(all_links)
+for link in sorted_links:
     website_crawler(link) # doe link does not need to be store into the database, the school's own url will be store
 
 print("This is list of schools without url provided in the DOE website: " + str(no_url))
