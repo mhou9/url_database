@@ -25,25 +25,26 @@ time.sleep(5)
 # Locate the inner scrollable container
 inner_container = driver.find_element(By.CSS_SELECTOR, '.iScroll')
 
-# # Set the current height of the inner scroller 
-# # In a loop, keep scrolling the inner scroller and update the newest height,
-# #               compare between the currect and the next height to find out if scroller reach its end
-# #               if yes, break the loop; else, continue until yes
-# last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-# while True:
-#     driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
-#     time.sleep(2)
-#     new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-#     if new_height == last_height:
-#         break
-#     last_height = new_height
+# Set the current height of the inner scroller 
+# In a loop, keep scrolling the inner scroller and update the newest height,
+#               compare between the currect and the next height to find out if scroller reach its end
+#               if yes, break the loop; else, continue until yes
+last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+while True:
+    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
+    time.sleep(2)
+    new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+    if new_height == last_height:
+        break
+    last_height = new_height
 
 # Now, we have the html content of elements inside the inner scroller
 # insert all the info (school name, lat, lng, DOE url) into the dictionary of dictionaries
 school_item_dict = {} #dict that stores all the info
 no_url = set() # store a list of school that return None when trying to locate its school url, which means it doesn't has its own url attached
 all_links = set() #get all links from the first layer
-issue = set()
+address_issue_schools = set() # get the name of all schools that have unformatted address that unable to convert to coordinates
+school_name_issue_urls = set() #doe link is raise error of school name not found
 
 def add_numeric_id(street):
     street_Ones = int(street) % 10
@@ -111,24 +112,24 @@ def format_address(address):
     # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
 
     regex1 = r'''
-        (?P<HouseNumber>[\w-]+)\s+                              # Matches '717 ' or '90-05'
-        (?P<Direction>([news]|North|East|West|South|Bay|Brighton|Kings)?)\b\s*?    # Matches 'N ' or ' ' or 'North '
-        (?P<StreetName>[0-9]+)\s*                               # Matches ONLY numeric
-        (?P<StreetDesignator>Street|Avenue|Road|Lane|Drive|Walk)\s*  # Matches 'Street ' or 'Avenue '
-        ,\s+                                                    # Force a comma after the street
-        # (?:Slip\s+\d+,\s*)?                                     # Not neccssary detail
-        (?P<TownName>.*),\s+                                    # Matches 'MANKATO, '
-        (?P<State>[A-Z]{2}),?\s+                                # Matches 'MN ' and 'MN, '
-        (?P<ZIP>\d{5})                                          # Matches '56001'
+        (?P<HouseNumber>[\w-]+)\s+                                                  # Matches '717 ' or '90-05'
+        (?P<Direction>([news]|North|East|West|South|Bay|Brighton|Kings)?)\b\s*?     # Matches 'N ' or ' ' or 'North '
+        (?P<StreetName>[0-9]+)\s*                                                   # Matches ONLY numeric
+        (?P<StreetDesignator>Street|Avenue|Road|Lane|Drive|Walk|Blvd.)\s*           # Matches 'Street ' or 'Avenue '
+        ,\s+                                                                        # Force a comma after the street
+        # (?:Slip\s+\d+,\s*)?                                                       # Not neccssary detail
+        (?P<TownName>.*),\s+                                                        # Matches 'MANKATO, '
+        (?P<State>[A-Z]{2}),?\s+                                                    # Matches 'MN ' and 'MN, '
+        (?P<ZIP>\d{5})                                                              # Matches '56001'
     '''
     regex1 = re.compile(regex1, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match1 = regex1.match(address) #store a match object that record detail info of the matched string, else None
 
     regex2 = r'''
         (?P<HouseNumber>[\w-]+)\s+                                  # Matches '717 ' or '90-05'
-        #(?P<Direction>(?:[news]|(?:North|East|West|South))?)\b\s+?  # Matches 'N ' or '' or 'North '
+        #(?P<Direction>(?:[news]|(?:North|East|West|South))?)\b\s+? # Matches 'N ' or '' or 'North '
         (?P<StreetName>[A-Za-z0-9]+)\s*                             # Matches anything, later check if it is only numeric
-        (?:\s+(Street|Avenue|Road|Lane|Drive|Walk|Blvd.))?                     # Matches 'Street ' or 'Avenue '
+        (?:\s+(Street|Avenue|Road|Lane|Drive|Walk|Blvd.))?          # Matches 'Street ' or 'Avenue '
         ,\s+                                                        # Force a comma after the street
         (?:Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
         # Not neccssary detail
@@ -192,14 +193,27 @@ def geocode_with_retry(geolocator, location):
         print(f"GeocoderUnavailable: {e}")
         raise
 
+def find_element_with_retry(driver, by, value, max_retries=5, delay=2):
+    retries = 0
+    while retries < max_retries:
+        try:
+            element = driver.find_element(by, value)
+            return element
+        except NoSuchElementException:
+            retries += 1
+            print(f"Element not found, retrying ({retries}/{max_retries})...")
+            time.sleep(delay)
+    raise NoSuchElementException(f"Element not found after {max_retries} retries")
+
 # insert (school_url, grades, district, borough) into the specific dictionary of each school
 # input: the url of each school for second layer crawling
 #        dictionary that we store the info that we got from each school
 def website_crawler(url):
     try:
         driver.get(url)
-        
-        school_name = driver.find_element(By.CSS_SELECTOR, 'div.module-header h1.title')
+        time.sleep(2)
+        #school_name = driver.find_element(By.CSS_SELECTOR, 'div.module-header h1.title')
+        school_name = find_element_with_retry(driver, By.CSS_SELECTOR, 'div.module-header h1.title')
         # for each item, create a new dictionary with school name as the key if it doesn't exist, key, value
         school_dict = school_item_dict.setdefault(school_name.text.strip(), {})
 
@@ -208,7 +222,7 @@ def website_crawler(url):
         geolocator = Nominatim(user_agent="my_request")
         address_x = address.text.split('\n')[0].strip().strip()
 
-        address_x = "757 60 Street, Brooklyn, NY, 11220"
+        #address_x = "757 60 Street, Brooklyn, NY, 11220"
         
         loc = format_address(address_x)
         print("reach")
@@ -234,13 +248,14 @@ def website_crawler(url):
             school_dict["Latitude"] = "40.65994388616899" #1st pair
             school_dict["Longitude"] = "-73.93088973213067"  #2nd pair
 
+        # Collect the name of all school where its address was not able to convert to coordinate
         else:
             school_dict["Latitude"] = "00000000000000000000000" #1st pair
-            school_dict["Longitude"] = "0000000000000000000000000"  #2nd pair
-            issue.add(school_name.text.strip())
+            school_dict["Longitude"] = "0000000000000000000000000" #2nd pair
+            address_issue_schools.add(school_name.text.strip())
             print("NOOOOOOOOOOOOOOOOOOOOOOOOOO\n")
             print(address_x)
-            print(issue)
+            print("No coordinate: " + str(address_issue_schools))
             print("\n\n\n")
             
         other_info = driver.find_element(By.CSS_SELECTOR, 'div#tab-panel-01 ul.box-list')
@@ -256,24 +271,33 @@ def website_crawler(url):
         # Borough store
         borough_span = other_info.find_element(By.XPATH, ".//li[.//strong[text()='Borough:']]//span")
         school_dict["Borough"] = borough_span.text.split(':')[-1].strip() # 5th pair
-
+        
+        
         # extract the school url using the exact path, if no school website is found, add the school name onto the no url list
-        school_url_elements = driver.find_element(By.XPATH, "//a[contains(text(), 'School Website')]")
-        print(school_url_elements)
-        if school_url_elements: # store the website into the dictionary
-            url = school_url_elements.get_attribute("href")
-            school_dict["School Website"] = url # 6th pair
-            domain = urlparse(url).netloc.replace('www.', '').split('.')
-            if domain == "google": #skip
-                school_dict["Domain_1"] = "None"
-                school_dict["Domain_2"] = "None"
+        try:   
+            school_url_elements = driver.find_element(By.XPATH, "//a[contains(text(), 'School Website')]")
+            print(school_url_elements)
+            if school_url_elements: # store the website into the dictionary
+                url = school_url_elements.get_attribute("href")
+                school_dict["School Website"] = url # 6th pair
+                domain = urlparse(url).netloc.replace('www.', '').split('.')
+                if domain == "google": #skip
+                    school_dict["Domain_1"] = "None"
+                    school_dict["Domain_2"] = "None"
+                else:
+                    school_dict["Domain_1"] = domain[0] + ".org"
+                    school_dict["Domain_2"] = domain[0] + ".com"
 
-    except NoSuchElementException as e:
-        schools_name = driver.find_element(By.CSS_SELECTOR, 'div.module.school-detail h1.title')
-        no_url.add(schools_name.text)
-        school_dict["School Website"] = "None"
-        school_dict["Domain_1"] = "None"
-        school_dict["Domain_2"] = "None"
+        except NoSuchElementException:
+            schools_name = driver.find_element(By.CSS_SELECTOR, 'div.module.school-detail h1.title')
+            no_url.add(schools_name.text.strip())
+            school_dict["School Website"] = "None"
+            school_dict["Domain_1"] = "None"
+            school_dict["Domain_2"] = "None"
+    
+    #if doe link is giving the issue of school name not found, add to list for special adjustment
+    except NoSuchElementException:
+        school_name_issue_urls.add(url)
 
     finally:
         print(school_item_dict)
@@ -285,26 +309,16 @@ for item in schools_item:
     a_tag = item.find_element(By.CSS_SELECTOR, 'h2.title a')
     all_links.add(a_tag.get_attribute('href'))
 
-
 # call the 2nd layer of crawling to complete storing rest of the info for this school
 # sending in the DOE link and the value which is the inner dictionary
 sorted_links = sorted(all_links)
 for link in sorted_links:
     website_crawler(link) # doe link does not need to be store into the database, the school's own url will be store
 
-print("This is list of schools without url provided in the DOE website: " + str(no_url))
+print("\nThis is list of schools without url provided in the DOE website(no private school url attached): " + str(no_url))
+print("\nDOE link issue: " + str(school_name_issue_urls))
+print("\nNo coordinate get for address converting: " + str(address_issue_schools))
 json_str = json.dumps(school_item_dict, indent= 4)
-
-# address = "8515 Ridge Boulevard, Brooklyn, NY, 11209"
-# geolocator = Here(apikey='EMFSMes4qAjPG6GIaFqtAt8DN_-Dh0KeqV-7zgdrmSU', user_agent="9uzouu4JG91QHNMoChLD")
-# try:
-#     location = geolocator.geocode(address, exactly_one=True)
-#     if location:
-#         print((location.latitude, location.longitude))
-#     else:
-#         print("Address not found")
-# except GeocoderTimedOut:
-#     print("Timeout error")
 
 with open("output.json", "w") as outfile:
     outfile.write(json_str)
