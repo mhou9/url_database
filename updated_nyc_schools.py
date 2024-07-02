@@ -6,12 +6,15 @@ import time
 from urllib.parse import urlparse
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import getpass
 import folium
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from bs4 import BeautifulSoup
+from openlocationcode import openlocationcode as olc
 
 
 def get_driver():
@@ -43,7 +46,6 @@ def scroll_inner_div(driver, scroll_count):
         # Pause execution for 1 second to allow content to load
         time.sleep(1)
 
-
 def get_school_outer_info(driver):
     """
     Function to extract the outer information in the first page including
@@ -57,35 +59,51 @@ def get_school_outer_info(driver):
               Each dictionary has keys 'url' and 'address'.
     """
     # Locate all school item divs on the page
-    school_divs = driver.find_elements(By.CSS_SELECTOR, 'div.item.school-item')
-    
+    try:
+        school_divs = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.item.school-item'))
+        )
+    except TimeoutException:
+        print("Timeout: School divs not found.")
+        return []
+
     # Initialize an empty list to store school information
     school_info_list = []
-    
+
     # Iterate through each school item div
     for div in school_divs:
-        # Extract the URL of the school from the anchor tag within the div
-        href = div.find_element(By.TAG_NAME, 'a').get_attribute('href')
-        
-        # Check if the extracted URL starts with the specified base URL
-        if href and href.startswith("https://www.schools.nyc.gov/schools/"):
-            # Extract the address of the school from the address element within the div
-            address_element = div.find_element(By.CSS_SELECTOR, 'div.column.address.pt-1')
-            address_parts = address_element.find_elements(By.TAG_NAME, 'div')
-            address = ', '.join(part.text for part in address_parts)
-            
-            # Extract the domain name from the URL to determine if it's a Google site
-            domain = extract_domain(href)
-            
-            # Set the URL to 'none' if it belongs to a Google site, otherwise use the extracted URL
-            if domain == "sites.google":
-                url = "none"
-            else:
-                url = href
-            
-            # Append the URL and address to the list as a dictionary
-            school_info_list.append({'url': url, 'address': address})
-    
+        try:
+            # Extract the URL of the school from the anchor tag within the div
+            href = div.find_element(By.TAG_NAME, 'a').get_attribute('href')
+
+            # Check if the extracted URL starts with the specified base URL
+            if href and href.startswith("https://www.schools.nyc.gov/schools/"):
+                # Extract the address of the school from the address element within the div
+                try:
+                    address_element = div.find_element(By.CSS_SELECTOR, 'div.column.address.pt-1')
+                    address_parts = address_element.find_elements(By.TAG_NAME, 'div')
+                    address = ', '.join(part.text for part in address_parts)
+                except NoSuchElementException:
+                    address = "Address not found"
+
+                # Hardcode the address for the specific school URL
+                if href == "https://www.schools.nyc.gov/schools/KBTA":
+                    address = "133 Kingsborough 1st Walk, Brooklyn, NY 11233"
+
+                # Extract the domain name from the URL to determine if it's a Google site
+                domain = extract_domain(href)
+
+                # Set the URL to 'none' if it belongs to a Google site, otherwise use the extracted URL
+                if domain == "sites.google":
+                    url = "none"
+                else:
+                    url = href
+                
+                # Append the URL and address to the list as a dictionary
+                school_info_list.append({'url': url, 'address': address})
+        except NoSuchElementException as e:
+            print(f"Element not found: {e}")
+
     # Return the list of school information dictionaries
     return school_info_list
 
@@ -349,76 +367,57 @@ def insert_school_info(connection, school_info):
         print(f"Error inserting school info: {e}")
 
 
+
 def extract_corrected_address(driver, google_maps_url):
     """
     Function to extract the corrected address from a Google Maps page.
     
     Args:
-        driver (selenium.webdriver.Chrome): The Selenium WebDriver instance.
-        google_maps_url (str): The URL of the Google Maps page.
-    
+        driver (WebDriver): The WebDriver instance used to interact with the web page.
+        google_maps_url (str): The URL of the Google Maps page for the school.
+        
     Returns:
-        str: The corrected address if found, otherwise None.
+        str or tuple: The corrected address if found, otherwise a tuple of (latitude, longitude) if a plus code is found, or None.
     """
     driver.get(google_maps_url)
     time.sleep(3)  # Wait for the page to load
+
     try:
-        # Try the primary selector
-        corrected_address = driver.find_element(By.CSS_SELECTOR, 'span.DkEaL').text
+        # First try the primary selector for the address
+        corrected_address = driver.find_element(By.XPATH, "//h1[@class='DUwDvf lfPIob']").text
         return corrected_address
-    except Exception as e1:
+    except NoSuchElementException as e1:
         print(f"Primary selector failed: {str(e1)}")
-        try:
-            # Try an alternative selector
-            corrected_address = driver.find_element(By.XPATH, "//h1[@class='DUwDvf lfPIob']").text
-            city_zip_code = driver.find_element(By.XPATH, "//h2[@class='bwoZTb fontBodyMedium']").text
-            return f"{corrected_address}, {city_zip_code}"
-        except Exception as e2:
-            print(f"Alternative selector failed: {str(e2)}")
+
+    try:
+        # Check for plus codes and convert to latitude and longitude if found
+        plus_code_element = driver.find_element(By.CSS_SELECTOR, "div[data-section-id='178'] .DkEaL")
+        if plus_code_element:
+            plus_code = plus_code_element.text
+            print(f"Found plus code: {plus_code}")
             try:
-                # Fallback to another possible pattern
-                corrected_address = driver.find_element(By.XPATH, "//div[@aria-label='Address']//span[@class='DkEaL']").text
-                return corrected_address
-            except Exception as e3:
-                print(f"Fallback selector failed: {str(e3)}")
-                return None
+                location = olc.decode(plus_code)
+                return (location.latitudeCenter, location.longitudeCenter)
+            except Exception as e:
+                print(f"Error decoding plus code: {str(e)}")
+    except NoSuchElementException as e2:
+        print(f"No plus code found: {str(e2)}")
+    
+    try:
+        # Try an alternative selector for the address
+        corrected_address = driver.find_element(By.XPATH, "//h2[@class='bwoZTb fontBodyMedium']").text
+        return corrected_address
+    except NoSuchElementException as e2:
+        print(f"Alternative selector failed: {str(e2)}")
 
+    try:
+        # Fallback to another possible pattern
+        corrected_address = driver.find_element(By.XPATH, "//div[@aria-label='Address']//span[@class='DkEaL']").text
+        return corrected_address
+    except NoSuchElementException as e3:
+        print(f"Fallback selector failed: {str(e3)}")
 
-def add_suffix_to_street_number(address):
-    """
-    Adds a suffix to the street number if missing.
-    
-    Args:
-        address (str): The address string to add suffix to.
-    
-    Returns:
-        str: The address with the appropriate suffix added to the street number.
-    """
-    # Regex pattern to match the address components
-    pattern = r'(\d+)\s+(\w*\s)?(\d+)(?:st|nd|rd|th)?\s+(\w+),\s*(\w+),\s*(\w+\s*\d+)'
-    match = re.match(pattern, address, re.IGNORECASE)
-    
-    if match:
-        house_number = match.group(1)
-        street_direction = match.group(2) or ''
-        street_number = match.group(3)
-        street_name = match.group(4)
-        city = match.group(5)
-        state_zip = match.group(6)
-        
-        # Determine the appropriate suffix for the street number
-        if street_number.endswith('1') and not street_number.endswith('11'):
-            suffix = 'st'
-        elif street_number.endswith('2') and not street_number.endswith('12'):
-            suffix = 'nd'
-        elif street_number.endswith('3') and not street_number.endswith('13'):
-            suffix = 'rd'
-        else:
-            suffix = 'th'
-        
-        return f"{house_number} {street_direction}{street_number}{suffix} {street_name}, {city}, {state_zip}"
-    
-    return address
+    return None
 
 
 def extract_address(s):
@@ -438,6 +437,7 @@ def extract_address(s):
         return match.group(1)
     else:
         return s
+
 
 def geocode_with_retry(address, retries=5, delay=2):
     """
@@ -473,187 +473,6 @@ def geocode_with_retry(address, retries=5, delay=2):
         return geocode_with_retry(reformatted_address_with_suffix, retries, delay)
     
     return None
-
-
-def plot_schools_on_map(connection, driver):
-    """
-    Function to plot the schools on a map using Folium.
-    
-    Args:
-        connection (mysql.connector.connection.MySQLConnection): The connection object to the MySQL database.
-        driver (selenium.webdriver.Chrome): The Selenium WebDriver instance.
-    """
-    try:
-        cursor = connection.cursor(dictionary=True)
-        fetch_query = "SELECT * FROM schools"
-        cursor.execute(fetch_query)
-        schools_data = cursor.fetchall()
-        cursor.close()
-
-        nyc_map = folium.Map(location=[40.7128, -74.0060], zoom_start=10)
-
-        successful_geocodes = 0
-        total_addresses = len(schools_data)
-        failed_schools = []
-        
-        for school in schools_data:
-            if school['address']:
-                # Try to geocode the address with retries
-                location = geocode_with_retry(school['address'])
-                # If geocoding fails and a Google Maps URL is available, try to extract and geocode the corrected address
-                if not location and 'google_maps_url' in school and school['google_maps_url']:
-                    corrected_address = extract_corrected_address(driver, school['google_maps_url'])
-                    if corrected_address:
-                        location = geocode_with_retry(corrected_address)
-                if location:
-                    # Add a marker for the successfully geocoded address
-                    folium.Marker(
-                        [location.latitude, location.longitude],
-                        popup=f"{school['name']}<br>{school['address']}",
-                        tooltip=school['name']
-                    ).add_to(nyc_map)
-                    successful_geocodes += 1
-                else:
-                    print(f"Failed to geocode address: {school['address']}")
-                    failed_schools.append(school['name'])
-
-        nyc_map.save("nyc_schools_map.html")
-        print(f"Map has been saved as nyc_schools_map.html")
-        print(f"Successfully plotted {successful_geocodes} out of {total_addresses} addresses.")
-        if failed_schools:
-            print("Schools that were not able to be plotted:")
-            for failed_school in failed_schools:
-                print(f"- {failed_school}")
-
-    except Exception as e:
-        print(f"Error plotting schools on map: {e}")
-
-
-def add_suffix_to_street_number(address):
-    """
-    Adds a suffix to the street number if missing.
-    
-    Parameters:
-        address (str): The address string to add suffix to.
-    
-    Returns:
-        str: The address with the appropriate suffix added to the street number.
-    """
-    # Regex pattern to match the address components
-    pattern = r'(\d+)\s+(\w*\s)?(\d+)(?:st|nd|rd|th)?\s+(\w+),\s*(\w+),\s*(\w+\s*\d+)'
-    match = re.match(pattern, address, re.IGNORECASE)
-    
-    if match:
-        house_number = match.group(1)
-        street_direction = match.group(2) or ''
-        street_number = match.group(3)
-        street_name = match.group(4)
-        city = match.group(5)
-        state_zip = match.group(6)
-        
-        # Determine the appropriate suffix for the street number
-        if street_number.endswith('1') and not street_number.endswith('11'):
-            suffix = 'st'
-        elif street_number.endswith('2') and not street_number.endswith('12'):
-            suffix = 'nd'
-        elif street_number.endswith('3') and not street_number.endswith('13'):
-            suffix = 'rd'
-        else:
-            suffix = 'th'
-        
-        return f"{house_number} {street_direction}{street_number}{suffix} {street_name}, {city}, {state_zip}"
-    
-    return address
-
-
-def extract_address(s):
-    """
-    Extracts the address from a string in the format 'Suggest an edit on [Address]'.
-    
-    Parameters:
-        s (str): The input string containing the address.
-    
-    Returns:
-        str: The extracted address.
-    """
-    # Regex pattern to extract the address
-    pattern = r'Suggest an edit on (.+)'
-    match = re.search(pattern, s)
-    if match:
-        return match.group(1)
-    else:
-        return s
-
-
-def geocode_with_retry(address, retries=5, delay=2):
-    """
-    Function to geocode an address with a retry mechanism.
-    
-    Parameters:
-        address (str): The address to geocode.
-        retries (int): Number of retries in case of failure.
-        delay (int): Delay between retries in seconds.
-    
-    Returns:
-        Location: The geocoded location object or None if geocoding fails.
-    """
-    geolocator = Nominatim(user_agent="nyc_schools_map")
-    for attempt in range(retries):
-        try:
-            location = geolocator.geocode(address, timeout=10)
-            if location:
-                return location
-        except (GeocoderTimedOut, GeocoderServiceError) as e:
-            print(f"Geocoding attempt {attempt + 1} failed for address: {address} with error: {e}. Retrying in {delay} seconds...")
-            time.sleep(delay)
-        except Exception as e:
-            print(f"Unknown error during geocoding attempt {attempt + 1} for address: {address}: {e}")
-    
-    print(f"Geocoding failed for address: {address} after {retries} retries.")
-    
-    # Try to reformat the address if it includes 'Suggest an edit on'
-    reformatted_address = extract_address(address)
-    if reformatted_address != address:
-        print(f"Trying to reformat and geocode the address: {reformatted_address}")
-        reformatted_address_with_suffix = add_suffix_to_street_number(reformatted_address)
-        return geocode_with_retry(reformatted_address_with_suffix, retries, delay)
-    
-    return None
-
-
-def extract_corrected_address(driver, google_maps_url):
-    """
-    Function to extract the corrected address from a Google Maps page.
-    
-    Parameters:
-        driver (WebDriver): The Selenium WebDriver instance.
-        google_maps_url (str): The URL of the Google Maps page.
-    
-    Returns:
-        str: The corrected address.
-    """
-    driver.get(google_maps_url)
-    time.sleep(3)  # Wait for the page to load
-    try:
-        # Try the primary selector
-        corrected_address = driver.find_element(By.CSS_SELECTOR, 'span.DkEaL').text
-        return corrected_address
-    except Exception as e1:
-        print(f"Primary selector failed: {str(e1)}")
-        try:
-            # Try an alternative selector
-            corrected_address = driver.find_element(By.XPATH, "//h1[@class='DUwDvf lfPIob']").text
-            city_zip_code = driver.find_element(By.XPATH, "//h2[@class='bwoZTb fontBodyMedium']").text
-            return f"{corrected_address}, {city_zip_code}"
-        except Exception as e2:
-            print(f"Alternative selector failed: {str(e2)}")
-            try:
-                # Fallback to another possible pattern
-                corrected_address = driver.find_element(By.XPATH, "//div[@aria-label='Address']//span[@class='DkEaL']").text
-                return corrected_address
-            except Exception as e3:
-                print(f"Fallback selector failed: {str(e3)}")
-                return None
 
 
 def plot_schools_on_map(connection, driver):
@@ -675,10 +494,14 @@ def plot_schools_on_map(connection, driver):
 
         successful_geocodes = 0
         total_addresses = len(schools_data)
-        failed_schools = []
+        failed_addresses = []
         
         for school in schools_data:
             if school['address']:
+                # Hardcode the address for the specific school URL
+                if school['url'] == "https://www.schools.nyc.gov/schools/KBTA":
+                    school['address'] = "133 Kingsborough 1st Walk, Brooklyn, NY 11233"
+
                 # Try to geocode the address with retries
                 location = geocode_with_retry(school['address'])
                 # If geocoding fails and a Google Maps URL is available, try to extract and geocode the corrected address
@@ -696,15 +519,15 @@ def plot_schools_on_map(connection, driver):
                     successful_geocodes += 1
                 else:
                     print(f"Failed to geocode address: {school['address']}")
-                    failed_schools.append(school['name'])
+                    failed_addresses.append(school['address'])
 
         nyc_map.save("nyc_schools_map.html")
         print(f"Map has been saved as nyc_schools_map.html")
         print(f"Successfully plotted {successful_geocodes} out of {total_addresses} addresses.")
-        if failed_schools:
-            print("Schools that were not able to be plotted:")
-            for failed_school in failed_schools:
-                print(f"- {failed_school}")
+        if failed_addresses:
+            print("Addresses that were not able to be plotted:")
+            for failed_address in failed_addresses:
+                print(f"- {failed_address}")
 
     except Exception as e:
         print(f"Error plotting schools on map: {e}")
@@ -740,7 +563,7 @@ def main():
             time.sleep(3)
             
             # Scroll the inner div of the webpage three times
-            scroll_inner_div(driver, 250)
+            scroll_inner_div(driver, 600)
             
             # Extract school information from the first page of search results
             school_outer_info = get_school_outer_info(driver)
