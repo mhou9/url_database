@@ -25,18 +25,18 @@ time.sleep(5)
 # Locate the inner scrollable container
 inner_container = driver.find_element(By.CSS_SELECTOR, '.iScroll')
 
-# # Set the current height of the inner scroller 
-# # In a loop, keep scrolling the inner scroller and update the newest height,
-# #               compare between the currect and the next height to find out if scroller reach its end
-# #               if yes, break the loop; else, continue until yes
-# last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-# while True:
-#     driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
-#     time.sleep(2)
-#     new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-#     if new_height == last_height:
-#         break
-#     last_height = new_height
+# Set the current height of the inner scroller 
+# In a loop, keep scrolling the inner scroller and update the newest height,
+#               compare between the currect and the next height to find out if scroller reach its end
+#               if yes, break the loop; else, continue until yes
+last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+while True:
+    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
+    time.sleep(2)
+    new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+    if new_height == last_height:
+        break
+    last_height = new_height
 
 # Now, we have the html content of elements inside the inner scroller
 # insert all the info (school name, lat, lng, DOE url) into the dictionary of dictionaries
@@ -107,7 +107,7 @@ def convert_word_to_numeric(word):
     except ValueError:
         return False
 
-def format_address(address):
+def format_address(geolocator, address):
     # Case 1 : 511 7 Ave, Brooklyn, NY 11215, 8-21 Bay 25 Street, Queens, NY 11691  -- 7 Avenue to 7th Avenue, detect Bay as direction
     # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
 
@@ -161,6 +161,8 @@ def format_address(address):
         # case where street number is written in word
         if convert_word_to_numeric(street) != False:
             street = convert_word_to_numeric(street)
+
+        #Edge cases:
         # 285 Delancy Street, Manhattan, NY 10002
         if street == "Delancy":
             street = "Delancey"
@@ -171,25 +173,27 @@ def format_address(address):
         townname = match2.group('TownName')
         if townname == "Jamaica":
             townname = "Queens"
-
         street_designator = match2.group(3)
+
+        housenumber = match2.group('HouseNumber')
+        # run geocode to see if locaiton is none, if none check for house number inconsistance 
+        # check if house number is xxx-xx, yes then remove -xx
+        # 4360-78 Broadway, Manhattan, NY 10033             -- 4360-78 to 4360
+        # 1962-84 Linden Blvd., Brooklyn, NY 11207
+        location = geocode_with_retry(geolocator, address)
+        if location == None:
+            if '-' in housenumber:
+                housenumber = housenumber.split('-')[0].strip()
+                print("fixing round 2")
         if street_designator != None:
-            address = match2.expand(fr'\g<HouseNumber> {street} {street_designator}, {townname}, \g<State>, \g<ZIP>')
+            address = match2.expand(fr'{housenumber} {street} {street_designator}, {townname}, \g<State>, \g<ZIP>')
         else:
-            address = match2.expand(fr'\g<HouseNumber> {street}, {townname}, \g<State>, \g<ZIP>')
+            address = match2.expand(fr'{housenumber} {street}, {townname}, \g<State>, \g<ZIP>')
         print("After fixed2: " + address)
         return address
     else: 
         print("no match")
         return address
-    
-# after address is not getting match after I already reformatted, then check for house number inconsistance 
-# 4360-78 Broadway, Manhattan, NY 10033             -- 4360-78 to 4360
-# 1962-84 Linden Blvd., Brooklyn, NY 11207
-def recheck_address(address):
-
-    return address
-
     
 @retry(stop_max_attempt_number=5, wait_fixed=3000)
 def geocode_with_retry(geolocator, location):
@@ -229,6 +233,21 @@ def website_crawler(url):
             school_dict["School Website"] = "https://www.adcs2.org/"
             school_dict["Domain_1"] = "adcs2.org"
             school_dict["Domain_2"] = "adcs2.com"
+            school_dict["Domain_3"] = "adcs2.edu"
+            school_dict["Domain_4"] = "adcs2.net"
+        # Imagine Early Learning Center @ City College - MBVK
+        elif url == "https://www.schools.nyc.gov/schools/MBVK":
+            school_dict = school_item_dict.setdefault("Imagine Early Learning Center @ City College - MBVK", {})
+            school_dict["Latitude"] = "40.81735904519423" #1st pair
+            school_dict["Longitude"] = "-73.95200281792249"  #2nd pair
+            school_dict["Grade"] = "3K, PK"
+            school_dict["District"] = "5"
+            school_dict["Borough"] = "Manhattan"
+            school_dict["School Website"] = "https://imagineelc.com/schools/city-college-child-development-center/"
+            school_dict["Domain_1"] = "imagineelc.org"
+            school_dict["Domain_2"] = "imagineelc.com"
+            school_dict["Domain_3"] = "imagineelc.edu"
+            school_dict["Domain_4"] = "imagineelc.net"
 
         else:
             #school_name = driver.find_element(By.CSS_SELECTOR, 'div.module-header h1.title')
@@ -240,19 +259,16 @@ def website_crawler(url):
             
             geolocator = Nominatim(user_agent="my_request")
             address_x = address.text.split('\n')[0].strip().strip()
-
-            #Location:
-            # 
-            address_x = "701 St Ann's Ave, Bronx, NY 10455" ################################################################################################
             
-            loc = format_address(address_x)
+            loc = format_address(geolocator, address_x)
             print("reach")
             location = geocode_with_retry(geolocator, loc)
             if location != None:
                 print("Got location: " + location.address + "\n")
                 school_dict["Latitude"] = location.latitude #1st pair
                 school_dict["Longitude"] = location.longitude  #2nd pair
-
+            
+            # When geocode return None:
             # ----- Special case where formatted address will also not able to be convert -----
             elif address_x == "1180 Rev. J.A. Polite Ave., Bronx, NY 10459":
                 school_dict["Latitude"] = "40.8278547454867" #1st pair
@@ -303,9 +319,15 @@ def website_crawler(url):
             elif school_name.text.strip() == "Marble Hill High School for International Studies":
                 school_dict["Latitude"] = "40.87787348734404" #1st pair
                 school_dict["Longitude"] = "-73.9132797314117"  #2nd pair
-            # New Visions Charter High School for Advanced Math and Science, 40.877476431107944, -73.91310203515972
-            # Bronx Theatre High School, 40.8779039872469, -73.91336218908397
-            # New Visions Charter High School for the Humanities, 40.87711969375018, -73.9125363032833
+            elif school_name.text.strip() == "New Visions Charter High School for Advanced Math and Science":
+                school_dict["Latitude"] = "40.877476431107944" #1st pair
+                school_dict["Longitude"] = "-73.91310203515972"  #2nd pair
+            elif school_name.text.strip() == "Bronx Theatre High School":
+                school_dict["Latitude"] = "40.8779039872469" #1st pair
+                school_dict["Longitude"] = "-73.91336218908397"  #2nd pair
+            elif school_name.text.strip() == "New Visions Charter High School for the Humanities":
+                school_dict["Latitude"] = "40.87711969375018" #1st pair
+                school_dict["Longitude"] = "-73.9125363032833"  #2nd pair
 
             # 275 Harlem River Park Bridge, Bronx, NY 10453
             elif school_name.text.strip() == "I.S. 229 Roland Patterson": 
@@ -314,17 +336,25 @@ def website_crawler(url):
             elif school_name.text.strip() == "The New American Academy at Roberto Clemente State Park": 
                 school_dict["Latitude"] = "40.85288194181465" #1st pair
                 school_dict["Longitude"] = "-73.92104215819913"  #2nd pair
+                
+            # 701 St. Anns Avenue, Bronx, NY 10455
+            elif school_name.text.strip() == "Mott Haven Village Preparatory High School":
+                school_dict["Latitude"] = "40.81843244053653" #1st pair
+                school_dict["Longitude"] = "-73.91176058908628"  #2nd pair
+            elif school_name.text.strip() == "University Heights Secondary School":
+                school_dict["Latitude"] = "40.818400937835776" #1st pair
+                school_dict["Longitude"] = "-73.91127711606919"  #2nd pair
             # --------------------------------------------------------------------------------------------
-
-            # 519 St Anns Avenue, Bronx, NY 10455
-            # 701 St. Anns Avenue, Bronx, NY 10455 -----University Heights Secondary School, Mott Haven Village Preparatory High School
-
+            
             elif address_x == "888 Rev J A Polite Ave, Bronx, NY 10459":
                 school_dict["Latitude"] = "40.82054115481338" #1st pair
                 school_dict["Longitude"] = "-73.89874503212259"  #2nd pair
             elif address_x == "2040 Antin Pl, Bronx, NY 10462":
                 school_dict["Latitude"] = "40.8519304393006" #1st pair
                 school_dict["Longitude"] = "-73.86451196095722"  #2nd pair
+            elif address_x == "519 St Anns Avenue, Bronx, NY 10455":
+                school_dict["Latitude"] = "40.81360947234675" #1st pair
+                school_dict["Longitude"] = "-73.9135955553995"  #2nd pair
 
             # ----- This school does't have the correct house number recorded -----
             elif address_x == "2157336 New Utrecht Avenue, Brooklyn, NY, 11214":
@@ -381,9 +411,13 @@ def website_crawler(url):
                     if domain == "google": #skip
                         school_dict["Domain_1"] = "None"
                         school_dict["Domain_2"] = "None"
+                        school_dict["Domain_3"] = "None"
+                        school_dict["Domain_4"] = "None"
                     else:
                         school_dict["Domain_1"] = domain[0] + ".org"
                         school_dict["Domain_2"] = domain[0] + ".com"
+                        school_dict["Domain_3"] = domain[0] + ".edu"
+                        school_dict["Domain_4"] = domain[0] + ".net"
 
             except NoSuchElementException:
                 schools_name = driver.find_element(By.CSS_SELECTOR, 'div.module.school-detail h1.title')
@@ -391,6 +425,8 @@ def website_crawler(url):
                 school_dict["School Website"] = "None"
                 school_dict["Domain_1"] = "None"
                 school_dict["Domain_2"] = "None"
+                school_dict["Domain_3"] = "None"
+                school_dict["Domain_4"] = "None"
     
     #if doe link is giving the issue of school name not found, add to list for special adjustment
     except NoSuchElementException:
