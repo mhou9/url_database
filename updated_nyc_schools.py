@@ -46,6 +46,7 @@ def scroll_inner_div(driver, scroll_count):
         # Pause execution for 1 second to allow content to load
         time.sleep(1)
 
+
 def get_school_outer_info(driver):
     """
     Function to extract the outer information in the first page including
@@ -133,13 +134,15 @@ def add_suffix_to_street_number(address):
     Adds the correct suffix to the second street number in the address if it doesn't already have one.
     
     Args:
-        address (str): The address string to which a suffix will be added if it's missing.
+        address (str): The address to process.
     
     Returns:
-        str: The address with the appropriate suffix added to the second street number.
+        str: The address with the suffix added to the second street number.
     """
-    def suffix(n):
-        # Determine the appropriate suffix for a given number
+    def get_suffix(n):
+        """
+        Determine the suffix based on the number.
+        """
         if 10 <= n % 100 <= 20:
             return 'th'
         elif n % 10 == 1:
@@ -151,17 +154,20 @@ def add_suffix_to_street_number(address):
         else:
             return 'th'
 
-    # Regex to find the second street number and check if it already has a suffix
-    match = re.search(r'(\d+)\s+(\d+)\s(\D+)', address)
+    # Regular expression to match the address and find the second street number
+    match = re.match(r'(\d+)\s+(\d+)\s+(.*)', address)
     if match:
-        first_number = match.group(1)
-        second_number = int(match.group(2))
-        street_name = match.group(3)
-        # Check if the second number already has a suffix
-        if not re.search(r'\d+(st|nd|rd|th)', f"{second_number}"):
-            suffix_part = suffix(second_number)
-            new_address = re.sub(r'(\d+)\s+(\d+)\s(\D+)', f"{first_number} {second_number}{suffix_part} {street_name}", address)
-            return new_address
+        first_number = match.group(1).strip()
+        second_number = int(match.group(2).strip())
+        rest_of_address = match.group(3).strip()
+
+        # Determine the suffix
+        suffix_part = get_suffix(second_number)
+
+        # Construct the new address with suffix
+        formatted_address = f"{first_number} {second_number}{suffix_part} {rest_of_address}"
+        return formatted_address
+
     return address
 
 
@@ -367,7 +373,6 @@ def insert_school_info(connection, school_info):
         print(f"Error inserting school info: {e}")
 
 
-
 def extract_corrected_address(driver, google_maps_url):
     """
     Function to extract the corrected address from a Google Maps page.
@@ -537,6 +542,8 @@ def main():
     """
     Main function to run the entire script.
     """
+
+    print(add_suffix_to_street_number("8401 23 Avenue, Brooklyn, NY, 11214"))
     # Establish a connection to the MySQL database
     connection = connect_to_db()
     
