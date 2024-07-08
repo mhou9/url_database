@@ -129,20 +129,9 @@ def extract_domain(url):
     return '.'.join(domain_parts[-2:])
 
 
+
 def add_suffix_to_street_number(address):
-    """
-    Adds the correct suffix to the second street number in the address if it doesn't already have one.
-    
-    Args:
-        address (str): The address to process.
-    
-    Returns:
-        str: The address with the suffix added to the second street number.
-    """
     def get_suffix(n):
-        """
-        Determine the suffix based on the number.
-        """
         if 10 <= n % 100 <= 20:
             return 'th'
         elif n % 10 == 1:
@@ -154,21 +143,27 @@ def add_suffix_to_street_number(address):
         else:
             return 'th'
 
-    # Regular expression to match the address and find the second street number
-    match = re.match(r'(\d+)\s+(\d+)\s+(.*)', address)
-    if match:
-        first_number = match.group(1).strip()
-        second_number = int(match.group(2).strip())
-        rest_of_address = match.group(3).strip()
+    patterns = [
+        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',  
+        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'    
+    ]
 
-        # Determine the suffix
-        suffix_part = get_suffix(second_number)
+    for pattern in patterns:
+        match = re.match(pattern, address)
+        if match:
+            groups = match.groups()
+            if len(groups) == 4:
+                if '-' in groups[0]:  # First pattern
+                    first_part, number, street_name, remaining = groups
+                    number_to_modify = int(number)
+                    return f"{first_part} {number}{get_suffix(number_to_modify)} {street_name}{remaining}"
+                else:  # Second pattern
+                    first_number, second_part, street_name, remaining = groups
+                    number_to_modify = int(re.search(r'\d+', second_part).group())
+                    return f"{first_number} {second_part}{get_suffix(number_to_modify)} {street_name}{remaining}"
 
-        # Construct the new address with suffix
-        formatted_address = f"{first_number} {second_number}{suffix_part} {rest_of_address}"
-        return formatted_address
+    return address  # Return original address if no pattern matches
 
-    return address
 
 
 def get_school_info(driver, school_url):
@@ -500,12 +495,22 @@ def plot_schools_on_map(connection, driver):
         successful_geocodes = 0
         total_addresses = len(schools_data)
         failed_addresses = []
-        
+
+        url_to_address_mapping = {
+            "https://www.schools.nyc.gov/schools/KBTA": "133 Kingsborough 1st Walk, Brooklyn, NY 11233",
+            "https://www.schools.nyc.gov/schools/X480": "1010 Rev. J. A. Polite Avenue, Bronx, NY 10459",
+            "https://www.schools.nyc.gov/schools/X333": "888 Rev J A Polite Ave, Bronx, NY 10459",
+            "https://www.schools.nyc.gov/schools/X274": "275 Harlem River Park Bridge, Bronx, NY 10453",
+            "https://www.schools.nyc.gov/schools/X204": "1780 Dr. Martin Luther King Jr. Blvd, Bronx, NY 10453",
+            "https://www.schools.nyc.gov/schools/QALO": "1 Jamaica Center Plaza, Queens, NY, 11432",
+            "https://www.schools.nyc.gov/schools/M551": "10 South Street, Slip 7, Manhattan, NY 10004",
+        }
+
         for school in schools_data:
             if school['address']:
-                # Hardcode the address for the specific school URL
-                if school['url'] == "https://www.schools.nyc.gov/schools/KBTA":
-                    school['address'] = "133 Kingsborough 1st Walk, Brooklyn, NY 11233"
+                # Hardcode the address for the specific school URL if available
+                if school['url'] in url_to_address_mapping:
+                    school['address'] = url_to_address_mapping[school['url']]
 
                 # Try to geocode the address with retries
                 location = geocode_with_retry(school['address'])
@@ -538,12 +543,12 @@ def plot_schools_on_map(connection, driver):
         print(f"Error plotting schools on map: {e}")
 
 
+
 def main():
     """
     Main function to run the entire script.
     """
 
-    print(add_suffix_to_street_number("8401 23 Avenue, Brooklyn, NY, 11214"))
     # Establish a connection to the MySQL database
     connection = connect_to_db()
     
@@ -570,7 +575,7 @@ def main():
             time.sleep(3)
             
             # Scroll the inner div of the webpage three times
-            scroll_inner_div(driver, 600)
+            scroll_inner_div(driver, 610)
             
             # Extract school information from the first page of search results
             school_outer_info = get_school_outer_info(driver)
