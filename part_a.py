@@ -11,6 +11,8 @@ from retrying import retry
 from word2number import w2n
 
 import re
+import folium
+start = time.time()
 
 driver = webdriver.Chrome()
 driver.get("https://schoolsearch.schools.nyc/")
@@ -110,6 +112,7 @@ def convert_word_to_numeric(word):
 def format_address(geolocator, address):
     # Case 1 : 511 7 Ave, Brooklyn, NY 11215, 8-21 Bay 25 Street, Queens, NY 11691  -- 7 Avenue to 7th Avenue, detect Bay as direction
     # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
+    # add to case 1 - 2322 3 Avenue, Ground Floor, Manhattan, NY, 10035
 
     regex1 = r'''
         (?P<HouseNumber>[\w-]+)\s+                                                              # Matches '717 ' or '90-05'
@@ -117,7 +120,7 @@ def format_address(geolocator, address):
         (?P<StreetName>[0-9]+)\s*                                                               # Matches ONLY numeric
         (?P<StreetDesignator>Street|Avenue|Road|Lane|Drive|Walk|Blvd.|Court|Place|Terrace)\s*   # Matches 'Street ' or 'Avenue '
         ,\s+                                                                                    # Force a comma after the street
-        # (?:Slip\s+\d+,\s*)?                                                                   # Not neccssary detail
+        (?: Ground\s+Floor,|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?                      # Remove " Ground Floor,"
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
         (?P<State>[A-Z]{2}),?\s+                                                                # Matches 'MN ' and 'MN, '
         (?P<ZIP>\d{5})                                                                          # Matches '56001'
@@ -128,9 +131,9 @@ def format_address(geolocator, address):
     regex2 = r'''
         (?P<HouseNumber>[\w-]+)\s+                                                              # Matches '717 ' or '90-05'
         (?P<StreetName>[A-Za-z0-9\']+)\s*                                                       # Matches anything, later check if it is only numeric
-        (?:\s+(Street|Avenue|Road|Lane|Drive|Walk|Blvd.|Court|Place|Terrace))?                  # Matches 'Street ' or 'Avenue '
+        (?:\s+(Street|Avenue|Road|Lane|Drive|Walk|Blvd.|Court|Place|Terrace|Ave|Ave.|St))?      # Matches 'Street ' or 'Avenue '
         ,\s+                                                                                    # Force a comma after the street
-        (?:Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
+        (?:Ground\s+Floor,|Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
         # Not neccssary detail
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
         (?P<State>[A-Z]{2}),?\s+                                                                # Matches 'MN ' and 'MN, '
@@ -169,6 +172,9 @@ def format_address(geolocator, address):
         # 271 Seabreeze Avenue, Brooklyn, NY, 11224
         elif street == "Seabreeze":
             street = "Sea Breeze"
+        # 83-78 Daniel Street, Queens, NY, 11435
+        elif street == "Daniel":
+            street = "Daniels"
         
         townname = match2.group('TownName')
         if townname == "Jamaica":
@@ -344,6 +350,20 @@ def website_crawler(url):
             elif school_name.text.strip() == "University Heights Secondary School":
                 school_dict["Latitude"] = "40.818400937835776" #1st pair
                 school_dict["Longitude"] = "-73.91127711606919"  #2nd pair
+
+            # 100-00 Beach Channel Drive, Queens, NY 11694
+            elif school_name.text.strip() == "Rockaway Park High School for Environmental Sustainability":
+                school_dict["Latitude"] = "40.58641541203024" #1st pair
+                school_dict["Longitude"] = "-73.82339948353565"  #2nd pair
+            elif school_name.text.strip() == "Channel View School for Research":
+                school_dict["Latitude"] = "40.58635306246096" #1st pair
+                school_dict["Longitude"] = "-73.82344309332062"  #2nd pair
+            elif school_name.text.strip() == "New Visions Charter High School for the Humanities IV":
+                school_dict["Latitude"] = "40.58652416520215" #1st pair
+                school_dict["Longitude"] = "-73.8238615179315"  #2nd pair
+            elif school_name.text.strip() == "Rockaway Collegiate High School":
+                school_dict["Latitude"] = "40.58628788034916" #1st pair
+                school_dict["Longitude"] = "-73.82367912771649"  #2nd pair
             # --------------------------------------------------------------------------------------------
             
             elif address_x == "888 Rev J A Polite Ave, Bronx, NY 10459":
@@ -355,6 +375,12 @@ def website_crawler(url):
             elif address_x == "519 St Anns Avenue, Bronx, NY 10455":
                 school_dict["Latitude"] = "40.81360947234675" #1st pair
                 school_dict["Longitude"] = "-73.9135955553995"  #2nd pair
+            elif address_x == "21 Saint Johns Lane, Manhattan, NY, 10013":
+                school_dict["Latitude"] = "40.7217406342474" #1st pair
+                school_dict["Longitude"] = "-74.0055800456191"  #2nd pair
+            elif address_x == "1 Jamaica Center Plaza, Queens, NY, 11432":
+                school_dict["Latitude"] = "40.702697431447575" #1st pair
+                school_dict["Longitude"] = "-73.80090671350494"  #2nd pair
 
             # ----- This school does't have the correct house number recorded -----
             elif address_x == "2157336 New Utrecht Avenue, Brooklyn, NY, 11214":
@@ -458,3 +484,6 @@ with open("output.json", "w") as outfile:
     print("\nSaved")
 
 driver.quit()
+end = time.time()
+runtime = end - start
+print(f"Runtime of the program: {runtime} seconds")

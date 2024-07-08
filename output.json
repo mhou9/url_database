@@ -365,11 +365,11 @@
         "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "19",
         "Borough": "Brooklyn",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
+        "School Website": "https://www.p36k.org/",
+        "Domain_1": "p36k.org",
+        "Domain_2": "p36k.com",
+        "Domain_3": "p36k.edu",
+        "Domain_4": "p36k.net"
     },
     "Beginning with Children Charter School II": {
         "Latitude": 40.703832899999995,
@@ -1229,7 +1229,7 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
-        "School Website": "https://ps130brooklyn.com/",
+        "School Website": "https://ps130brooklyn.org/",
         "Domain_1": "ps130brooklyn.org",
         "Domain_2": "ps130brooklyn.com",
         "Domain_3": "ps130brooklyn.edu",
@@ -2676,8 +2676,8 @@
         "Domain_4": "ps270.net"
     },
     "P.S. 272 Curtis Estabrook": {
-        "Latitude": 40.6272141,
-        "Longitude": -73.8998766,
+        "Latitude": 40.6318973,
+        "Longitude": -73.8927696,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "18",
         "Borough": "Brooklyn",
@@ -3257,11 +3257,11 @@
         "Grade": "06,07,08,SE",
         "District": "32",
         "Borough": "Brooklyn",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
+        "School Website": "https://is347k.echalksites.com/",
+        "Domain_1": "is347k.org",
+        "Domain_2": "is347k.com",
+        "Domain_3": "is347k.edu",
+        "Domain_4": "is347k.net"
     },
     "High School of Sports Management": {
         "Latitude": 40.59353805,
@@ -5669,7 +5669,7 @@
         "Grade": "09,10,11,12,SE",
         "District": "14",
         "Borough": "Brooklyn",
-        "School Website": "https://www.elpuente.us/",
+        "School Website": "https://www.elpuente.org/",
         "Domain_1": "elpuente.org",
         "Domain_2": "elpuente.com",
         "Domain_3": "elpuente.edu",
@@ -10440,8 +10440,8 @@
         "Domain_4": "None"
     },
     "Neshama 1 Inc.": {
-        "Latitude": 40.5755466,
-        "Longitude": -73.9684336,
+        "Latitude": 40.584923,
+        "Longitude": -73.9662716,
         "Grade": "PK",
         "District": "21",
         "Borough": "Brooklyn",
@@ -11957,11 +11957,11 @@
         "Grade": "PK,0K,1,2,3,4,5,6,7,8,SE",
         "District": "4",
         "Borough": "Manhattan",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
+        "School Website": "http://www.ps96act.com/",
+        "Domain_1": "ps96act.org",
+        "Domain_2": "ps96act.com",
+        "Domain_3": "ps96act.edu",
+        "Domain_4": "ps96act.net"
     },
     "P.S. 098 Shorac Kappock": {
         "Latitude": 40.86775075,
@@ -15864,8 +15864,8 @@
         "Domain_4": "None"
     },
     "Addie Mae Collins 3": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": 40.8045679,
+        "Longitude": -73.9354103,
         "Grade": "PK, 3K, EL",
         "District": "5",
         "Borough": "Manhattan",
@@ -16272,8 +16272,8 @@
         "Domain_4": "None"
     },
     "East Harlem Chs Bilingual Head Start - 111Th": {
-        "Latitude": 40.8068247,
-        "Longitude": -73.9342092,
+        "Latitude": 40.8025427,
+        "Longitude": -73.9364428,
         "Grade": "PK, 3K",
         "District": "5",
         "Borough": "Manhattan",
@@ -16632,8 +16632,8 @@
         "Domain_4": "None"
     },
     "Cpc-Tribeca Early Learning Center": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.7217406342474",
+        "Longitude": "-74.0055800456191",
         "Grade": "PK, 3K, EL",
         "District": "2",
         "Borough": "Manhattan",
@@ -16836,8 +16836,8 @@
         "Domain_4": "None"
     },
     "Manhattan Schoolhouse LLC": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": 40.770213133333336,
+        "Longitude": -73.95411633333335,
         "Grade": "3K",
         "District": "2",
         "Borough": "Manhattan",
@@ -16894,6 +16894,18 @@
         "Domain_2": "None",
         "Domain_3": "None",
         "Domain_4": "None"
+    },
+    "Imagine Early Learning Center @ City College - MBVK": {
+        "Latitude": "40.81735904519423",
+        "Longitude": "-73.95200281792249",
+        "Grade": "3K, PK",
+        "District": "5",
+        "Borough": "Manhattan",
+        "School Website": "https://imagineelc.com/schools/city-college-child-development-center/",
+        "Domain_1": "imagineelc.org",
+        "Domain_2": "imagineelc.com",
+        "Domain_3": "imagineelc.edu",
+        "Domain_4": "imagineelc.net"
     },
     "Heaven's Tiny Tots, Child Development Center, Inc.": {
         "Latitude": 40.8027615,
@@ -18125,11 +18137,11 @@
         "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "24",
         "Borough": "Queens",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
+        "School Website": "https://www.ps102q.org/",
+        "Domain_1": "ps102q.org",
+        "Domain_2": "ps102q.com",
+        "Domain_3": "ps102q.edu",
+        "Domain_4": "ps102q.net"
     },
     "P.S. 104 The Bays Water": {
         "Latitude": 40.607991600000005,
@@ -18240,8 +18252,8 @@
         "Domain_4": "ps112q.net"
     },
     "P.S./I.S. 113 Anthony J. Pranzo": {
-        "Latitude": 40.70538195,
-        "Longitude": -73.86133808292115,
+        "Latitude": 40.7054739,
+        "Longitude": -73.8608951,
         "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "24",
         "Borough": "Queens",
@@ -19421,11 +19433,11 @@
         "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "25",
         "Borough": "Queens",
-        "School Website": "https://www.psms219.org/",
-        "Domain_1": "psms219.org",
-        "Domain_2": "psms219.com",
-        "Domain_3": "psms219.edu",
-        "Domain_4": "psms219.net"
+        "School Website": "None",
+        "Domain_1": "None",
+        "Domain_2": "None",
+        "Domain_3": "None",
+        "Domain_4": "None"
     },
     "P.S. 220 Edward Mandel": {
         "Latitude": 40.7365,
@@ -19836,8 +19848,8 @@
         "Domain_4": "voyagessouth.net"
     },
     "Channel View School for Research": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.58635306246096",
+        "Longitude": "-73.82344309332062",
         "Grade": "06,07,08,09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -19956,8 +19968,8 @@
         "Domain_4": "None"
     },
     "The Riverview School": {
-        "Latitude": 40.7461835,
-        "Longitude": -73.9199922,
+        "Latitude": 40.7395344,
+        "Longitude": -73.9213261,
         "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "24",
         "Borough": "Queens",
@@ -20220,8 +20232,8 @@
         "Domain_4": "qirtnyc.net"
     },
     "The Academy for Excellence through the Arts": {
-        "Latitude": 40.7223146,
-        "Longitude": -73.8415403,
+        "Latitude": 40.735657,
+        "Longitude": -73.848404,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "28",
         "Borough": "Queens",
@@ -20460,8 +20472,8 @@
         "Domain_4": "scholarsnyc.net"
     },
     "Rockaway Park High School for Environmental Sustainability": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.58641541203024",
+        "Longitude": "-73.82339948353565",
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -20688,8 +20700,8 @@
         "Domain_4": "jamaicagateway.net"
     },
     "Rockaway Collegiate High School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.58628788034916",
+        "Longitude": "-73.82367912771649",
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -20808,8 +20820,8 @@
         "Domain_4": "gugcs.net"
     },
     "New Visions Charter High School for the Humanities IV": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.58652416520215",
+        "Longitude": "-73.8238615179315",
         "Grade": "09,10,11,12",
         "District": "27",
         "Borough": "Queens",
@@ -20861,7 +20873,7 @@
         "Grade": "06,07,08,SE",
         "District": "25",
         "Borough": "Queens",
-        "School Website": "https://sites.google.com/schools.nyc.gov/ms379q/home?authuser=0",
+        "School Website": "https://sites.google.com/schools.nyc.gov/ms379q/home",
         "Domain_1": "sites.org",
         "Domain_2": "sites.com",
         "Domain_3": "sites.edu",
@@ -21768,8 +21780,8 @@
         "Domain_4": "None"
     },
     "Our Lady of Sorrows Catholic Academy": {
-        "Latitude": 40.7559159,
-        "Longitude": -73.8633805,
+        "Latitude": 40.7578529,
+        "Longitude": -73.8637351,
         "Grade": "PK, 3K",
         "District": "24",
         "Borough": "Queens",
@@ -21828,8 +21840,8 @@
         "Domain_4": "None"
     },
     "Razi School": {
-        "Latitude": 40.7410283,
-        "Longitude": -73.9021038,
+        "Latitude": 40.7405045,
+        "Longitude": -73.8969602,
         "Grade": "PK, 3K",
         "District": "30",
         "Borough": "Queens",
@@ -22008,8 +22020,8 @@
         "Domain_4": "None"
     },
     "Stepping Stone Pre & Grade School": {
-        "Latitude": 40.6951246,
-        "Longitude": -73.7458114,
+        "Latitude": 40.7247246,
+        "Longitude": -73.7649483,
         "Grade": "PK, 3K",
         "District": "29",
         "Borough": "Queens",
@@ -22068,8 +22080,8 @@
         "Domain_4": "None"
     },
     "Forest Hills Jewish Center Nursery And Pre-K": {
-        "Latitude": 40.7231057,
-        "Longitude": -73.8472011,
+        "Latitude": 40.7215785,
+        "Longitude": -73.8449516,
         "Grade": "PK, 3K",
         "District": "28",
         "Borough": "Queens",
@@ -22224,8 +22236,8 @@
         "Domain_4": "None"
     },
     "Imagine Early Learning Center": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "40.702697431447575",
+        "Longitude": "-73.80090671350494",
         "Grade": "PK, 3K",
         "District": "28",
         "Borough": "Queens",
@@ -22272,8 +22284,8 @@
         "Domain_4": "None"
     },
     "Jackson Heights Learning Center Annex": {
-        "Latitude": 40.7544796,
-        "Longitude": -73.877675,
+        "Latitude": 40.7539845,
+        "Longitude": -73.8823774,
         "Grade": "PK",
         "District": "30",
         "Borough": "Queens",
@@ -22296,8 +22308,8 @@
         "Domain_4": "None"
     },
     "Lolly's Early Childhood Center": {
-        "Latitude": 40.745384650000005,
-        "Longitude": -73.95386328781186,
+        "Latitude": 40.7455203,
+        "Longitude": -73.9538893,
         "Grade": "PK, 3K",
         "District": "30",
         "Borough": "Queens",
@@ -22596,8 +22608,8 @@
         "Domain_4": "None"
     },
     "All My Children Day Care 8": {
-        "Latitude": 40.7310731,
-        "Longitude": -73.8643631,
+        "Latitude": 40.7309475,
+        "Longitude": -73.8644352,
         "Grade": "PK, 3K",
         "District": "28",
         "Borough": "Queens",
@@ -22740,8 +22752,8 @@
         "Domain_4": "None"
     },
     "Child Center of NY 2": {
-        "Latitude": 40.756429,
-        "Longitude": -73.8607454,
+        "Latitude": 40.7546506,
+        "Longitude": -73.8604222,
         "Grade": "PK, 3K",
         "District": "24",
         "Borough": "Queens",
@@ -23580,8 +23592,8 @@
         "Domain_4": "None"
     },
     "Laguardia Community College Preschool": {
-        "Latitude": 40.7460248,
-        "Longitude": -73.94118,
+        "Latitude": 40.7452742,
+        "Longitude": -73.9378334,
         "Grade": "PK",
         "District": "24",
         "Borough": "Queens",
@@ -23664,8 +23676,8 @@
         "Domain_4": "None"
     },
     "ABC Kiddieland, Inc.": {
-        "Latitude": 40.746471,
-        "Longitude": -73.8950324,
+        "Latitude": 40.7453923,
+        "Longitude": -73.9062564,
         "Grade": "PK",
         "District": "30",
         "Borough": "Queens",
@@ -23736,8 +23748,8 @@
         "Domain_4": "None"
     },
     "Funday Daycare Center, Inc.": {
-        "Latitude": 40.7492299,
-        "Longitude": -73.861366,
+        "Latitude": 40.7455767,
+        "Longitude": -73.859334,
         "Grade": "PK, 3K",
         "District": "24",
         "Borough": "Queens",
@@ -23916,8 +23928,8 @@
         "Domain_4": "None"
     },
     "Dream Trees Childcare Inc.": {
-        "Latitude": 40.7669101,
-        "Longitude": -73.7900722,
+        "Latitude": 40.7640741,
+        "Longitude": -73.7879856,
         "Grade": "PK, 3K",
         "District": "26",
         "Borough": "Queens",
@@ -24048,8 +24060,8 @@
         "Domain_4": "None"
     },
     "Moving Up Children Center": {
-        "Latitude": 40.7471513,
-        "Longitude": -73.871999,
+        "Latitude": 40.744442,
+        "Longitude": -73.8707922,
         "Grade": "PK, 3K",
         "District": "24",
         "Borough": "Queens",
@@ -24756,8 +24768,8 @@
         "Domain_4": "None"
     },
     "Sholom Daycare #4": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": 40.715234800000005,
+        "Longitude": -73.81500498435673,
         "Grade": "PK, 3K",
         "District": "28",
         "Borough": "Queens",
@@ -27785,11 +27797,11 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "8",
         "Borough": "Bronx",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
+        "School Website": "https://www.ps100x.org/",
+        "Domain_1": "ps100x.org",
+        "Domain_2": "ps100x.com",
+        "Domain_3": "ps100x.edu",
+        "Domain_4": "ps100x.net"
     },
     "M.S. X101 Edward R. Byrne": {
         "Latitude": 40.8272124,
@@ -30298,18 +30310,6 @@
         "Domain_2": "sites.com",
         "Domain_3": "sites.edu",
         "Domain_4": "sites.net"
-    },
-    "School for Excellence": {
-        "Latitude": 40.8273033,
-        "Longitude": -73.9045098,
-        "Grade": "09,10,11,12,SE",
-        "District": "9",
-        "Borough": "Bronx",
-        "School Website": "None",
-        "Domain_1": "None",
-        "Domain_2": "None",
-        "Domain_3": "None",
-        "Domain_4": "None"
     },
     "Herbert H. Lehman High School": {
         "Latitude": 40.8399325,
@@ -33612,8 +33612,8 @@
         "Domain_4": "None"
     },
     "Cheer And Grow Learning Academy Corp.": {
-        "Latitude": 40.8357154,
-        "Longitude": -73.8704958,
+        "Latitude": 40.8361776,
+        "Longitude": -73.871836,
         "Grade": "PK, 3K",
         "District": "8",
         "Borough": "Bronx",

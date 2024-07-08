@@ -24,7 +24,7 @@ mycursor = mydb.cursor()
 
 #create the table using python
 mycursor.execute(
-   "CREATE TABLE DOE_Schools_database (School_Name VARCHAR(255), Latitude VARCHAR(255), Longitude VARCHAR(255), Grade VARCHAR(255), District VARCHAR(255), Borough VARCHAR(255), School_Website VARCHAR(255), Domain_1 VARCHAR(255), Domain_2 VARCHAR(255), Domain_3 VARCHAR(255), Domain_4 VARCHAR(255))")
+   "CREATE TABLE DOE_Schools_database (ID int NOT NULL, School_Name VARCHAR(255), Latitude VARCHAR(255), Longitude VARCHAR(255), Grade VARCHAR(255), District VARCHAR(255), Borough VARCHAR(255), School_Website VARCHAR(255), Domain_1 VARCHAR(255), Domain_2 VARCHAR(255), Domain_3 VARCHAR(255), Domain_4 VARCHAR(255))")
 
 # Insert data into database
 for school, inner in school_dict.items():
