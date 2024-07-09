@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import json
 from urllib.parse import urlparse
-# from geopy.geocoders import Here #EMFSMes4qAjPG6GIaFqtAt8DN_-Dh0KeqV-7zgdrmSU
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderUnavailable
 from retrying import retry
@@ -30,6 +29,7 @@ address_issue_schools = set() # get the name of all schools that have unformatte
 school_name_issue_urls = set() #doe link is raise error of school name not found
 google_url = set() #
 
+# add the correct ending for all numbers
 def add_numeric_id(street):
     street_Ones = int(street) % 10
     print(street_Ones)
@@ -45,11 +45,11 @@ def add_numeric_id(street):
         street = street + 'th'
     return street
 
+# convert ordinal number as word to numeric with ending
 def convert_word_to_numeric(word):
     try:
         word = word.strip().title()
 
-        #ordinal conversion
         ordinal_mapping = {
             "First": "1st",
             "Second": "2nd",
@@ -90,7 +90,6 @@ def convert_word_to_numeric(word):
     except ValueError:
         return False
 
-# function that format address and return coordinate pairs
 def format_address(geolocator, address):
     # Case 1 : 511 7 Ave, Brooklyn, NY 11215, 8-21 Bay 25 Street, Queens, NY 11691  -- 7 Avenue to 7th Avenue, detect Bay as direction
     # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
@@ -129,10 +128,10 @@ def format_address(geolocator, address):
         street = match1.group('StreetName')
         street = add_numeric_id(street)
         direction = match1.group('Direction')
+        townname = match1.group('TownName')
         # 133 Kings 1 Walk, Brooklyn, NY, 11233
         if direction == "Kings":
             direction = "Kingsborough"
-        townname = match1.group('TownName')
         if townname == "Jamaica":
             townname = "Queens"
         address = match1.expand(fr'\g<HouseNumber> {direction} {street} \g<StreetDesignator>, {townname}, \g<State>, \g<ZIP>')
@@ -183,13 +182,13 @@ def format_address(geolocator, address):
         print("no match")
         return address
     
-@retry(stop_max_attempt_number=5, wait_fixed=3000)
-def geocode_with_retry(geolocator, location):
-    try:
-        return geolocator.geocode(location, timeout=10)
-    except GeocoderUnavailable as e:
-        print(f"GeocoderUnavailable: {e}")
-        raise
+# @retry(stop_max_attempt_number=5, wait_fixed=3000)
+# def geocode_with_retry(geolocator, location):
+#     try:
+#         return geolocator.geocode(location, timeout=5)
+#     except GeocoderUnavailable as e:
+#         print(f"GeocoderUnavailable: {e}")
+#         raise
 
 # get each address and format address then store 
 URL = "https://ws.schools.nyc/schooldata/GetSchools?search=&borough=&grade="
@@ -197,7 +196,7 @@ r = requests.get(url = URL)
 data = r.json() # list of dictionories
 driver.quit()
 
-# In total there is 2900 schools
+# Total : 2900 schools
 # loop through each school and store all the info:
 # {'locationCode': 'K001', 'type': 'DOE', 'boroughName': 'Brooklyn', 'boroughCode': 'K', 'name': 'P.S. 001 The Bergen', 
 # 'phoneNumber': '718-567-7661', 'primaryAddressLine': '309 47 STREET', 'zip': '11220', 'grades': 'PK,0K,01,02,03,04,05,SE', 
@@ -216,7 +215,7 @@ for school in data:
     print(address_x)
 
     loc = format_address(geolocator, address_x)
-    location = geocode_with_retry(geolocator, loc)
+    location = geolocator.geocode(loc)
     if location != None:
         print("Got location: " + location.address + "\n")
         school_dict["Latitude"] = location.latitude #1st pair
@@ -266,6 +265,7 @@ for school in data:
 print("\nThis is list of schools without url provided in the DOE website(no private school url attached): " + str(no_url))
 print("\nDOE link issue: " + str(school_name_issue_urls))
 print("\nNo coordinate get for address converting: " + str(address_issue_schools))
+print("These are " + len(google_url) + " schools using google site as their url: " + str(google_url))
 not_converted = len(address_issue_schools)
 percentage = 100 - 100 * float(not_converted)/float(len(data))
 no_url_number = len(no_url)
