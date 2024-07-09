@@ -15,6 +15,10 @@ from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from bs4 import BeautifulSoup
 from openlocationcode import openlocationcode as olc
+import time
+
+# To keep track of runtime
+start_time = time.time()
 
 
 def get_driver():
@@ -144,26 +148,31 @@ def add_suffix_to_street_number(address):
             return 'th'
 
     patterns = [
-        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',  
-        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'    
+        r'^(\d+-\d+)\s+(East|West|North|South)?\s*(\d+)\s+(\w+)(.*)$',  # "144-176 East 128 Street, Manhattan, NY 10035"
+        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',  # "89-30 114 Street, Queens, NY 11418"
+        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'    # "80 East 181 Street, Bronx, NY, 10453"
     ]
 
     for pattern in patterns:
         match = re.match(pattern, address)
         if match:
             groups = match.groups()
-            if len(groups) == 4:
-                if '-' in groups[0]:  # First pattern
+            if len(groups) == 5:  # First pattern
+                range_part, direction, number, street_name, remaining = groups
+                direction = direction + " " if direction else ""
+                number_to_modify = int(number)
+                return f"{range_part} {direction}{number}{get_suffix(number_to_modify)} {street_name}{remaining}"
+            elif len(groups) == 4:
+                if '-' in groups[0]:  # Second pattern
                     first_part, number, street_name, remaining = groups
                     number_to_modify = int(number)
                     return f"{first_part} {number}{get_suffix(number_to_modify)} {street_name}{remaining}"
-                else:  # Second pattern
+                else:  # Third pattern
                     first_number, second_part, street_name, remaining = groups
                     number_to_modify = int(re.search(r'\d+', second_part).group())
                     return f"{first_number} {second_part}{get_suffix(number_to_modify)} {street_name}{remaining}"
 
     return address  # Return original address if no pattern matches
-
 
 
 def get_school_info(driver, school_url):
@@ -548,7 +557,7 @@ def main():
     """
     Main function to run the entire script.
     """
-
+    print(add_suffix_to_street_number("144-176 East 128 Street, Manhattan, NY 10035"))
     # Establish a connection to the MySQL database
     connection = connect_to_db()
     
@@ -601,6 +610,9 @@ def main():
             
             # Quit the WebDriver instance
             driver.quit()
+       
+    print("Process finished --- %s seconds ---" % (time.time() - start_time))
+
 
 
 if __name__ == "__main__":
