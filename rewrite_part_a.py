@@ -1,6 +1,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import json
 from urllib.parse import urlparse
 from geopy.geocoders import Nominatim
@@ -182,19 +183,48 @@ def format_address(geolocator, address):
         print("no match")
         return address
     
-# @retry(stop_max_attempt_number=5, wait_fixed=3000)
-# def geocode_with_retry(geolocator, location):
-#     try:
-#         return geolocator.geocode(location, timeout=5)
-#     except GeocoderUnavailable as e:
-#         print(f"GeocoderUnavailable: {e}")
-#         raise
+@retry(stop_max_attempt_number=5, wait_fixed=1000)
+def geocode_with_retry(geolocator, location):
+    try:
+        return geolocator.geocode(location, timeout=3)
+    except GeocoderUnavailable as e:
+        print(f"GeocoderUnavailable: {e}")
+        raise
+
+def web_crawler_doe(doe_url, school_name):
+    driver.get(doe_url)
+    # extract the school url using the exact path, if no school website is found, add the school name onto the no url list
+    try:
+        school_url_elements = driver.find_element(By.XPATH, "//a[contains(text(), 'School Website')]")
+        if school_url_elements: # store the website into the dictionary
+            url = school_url_elements.get_attribute("href")
+            school_dict["School Website"] = url # 6th pair
+            domain = urlparse(url).netloc.replace('www.', '').split('.')
+            print(domain)
+            if domain[1] == "google": #skip
+                google_url.add(school_name)
+                school_dict["Domain_1"] = ''
+                school_dict["Domain_2"] = ''
+                school_dict["Domain_3"] = ''
+                school_dict["Domain_4"] = ''
+            else:
+                school_dict["Domain_1"] = domain[0] + ".org"
+                school_dict["Domain_2"] = domain[0] + ".com"
+                school_dict["Domain_3"] = domain[0] + ".edu"
+                school_dict["Domain_4"] = domain[0] + ".net"
+
+    except NoSuchElementException:
+        no_url.add(school_name)
+        school_dict["School Website"] = ''
+        school_dict["Domain_1"] = ''
+        school_dict["Domain_2"] = ''
+        school_dict["Domain_3"] = ''
+        school_dict["Domain_4"] = ''
 
 # get each address and format address then store 
 URL = "https://ws.schools.nyc/schooldata/GetSchools?search=&borough=&grade="
 r = requests.get(url = URL)
 data = r.json() # list of dictionories
-driver.quit()
 
 # Total : 2900 schools
 # loop through each school and store all the info:
@@ -215,7 +245,7 @@ for school in data:
     print(address_x)
 
     loc = format_address(geolocator, address_x)
-    location = geolocator.geocode(loc)
+    location = geocode_with_retry(geolocator, loc)
     if location != None:
         print("Got location: " + location.address + "\n")
         school_dict["Latitude"] = location.latitude #1st pair
@@ -238,9 +268,20 @@ for school in data:
     
     # extract the school url using the exact path, if no school website is found, add the school name onto the no url list
     school_dict["School Website"] = school['profile'].lower()
-    if school['profile'] != '':
-        domain = urlparse(school['profile'].lower()).netloc.replace('www.', '').split('.')
-        if domain == "google": #skip
+    the_url = school['profile'].lower()
+    print(the_url)
+    # if url is not found in the API database
+    if the_url == ''or the_url == "-" or the_url == "n/a": 
+        print("\nGot no url thus get from doe link")
+        # get the private website from the doe website
+        web_crawler_doe("https://www.schools.nyc.gov/schools/" + school['locationCode'], school['name'])
+    else:
+        if the_url.startswith('https://') == False:
+            the_url = 'https://' + the_url
+        the_url = urlparse(the_url)
+        domain = the_url.netloc.replace('www.', '').split('.')
+        print(domain)
+        if domain[1] == "google": #skip
             google_url.add(school['name'].strip())
             school_dict["Domain_1"] = ''
             school_dict["Domain_2"] = ''
@@ -251,26 +292,21 @@ for school in data:
             school_dict["Domain_2"] = domain[0] + ".com"
             school_dict["Domain_3"] = domain[0] + ".edu"
             school_dict["Domain_4"] = domain[0] + ".net"
-    else:
-        no_url.add(school['name'].strip())
-        school_dict["Domain_1"] = ''
-        school_dict["Domain_2"] = ''
-        school_dict["Domain_3"] = ''
-        school_dict["Domain_4"] = ''
     
     end_each = time.time()
     each_school_time_avg = end_each - each_school_time_avg
     avg_loop_runtime += each_school_time_avg
 
-print("\nThis is list of schools without url provided in the DOE website(no private school url attached): " + str(no_url))
-print("\nDOE link issue: " + str(school_name_issue_urls))
-print("\nNo coordinate get for address converting: " + str(address_issue_schools))
-print("These are " + len(google_url) + " schools using google site as their url: " + str(google_url))
+driver.quit()
+print(f"\nThis is list of schools without url provided in the DOE website (no private school url attached): {no_url}")
+print(f"\nDOE link issue: {school_name_issue_urls}")
+print(f"\nNo coordinate get for address converting: {address_issue_schools}")
+print(f"\nThese are {len(google_url)} schools using google site as their url: {google_url}")
 not_converted = len(address_issue_schools)
 percentage = 100 - 100 * float(not_converted)/float(len(data))
 no_url_number = len(no_url)
-print("\nGeocode was not able to convert " + str(not_converted) + " school addresses.\nThus, the converting percentage is " + str(percentage) + "%.")
-print("There are " + str(no_url_number) + " schools with no private url provided.")
+print(f"\nGeocode was not able to convert {not_converted} school addresses.\nThus, the converting percentage is {percentage}%.")
+print(f"There are {no_url_number} schools with no private url provided.")
 avg_loop_runtime = avg_loop_runtime/len(data)
 print(f"Average loop time: {avg_loop_runtime} seconds")
 
