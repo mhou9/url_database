@@ -1,27 +1,31 @@
-import requests
-import re  
 import json
 import mysql.connector
 from mysql.connector import Error
 import time
 from urllib.parse import urlparse
 import getpass
-import folium
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut, GeocoderServiceError
-from openlocationcode import openlocationcode as olc
-from bs4 import BeautifulSoup
-from time import sleep
+import logging
 import aiohttp
 import asyncio
 import traceback
-import random
-import logging
+import re
 
 # MySQL Credentials
 HOST = 'localhost'
-USER = 'root'  
-DATABASE = 'schoolinfo' 
+USER = 'root'
+DATABASE = 'schoolinfo'
+
+# Hardcoded edge case mappings
+EDGE_CASE_ADDRESSES = {
+    "https://www.schools.nyc.gov/schools/KBUF": "133 Kingsborough 1st Walk, Brooklyn, NY 11233",
+    "https://www.schools.nyc.gov/schools/X480": "1010 Rev. J. A. Polite Avenue, Bronx, NY 10459",
+    "https://www.schools.nyc.gov/schools/X333": "888 Rev J A Polite Ave, Bronx, NY 10459",
+    "https://www.schools.nyc.gov/schools/X274": "275 Harlem River Park Bridge, Bronx, NY 10453",
+    "https://www.schools.nyc.gov/schools/X204": "1780 Dr. Martin Luther King Jr. Blvd, Bronx, NY 10453",
+    "https://www.schools.nyc.gov/schools/QALO": "1 Jamaica Center Plaza, Queens, NY, 11432",
+    "https://www.schools.nyc.gov/schools/M551": "10 South Street, Slip 7, Manhattan, NY 10004",
+    "https://www.schools.nyc.gov/schools/KDVD": "561 Utica Ave, Brooklyn, NY 11203"
+}
 
 # Hardcoded school information
 HARD_CODED_SCHOOLS = [
@@ -47,10 +51,9 @@ HARD_CODED_SCHOOLS = [
     }
 ]
 
-
 def extract_domain(url):
     """
-    Function to extract the domain name from a given URL.
+    Extract the domain name from a given URL.
     
     Args:
         url (str): The URL from which the domain name needs to be extracted.
@@ -58,15 +61,9 @@ def extract_domain(url):
     Returns:
         str: Extracted domain name in the format 'domain.extension'.
     """
-    # Parse the URL to break it into its components
     parsed_url = urlparse(url)
-    
-    # Split the network location (domain) by dots
     domain_parts = parsed_url.netloc.split('.')
-    
-    # Join the last two parts of the domain to form the domain name (excluding any subdomains)
     return '.'.join(domain_parts[-2:])
-
 
 async def fetch_schools(api_url, session):
     """
@@ -92,7 +89,6 @@ async def fetch_schools(api_url, session):
         logging.error(f"Error fetching or parsing school data: {e}")
         return []
 
-
 async def get_personal_website(session, url, semaphore):
     """
     Fetches the personal website of a school with rate limiting.
@@ -116,7 +112,6 @@ async def get_personal_website(session, url, semaphore):
         except Exception as e:
             logging.error(f"Error fetching personal website {url}: {e}")
             return None
-        
 
 def add_suffix(address):
     def get_suffix(n):
@@ -132,32 +127,31 @@ def add_suffix(address):
             return 'th'
 
     patterns = [
-        r'^(\d+-\d+)\s+(East|West|North|South)?\s*(\d+)\s+(\w+)(.*)$',  # "144-176 East 128 Street, Manhattan, NY 10035"
-        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',  # "89-30 114 Street, Queens, NY 11418"
-        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'    # "80 East 181 Street, Bronx, NY, 10453"
+        r'^(\d+-\d+)\s+(East|West|North|South)?\s*(\d+)\s+(\w+)(.*)$',
+        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',
+        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'
     ]
 
     for pattern in patterns:
         match = re.match(pattern, address)
         if match:
             groups = match.groups()
-            if len(groups) == 5:  # First pattern
+            if len(groups) == 5:
                 range_part, direction, number, street_name, remaining = groups
                 direction = direction + " " if direction else ""
                 number_to_modify = int(number)
                 return f"{range_part} {direction}{number}{get_suffix(number_to_modify)} {street_name}{remaining}"
             elif len(groups) == 4:
-                if '-' in groups[0]:  # Second pattern
+                if '-' in groups[0]:
                     first_part, number, street_name, remaining = groups
                     number_to_modify = int(number)
                     return f"{first_part} {number}{get_suffix(number_to_modify)} {street_name}{remaining}"
-                else:  # Third pattern
+                else:
                     first_number, second_part, street_name, remaining = groups
                     number_to_modify = int(re.search(r'\d+', second_part).group())
                     return f"{first_number} {second_part}{get_suffix(number_to_modify)} {street_name}{remaining}"
 
-    return address  # Return original address if no pattern matches
-            
+    return address
 
 def process_schools(schools_data, websites):
     """
@@ -171,57 +165,53 @@ def process_schools(schools_data, websites):
         list: A list of tuples where each tuple represents a row to insert into the database.
     """
     schools_info = []
-    hardcoded_names = {school['name'] for school in HARD_CODED_SCHOOLS}
+    hardcoded_schools_dict = {school['name']: school for school in HARD_CODED_SCHOOLS}
 
     for i, (school, personal_website) in enumerate(zip(schools_data, websites), 1):
-        if school['name'] in hardcoded_names:
-            continue  # Skip processing for hardcoded schools
+        url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
 
-        try:
-            url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
-
-            # Extract domain
-            domain_name = extract_domain(personal_website) if personal_website else None
-
-            # Format address
-            address = f"{school['primaryAddressLine']}, {school['boroughName']}, {school['stateCode']}, {school['zip']}"
-            formatted_address = add_suffix(address)
-
-            # Append school info
+        # Check if this school has hardcoded information
+        if school['name'] in hardcoded_schools_dict:
+            hardcoded_school = hardcoded_schools_dict[school['name']]
+            formatted_address = hardcoded_school['formatted_address']
+            domain_name = extract_domain(personal_website) if personal_website else hardcoded_school['domain_name']
             schools_info.append((
-                url,
-                school['name'],
-                personal_website,
+                hardcoded_school['url'],
+                hardcoded_school['name'],
+                hardcoded_school['personal_website'],
                 domain_name,
-                school.get('district', ''),
-                school.get('grades', ''),
-                school.get('boroughName', ''),
+                hardcoded_school['district'],
+                hardcoded_school['grades'],
+                hardcoded_school['borough'],
                 formatted_address
             ))
+            continue
 
-            if i % 500 == 0:
-                logging.info(f"Processed {i} schools...")
-        except Exception as e:
-            logging.error(f"Error processing school {school.get('name', 'Unknown')}: {e}")
-            logging.error(f"School data: {school}")
-            logging.error(f"Personal website: {personal_website}")
-            logging.error(f"Traceback: {traceback.format_exc()}")
+        # Check if this school has an edge case address
+        address = EDGE_CASE_ADDRESSES.get(url, f"{school['primaryAddressLine']}, {school['boroughName']}, {school['stateCode']}, {school['zip']}")
+        
+        # Format address with suffix
+        formatted_address = add_suffix(address)
 
-    # Append hardcoded school information
-    for school in HARD_CODED_SCHOOLS:
+        # Extract domain
+        domain_name = extract_domain(personal_website) if personal_website else None
+
+        # Append school info
         schools_info.append((
-            school['url'],
+            url,
             school['name'],
-            school['personal_website'],
-            school['domain_name'],
-            school['district'],
-            school['grades'],
-            school['borough'],
-            school['formatted_address']
+            personal_website,
+            domain_name,
+            school.get('district', ''),
+            school.get('grades', ''),
+            school.get('boroughName', ''),
+            formatted_address
         ))
 
-    return schools_info
+        if i % 500 == 0:
+            logging.info(f"Processed {i} schools...")
 
+    return schools_info
 
 def batch_insert_schools(data, password):
     """
@@ -232,7 +222,6 @@ def batch_insert_schools(data, password):
         password (str): MySQL password.
     """
     try:
-        # Establish a database connection
         connection = mysql.connector.connect(
             host=HOST,
             user=USER,
@@ -254,11 +243,11 @@ def batch_insert_schools(data, password):
             """
 
             # Execute the batch insert
-            batch_size = 100  # Adjust the batch size as needed
+            batch_size = 100
             for i in range(0, len(data), batch_size):
                 batch = data[i:i + batch_size]
                 cursor.executemany(insert_query, batch)
-                connection.commit()  # Commit the batch
+                connection.commit()
 
             logging.info(f"Successfully inserted {len(data)} rows into the database.")
 
@@ -269,7 +258,6 @@ def batch_insert_schools(data, password):
         if connection.is_connected():
             cursor.close()
             connection.close()
-
 
 async def main():
     # Configuration
@@ -286,7 +274,7 @@ async def main():
         logging.info(f"Retrieved data for {len(schools_data)} schools in {fetch_end - fetch_start:.2f} seconds.")
 
         # Create tasks for fetching personal websites
-        semaphore = asyncio.Semaphore(50)  # Adjust based on your needs
+        semaphore = asyncio.Semaphore(50)
         website_tasks = []
         for school in schools_data:
             url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
