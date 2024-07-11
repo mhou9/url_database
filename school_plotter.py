@@ -1,12 +1,23 @@
 import logging
-import time
+import re  
+import json
 import mysql.connector
-import getpass
+from mysql.connector import Error
+import time
+from urllib.parse import urlparse
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+import getpass
 import folium
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
-import re
+from bs4 import BeautifulSoup
+from openlocationcode import openlocationcode as olc
+import time
+import requests
 
 # To keep track of runtime
 start_time = time.time()
@@ -56,7 +67,75 @@ def connect_to_db():
         logging.error("Error connecting to MySQL: %s", error)
         raise  # Raise the exception to indicate connection failure
 
-def geocode_with_retry(address, retries=5, delay=2):
+def add_suffix_to_street_number(address):
+    def get_suffix(n):
+        if 10 <= n % 100 <= 20:
+            return 'th'
+        elif n % 10 == 1:
+            return 'st'
+        elif n % 10 == 2:
+            return 'nd'
+        elif n % 10 == 3:
+            return 'rd'
+        else:
+            return 'th'
+
+    patterns = [
+        r'^(\d+-\d+)\s+(East|West|North|South)?\s*(\d+)\s+(\w+)(.*)$',  # "144-176 East 128 Street, Manhattan, NY 10035"
+        r'^(\d+-\d+)\s+(\d+)\s+(\w+)(.*)$',  # "89-30 114 Street, Queens, NY 11418"
+        r'^(\d+)\s+(.*?\d+)\s+(\w+)(.*)$'    # "80 East 181 Street, Bronx, NY, 10453"
+    ]
+
+    for pattern in patterns:
+        match = re.match(pattern, address)
+        if match:
+            groups = match.groups()
+            if len(groups) == 5:  # First pattern
+                range_part, direction, number, street_name, remaining = groups
+                direction = direction + " " if direction else ""
+                number_to_modify = int(number)
+                return f"{range_part} {direction}{number}{get_suffix(number_to_modify)} {street_name}{remaining}"
+            elif len(groups) == 4:
+                if '-' in groups[0]:  # Second pattern
+                    first_part, number, street_name, remaining = groups
+                    number_to_modify = int(number)
+                    return f"{first_part} {number}{get_suffix(number_to_modify)} {street_name}{remaining}"
+                else:  # Third pattern
+                    first_number, second_part, street_name, remaining = groups
+                    number_to_modify = int(re.search(r'\d+', second_part).group())
+                    return f"{first_number} {second_part}{get_suffix(number_to_modify)} {street_name}{remaining}"
+
+    return address  # Return original address if no pattern matches
+
+# Function to fetch the page content
+def fetch_page_content(address):
+    googleUrl = "https://www.google.com/maps/place/"
+    address = re.sub(r'\s', '+', address)
+    place_url = googleUrl + address + "/"
+    response = requests.get(place_url, allow_redirects=True)
+    response.raise_for_status()  # Raise an error for bad status codes
+    return response.text
+
+# Function to extract coordinates from the HTML content
+def extract_coordinates_from_html(content):
+    soup = BeautifulSoup(content, 'html.parser')
+    
+    # Find the meta tag containing the coordinates
+    meta_tag = soup.find('meta', attrs={'content': re.compile(r'geo0.ggpht.com')})
+    
+    if meta_tag:
+        # Extract the coordinates from the meta tag content
+        content_value = meta_tag['content']
+        match = re.search(r'll=([\d.-]+),([\d.-]+)', content_value)
+        if match:
+            latitude = match.group(1)
+            longitude = match.group(2)
+            return float(latitude), float(longitude)
+
+    return None, None
+
+# Function to geocode an address with a retry mechanism
+def geocode_with_retry(address, retries=2, delay=2):
     """
     Function to geocode an address with a retry mechanism.
     
@@ -66,22 +145,38 @@ def geocode_with_retry(address, retries=5, delay=2):
         delay (int): Delay between retries in seconds.
     
     Returns:
-        Location: The geocoded location object or None if geocoding fails.
+        tuple: The geocoded latitude and longitude or (None, None) if geocoding fails.
     """
     geolocator = Nominatim(user_agent="nyc_schools_map")
     for attempt in range(retries):
         try:
             location = geolocator.geocode(address, timeout=10)
             if location:
-                return location
+                return location.latitude, location.longitude
+             
         except (GeocoderTimedOut, GeocoderServiceError) as e:
-            logging.error(f"Geocoding attempt {attempt + 1} failed for address: {address} with error: {e}. Retrying in {delay} seconds...")
+            print(f"Geocoding attempt {attempt + 1} failed for address: {address} with error: {e}. Retrying in {delay} seconds...")
             time.sleep(delay)
+
         except Exception as e:
-            logging.error(f"Unknown error during geocoding attempt {attempt + 1} for address: {address}: {e}")
+            print(f"Unknown error during geocoding attempt {attempt + 1} for address: {address}: {e}")
     
-    logging.error(f"Geocoding failed for address: {address} after {retries} retries.")
-    return None
+    print(f"Geocoding failed for address: {address} after {retries} retries.")
+    
+    # Fallback to HTML extraction if geocoding fails
+    print(f"Attempting to extract coordinates from Google Maps for address: {address}")
+    try:
+        html_content = fetch_page_content(address)
+        latitude, longitude = extract_coordinates_from_html(html_content)
+        if latitude and longitude:
+            print(f"Extracted coordinates from HTML: Latitude = {latitude}, Longitude = {longitude}")
+            return latitude, longitude
+        else:
+            print(f"Failed to extract coordinates from HTML for address: {address}")
+    except Exception as e:
+        print(f"Error fetching page content or extracting coordinates for address: {address}: {e}")
+    
+    return None, None
 
 def update_geocoded_coordinates(connection):
     """
@@ -97,10 +192,10 @@ def update_geocoded_coordinates(connection):
         schools_data = cursor.fetchall()
 
         for school in schools_data:
-            location = geocode_with_retry(school['formatted_address'])
-            if location:
+            latitude, longitude = geocode_with_retry(school['formatted_address'])
+            if latitude is not None and longitude is not None:
                 update_query = "UPDATE schools SET latitude = %s, longitude = %s WHERE id = %s"
-                cursor.execute(update_query, (location.latitude, location.longitude, school['id']))
+                cursor.execute(update_query, (latitude, longitude, school['id']))
                 connection.commit()
         
         cursor.close()
