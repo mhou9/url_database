@@ -9,25 +9,21 @@ import aiohttp
 import asyncio
 import traceback
 import re
+from bs4 import BeautifulSoup
+import requests
 
 # MySQL Credentials
 HOST = 'localhost'
 USER = 'root'
 DATABASE = 'schoolinfo'
 
-# Hardcoded edge case mappings
+# Hardcoded edge case mappings for specific school URLs to their addresses
 EDGE_CASE_ADDRESSES = {
     "https://www.schools.nyc.gov/schools/KBUF": "133 Kingsborough 1st Walk, Brooklyn, NY 11233",
-    "https://www.schools.nyc.gov/schools/X480": "1010 Rev. J. A. Polite Avenue, Bronx, NY 10459",
-    "https://www.schools.nyc.gov/schools/X333": "888 Rev J A Polite Ave, Bronx, NY 10459",
-    "https://www.schools.nyc.gov/schools/X274": "275 Harlem River Park Bridge, Bronx, NY 10453",
-    "https://www.schools.nyc.gov/schools/X204": "1780 Dr. Martin Luther King Jr. Blvd, Bronx, NY 10453",
-    "https://www.schools.nyc.gov/schools/QALO": "1 Jamaica Center Plaza, Queens, NY, 11432",
-    "https://www.schools.nyc.gov/schools/M551": "10 South Street, Slip 7, Manhattan, NY 10004",
     "https://www.schools.nyc.gov/schools/KDVD": "561 Utica Ave, Brooklyn, NY 11203"
 }
 
-# Hardcoded school information
+# Hardcoded school information used as a fallback for known schools
 HARD_CODED_SCHOOLS = [
     {
         'url': None,
@@ -36,7 +32,7 @@ HARD_CODED_SCHOOLS = [
         'domain_name': 'adcs2',
         'district': '7',
         'grades': '06,07,08,09,10,11,12',
-        'borough': 'X',
+        'borough': 'Bronx',
         'formatted_address': '510 E 141st St, Bronx, NY 10454'
     },
     {
@@ -46,35 +42,37 @@ HARD_CODED_SCHOOLS = [
         'domain_name': 'imagineelc',
         'district': '',
         'grades': 'PK',
-        'borough': 'M',
+        'borough': 'Manhattan',
         'formatted_address': '119 Convent Ave, New York, NY 10031'
     }
 ]
 
+
 def extract_domain(url):
     """
-    Extract the domain name from a given URL.
+    Extracts the domain name from a given URL.
     
     Args:
-        url (str): The URL from which the domain name needs to be extracted.
+        url (str): The URL from which the domain name is to be extracted.
         
     Returns:
-        str: Extracted domain name in the format 'domain.extension'.
+        str: The domain name in the format 'domain.extension'.
     """
     parsed_url = urlparse(url)
     domain_parts = parsed_url.netloc.split('.')
     return '.'.join(domain_parts[-2:])
 
+
 async def fetch_schools(api_url, session):
     """
-    Fetches school data from the API.
+    Fetches school data from the API asynchronously.
 
     Args:
-        api_url (str): The URL of the API to fetch data from.
-        session (aiohttp.ClientSession): The aiohttp client session to use for requests.
+        api_url (str): The API URL to fetch data from.
+        session (aiohttp.ClientSession): The aiohttp session to use for HTTP requests.
 
     Returns:
-        list: A list of school data dictionaries.
+        list: A list of dictionaries containing school data.
     """
     try:
         async with session.get(api_url) as response:
@@ -89,31 +87,77 @@ async def fetch_schools(api_url, session):
         logging.error(f"Error fetching or parsing school data: {e}")
         return []
 
-async def get_personal_website(session, url, semaphore):
+
+async def get_school_website(session, school_info_url):
     """
-    Fetches the personal website of a school with rate limiting.
+    Asynchronously fetches the HTML content of a school's info page and extracts the school's personal website URL.
+    If the URL is from Google Sites, returns None.
 
     Args:
-        session (aiohttp.ClientSession): The aiohttp client session to use for requests.
-        url (str): The URL of the school's personal website.
-        semaphore (asyncio.Semaphore): Semaphore to control the rate limit.
+        session (aiohttp.ClientSession): The aiohttp session to use.
+        school_info_url (str): The URL of the school's info page.
 
     Returns:
-        str: The URL of the personal website or None if it fails.
+        str: The URL of the school's personal website or None if not found or if it is a Google site.
+    """
+    try:
+        async with session.get(school_info_url) as response:
+            response.raise_for_status()  # Ensure the request was successful
+            html_content = await response.text()
+
+            # Parse the HTML content with BeautifulSoup
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            # Find all <li> elements
+            list_items = soup.find_all('li')
+
+            # Extract URLs based on <svg> class
+            for item in list_items:
+                svg = item.find('svg')
+                if svg and 'icon-globe' in svg.get('class', []):
+                    a_tag = item.find('a')
+                    if a_tag and a_tag.get('href'):
+                        url = a_tag.get('href')
+                        if "sites.google.com" in url:
+                            return None
+                        return url
+        
+        return None  # Return None if no personal website URL was found
+
+    except aiohttp.ClientError as e:
+        logging.error(f"Error fetching the URL: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        return None
+
+
+async def fetch_school_website_with_semaphore(session, semaphore, url):
+    """
+    Fetches a school's personal website URL with semaphore to control concurrency.
+
+    Args:
+        session (aiohttp.ClientSession): The aiohttp session to use.
+        semaphore (asyncio.Semaphore): Semaphore to limit the number of concurrent requests.
+        url (str): The URL of the school's info page.
+
+    Returns:
+        str: The URL of the school's personal website or None if not found.
     """
     async with semaphore:
-        try:
-            async with session.get(url) as response:
-                if response.status == 200:
-                    return str(response.url)
-                else:
-                    logging.error(f"Failed to fetch {url}: Status code {response.status}")
-                    return None
-        except Exception as e:
-            logging.error(f"Error fetching personal website {url}: {e}")
-            return None
+        return await get_school_website(session, url)
+
 
 def add_suffix(address):
+    """
+    Adds ordinal suffix to street numbers in the given address.
+
+    Args:
+        address (str): The address where suffixes need to be added.
+
+    Returns:
+        str: The address with ordinal suffixes added to the street numbers.
+    """
     def get_suffix(n):
         if 10 <= n % 100 <= 20:
             return 'th'
@@ -153,16 +197,17 @@ def add_suffix(address):
 
     return address
 
+
 def process_schools(schools_data, websites):
     """
-    Processes the schools data to prepare it for insertion into the database.
+    Processes the list of schools and their corresponding website URLs to prepare data for database insertion.
 
     Args:
-        schools_data (list): List of school data dictionaries.
-        websites (list): List of websites corresponding to the schools.
+        schools_data (list): List of dictionaries containing school data from the API.
+        websites (list): List of website URLs for the schools.
 
     Returns:
-        list: A list of tuples where each tuple represents a row to insert into the database.
+        list: A list of tuples where each tuple represents a row to be inserted into the database.
     """
     schools_info = []
     hardcoded_schools_dict = {school['name']: school for school in HARD_CODED_SCHOOLS}
@@ -170,7 +215,7 @@ def process_schools(schools_data, websites):
     for i, (school, personal_website) in enumerate(zip(schools_data, websites), 1):
         url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
 
-        # Check if this school has hardcoded information
+        # Check if the school has hardcoded information
         if school['name'] in hardcoded_schools_dict:
             hardcoded_school = hardcoded_schools_dict[school['name']]
             formatted_address = hardcoded_school['formatted_address']
@@ -187,16 +232,16 @@ def process_schools(schools_data, websites):
             ))
             continue
 
-        # Check if this school has an edge case address
+        # Check if the school has an edge case address
         address = EDGE_CASE_ADDRESSES.get(url, f"{school['primaryAddressLine']}, {school['boroughName']}, {school['stateCode']}, {school['zip']}")
         
-        # Format address with suffix
+        # Format the address with an ordinal suffix
         formatted_address = add_suffix(address)
 
-        # Extract domain
+        # Extract domain name from personal website if available
         domain_name = extract_domain(personal_website) if personal_website else None
 
-        # Append school info
+        # Append the processed school information
         schools_info.append((
             url,
             school['name'],
@@ -213,13 +258,14 @@ def process_schools(schools_data, websites):
 
     return schools_info
 
+
 def batch_insert_schools(data, password):
     """
-    Inserts data into a MySQL table in batches.
+    Inserts school data into a MySQL database in batches.
 
     Args:
-        data (list of tuples): The list of tuples where each tuple represents a row to insert.
-        password (str): MySQL password.
+        data (list of tuples): List of tuples where each tuple represents a row to be inserted.
+        password (str): MySQL password for database authentication.
     """
     try:
         connection = mysql.connector.connect(
@@ -231,18 +277,18 @@ def batch_insert_schools(data, password):
         if connection.is_connected():
             cursor = connection.cursor()
 
-            # Truncate table to ensure it's empty
+            # Truncate the table to ensure it is empty before insertion
             logging.info("Truncating the table to ensure it's empty...")
             cursor.execute("TRUNCATE TABLE schools")
             connection.commit()
 
-            # Define the insert query
+            # Define the SQL insert query
             insert_query = """
                 INSERT INTO schools (url, name, personal_website, domain_name, district, grades, borough, formatted_address)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
 
-            # Execute the batch insert
+            # Execute the batch insert in chunks
             batch_size = 100
             for i in range(0, len(data), batch_size):
                 batch = data[i:i + batch_size]
@@ -259,55 +305,46 @@ def batch_insert_schools(data, password):
             cursor.close()
             connection.close()
 
+
 async def main():
-    # Configuration
+    """
+    Main function to orchestrate fetching, processing, and inserting school data.
+    """
+    # Configuration for API URL
     api_url = "https://ws.schools.nyc/schooldata/GetSchools?search=&borough=&grade="
 
-    # Prompt the user for the MySQL password
+    # Prompt user for MySQL password
     password = getpass.getpass(prompt='Enter MySQL password: ')
 
     async with aiohttp.ClientSession() as session:
-        # Fetch the main schools data
+        # Fetch school data from the API
         fetch_start = time.time()
         schools_data = await fetch_schools(api_url, session)
         fetch_end = time.time()
         logging.info(f"Retrieved data for {len(schools_data)} schools in {fetch_end - fetch_start:.2f} seconds.")
 
-        # Create tasks for fetching personal websites
+        # Create tasks to fetch personal websites concurrently with a semaphore to control the rate
         semaphore = asyncio.Semaphore(50)
         website_tasks = []
-        for school in schools_data:
+        for index, school in enumerate(schools_data):
+            if index % 100 == 0 and index > 0:
+                logging.info(f"Processing school {index} out of {len(schools_data)}")
             url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
-            task = asyncio.create_task(get_personal_website(session, url, semaphore))
+            task = asyncio.create_task(fetch_school_website_with_semaphore(session, semaphore, url))
             website_tasks.append(task)
 
-        # Wait for all website tasks to complete
+        # Wait for all website fetch tasks to complete
         website_start = time.time()
         logging.info("Starting to fetch personal websites...")
-        websites = []
-        successful_fetches = 0
-        failed_fetches = 0
-        for i, task in enumerate(asyncio.as_completed(website_tasks), 1):
-            try:
-                website = await task
-                websites.append(website)
-                if website:
-                    successful_fetches += 1
-                else:
-                    failed_fetches += 1
-                
-                if i % 100 == 0:
-                    logging.info(f"Fetched {i}/{len(website_tasks)} websites...")
-            except Exception as e:
-                logging.error(f"Error fetching a website: {e}")
-                websites.append(None)
-                failed_fetches += 1
+        websites = await asyncio.gather(*website_tasks)
 
         website_end = time.time()
         logging.info(f"Fetched personal websites in {website_end - website_start:.2f} seconds.")
+        successful_fetches = sum(1 for website in websites if website is not None)
+        failed_fetches = len(websites) - successful_fetches
         logging.info(f"Successful fetches: {successful_fetches}, Failed fetches: {failed_fetches}")
 
-        # Process the results
+        # Process the fetched school data
         logging.info("Processing school information...")
         schools_info = process_schools(schools_data, websites)
         logging.info(f"Processed {len(schools_info)} schools.")
@@ -317,7 +354,8 @@ async def main():
         batch_insert_schools(schools_info, password)
         logging.info("Data insertion completed.")
 
-# Configure logging
+
+# Configure logging to output information
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 if __name__ == "__main__":
