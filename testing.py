@@ -93,32 +93,13 @@ def add_numeric_id(street):
 def convert_word_to_numeric(word):
     word = word.strip().title()
     ordinal_mapping = {
-        "First": "1st",
-        "Second": "2nd",
-        "Third": "3rd",
-        "Fourth": "4th",
-        "Fifth": "5th",
-        "Sixth": "6th",
-        "Seventh": "7th",
-        "Eighth": "8th",
-        "Ninth": "9th",
-        "Tenth": "10th",
-        "Eleventh": "11th",
-        "Twelfth": "12th",
-        "Thirteenth": "13th",
-        "Fourteenth": "14th",
-        "Fifteenth": "15th",
-        "Sixteenth": "16th",
-        "Seventeenth": "17th",
-        "Eighteenth": "18th",
-        "Nineteenth": "19th",
-        "Twentieth": "20th",
-        "Twenty-First": "21st",
-        "Twenty-Second": "22nd",
-        "Twenty-Third": "23rd",
-        "Twenty-Fourth": "24th",
-        "Twenty-Fifth": "25th",
-    }
+            "First": "1st", "Second": "2nd", "Third": "3rd", "Fourth": "4th", "Fifth": "5th",
+            "Sixth": "6th", "Seventh": "7th", "Eighth": "8th", "Ninth": "9th", "Tenth": "10th",
+            "Eleventh": "11th", "Twelfth": "12th", "Thirteenth": "13th", "Fourteenth": "14th",
+            "Fifteenth": "15th", "Sixteenth": "16th", "Seventeenth": "17th", "Eighteenth": "18th",
+            "Nineteenth": "19th", "Twentieth": "20th", "Twenty-First": "21st", "Twenty-Second": "22nd",
+            "Twenty-Third": "23rd", "Twenty-Fourth": "24th", "Twenty-Fifth": "25th"
+        }
     if word in ordinal_mapping:
         return ordinal_mapping[word]
     else:
@@ -302,7 +283,7 @@ google_url = set() #
 # 'profile' contains the school's private url link, need to turn lower case
 count = 0 
 for school in data: 
-    if count >= 3: break 
+    # if count >= 3: break 
 
     print("School:", school)
     school_dict = school_item_dict.setdefault(school['name'].strip(), {})

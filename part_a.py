@@ -27,18 +27,18 @@ time.sleep(5)
 # Locate the inner scrollable container
 inner_container = driver.find_element(By.CSS_SELECTOR, '.iScroll')
 
-# Set the current height of the inner scroller 
-# In a loop, keep scrolling the inner scroller and update the newest height,
-#               compare between the currect and the next height to find out if scroller reach its end
-#               if yes, break the loop; else, continue until yes
-last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-while True:
-    driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
-    time.sleep(2)
-    new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
-    if new_height == last_height:
-        break
-    last_height = new_height
+# # Set the current height of the inner scroller 
+# # In a loop, keep scrolling the inner scroller and update the newest height,
+# #               compare between the currect and the next height to find out if scroller reach its end
+# #               if yes, break the loop; else, continue until yes
+# last_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+# while True:
+#     driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", inner_container)
+#     time.sleep(2)
+#     new_height = driver.execute_script("return arguments[0].scrollHeight", inner_container)
+#     if new_height == last_height:
+#         break
+#     last_height = new_height
 
 # Now, we have the html content of elements inside the inner scroller
 # insert all the info (school name, lat, lng, DOE url) into the dictionary of dictionaries
