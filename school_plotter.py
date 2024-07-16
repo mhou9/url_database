@@ -17,6 +17,8 @@ from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 from bs4 import BeautifulSoup
 from openlocationcode import openlocationcode as olc
 import requests
+from concurrent.futures import ThreadPoolExecutor
+
 
 # Hardcoded coordinates for specific addresses to bypass geocoding service limitations
 HARD_CODED_COORDINATES = {
@@ -34,6 +36,7 @@ start_time = time.time()
 # Setup logging configuration to display messages
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 def get_driver():
     """
     Function to initialize and return a Chrome WebDriver instance.
@@ -42,6 +45,7 @@ def get_driver():
         webdriver.Chrome: A new instance of Chrome WebDriver.
     """
     return webdriver.Chrome()
+
 
 def connect_to_db():
     """
@@ -78,6 +82,7 @@ def connect_to_db():
     except mysql.connector.Error as error:
         logging.error("Error connecting to MySQL: %s", error)
         raise  # Raise the exception to indicate connection failure
+
 
 def add_suffix_to_street_number(address):
     """
@@ -129,6 +134,7 @@ def add_suffix_to_street_number(address):
 
     return address  # Return original address if no pattern matches
 
+
 def fetch_page_content(address):
     """
     Fetches the HTML content of a Google Maps place URL for the given address.
@@ -145,6 +151,7 @@ def fetch_page_content(address):
     response = requests.get(place_url, allow_redirects=True)
     response.raise_for_status()  # Raise an error for bad status codes
     return response.text
+
 
 def extract_coordinates_from_html(content):
     """
@@ -214,21 +221,6 @@ def geocode(addresses, retries=2, delay=2):
 
     return geocoded_data
 
-def log_failed_addresses(failed_addresses, file_path='failed_addresses.txt'):
-    """
-    Logs addresses that failed geocoding to a text file.
-    
-    Args:
-        failed_addresses (list): List of addresses that failed to be geocoded.
-        file_path (str): Path to the text file where failed addresses will be saved.
-    """
-    try:
-        with open(file_path, 'a') as file:
-            for address in failed_addresses:
-                file.write(f"{address}\n")
-        logging.info(f"Failed addresses logged to {file_path}.")
-    except Exception as e:
-        logging.error(f"Error writing to file {file_path}: {e}")
 
 def update_geocoded_coordinates(connection):
     """
@@ -242,14 +234,16 @@ def update_geocoded_coordinates(connection):
         fetch_query = "SELECT id, formatted_address FROM schools WHERE latitude IS NULL OR longitude IS NULL"
         cursor.execute(fetch_query)
         schools_data = cursor.fetchall()
+        logging.info(f"Fetched {len(schools_data)} records to geocode.")
         
         # Divide addresses into batches to process
         batch_size = 10  # Adjust based on needs and API rate limits
         address_batches = [schools_data[i:i + batch_size] for i in range(0, len(schools_data), batch_size)]
         
         failed_addresses = []
-
-        for batch in address_batches:
+        
+        def process_batch(batch):
+            nonlocal failed_addresses
             addresses = [school['formatted_address'] for school in batch]
             geocoded_data = {}
             
@@ -259,7 +253,7 @@ def update_geocoded_coordinates(connection):
                     geocoded_data[address] = HARD_CODED_COORDINATES[address]
                 else:
                     geocoded_data[address] = (None, None)  # Placeholder for real geocoding
-
+            
             # Geocode addresses not covered by hardcoded list
             uncoded_addresses = [address for address in addresses if geocoded_data[address] == (None, None)]
             if uncoded_addresses:
@@ -278,6 +272,13 @@ def update_geocoded_coordinates(connection):
                 else:
                     failed_addresses.append(address)
         
+        start_time = time.time()
+        with ThreadPoolExecutor(max_workers=5) as executor:
+            executor.map(process_batch, address_batches)
+        end_time = time.time()
+
+        logging.info(f"Geocoding process completed in {end_time - start_time:.2f} seconds.")
+        
         # Log addresses that could not be geocoded
         if failed_addresses:
             log_failed_addresses(failed_addresses)
@@ -286,6 +287,24 @@ def update_geocoded_coordinates(connection):
         logging.info("Geocoded coordinates updated in the database.")
     except Exception as e:
         logging.error(f"Error updating geocoded coordinates: {e}")
+
+
+def log_failed_addresses(failed_addresses, file_path='failed_addresses.txt'):
+    """
+    Logs addresses that failed geocoding to a text file.
+    
+    Args:
+        failed_addresses (list): List of addresses that failed to be geocoded.
+        file_path (str): Path to the text file where failed addresses will be saved.
+    """
+    try:
+        with open(file_path, 'a') as file:
+            for address in failed_addresses:
+                file.write(f"{address}\n")
+        logging.info(f"Failed addresses logged to {file_path}.")
+    except Exception as e:
+        logging.error(f"Error writing to file {file_path}: {e}")
+
 
 def plot_schools_on_map(connection):
     """
@@ -299,6 +318,7 @@ def plot_schools_on_map(connection):
         fetch_query = "SELECT name, formatted_address, latitude, longitude FROM schools WHERE latitude IS NOT NULL AND longitude IS NOT NULL"
         cursor.execute(fetch_query)
         schools_data = cursor.fetchall()
+        print(len(schools_data))
         cursor.close()
 
         # Initialize the map centered around NYC
@@ -318,6 +338,7 @@ def plot_schools_on_map(connection):
 
     except Exception as e:
         logging.error(f"Error plotting schools on map: {e}")
+
 
 def main():
     """
