@@ -178,7 +178,7 @@ def add_suffix(address):
 
     for pattern in patterns:
         match = re.match(pattern, address)
-        if match:
+        if (match):
             groups = match.groups()
             if len(groups) == 5:
                 range_part, direction, number, street_name, remaining = groups
@@ -247,16 +247,44 @@ def process_schools(schools_data, websites):
             school['name'],
             personal_website,
             domain_name,
-            school.get('district', ''),
-            school.get('grades', ''),
-            school.get('boroughName', ''),
+            school['district'],
+            school['grades'],
+            school['boroughName'],
             formatted_address
         ))
 
-        if i % 500 == 0:
-            logging.info(f"Processed {i} schools...")
+    # Add the hardcoded schools
+    for school in HARD_CODED_SCHOOLS:
+        domain_name = extract_domain(school['personal_website']) if school['personal_website'] else None
+        schools_info.append((
+            school['url'],
+            school['name'],
+            school['personal_website'],
+            domain_name,
+            school['district'],
+            school['grades'],
+            school['borough'],
+            school['formatted_address']
+        ))
 
     return schools_info
+
+
+def save_to_json(data, file_path):
+    """
+    Saves the processed school data to a JSON file.
+
+    Args:
+        data (list): List of tuples containing the school data.
+        file_path (str): Path to the JSON file where data will be saved.
+    """
+    # Convert tuples to a list of dictionaries
+    keys = ['url', 'name', 'personal_website', 'domain_name', 'district', 'grades', 'borough', 'formatted_address']
+    dict_data = [dict(zip(keys, row)) for row in data]
+
+    # Save to JSON file
+    with open(file_path, 'w') as json_file:
+        json.dump(dict_data, json_file, indent=4)
 
 
 def batch_insert_schools(data, password):
@@ -276,7 +304,7 @@ def batch_insert_schools(data, password):
         )
         if connection.is_connected():
             cursor = connection.cursor()
-
+            connection.ping(reconnect=True)
             # Truncate the table to ensure it is empty before insertion
             logging.info("Truncating the table to ensure it's empty...")
             cursor.execute("TRUNCATE TABLE schools")
@@ -290,15 +318,26 @@ def batch_insert_schools(data, password):
 
             # Execute the batch insert in chunks
             batch_size = 100
+            total_inserted = 0
             for i in range(0, len(data), batch_size):
                 batch = data[i:i + batch_size]
-                cursor.executemany(insert_query, batch)
-                connection.commit()
+                try:
+                    print(cursor.alive)
+                    cursor.executemany(insert_query, batch)
+                    connection.commit()
+                    total_inserted += len(batch)
+                    logging.info(f"Successfully inserted batch {i // batch_size + 1} with {len(batch)} rows.")
+                except mysql.connector.Error as e:
+                    logging.error(f"Error while inserting batch {i // batch_size + 1}: {e}")
+                    connection.rollback()
+                except Exception as e:
+                    logging.error(f"Unexpected error while inserting batch {i // batch_size + 1}: {e}")
+                    connection.rollback()
 
-            logging.info(f"Successfully inserted {len(data)} rows into the database.")
+            logging.info(f"Successfully inserted {total_inserted} rows into the database.")
 
     except Error as e:
-        logging.error(f"Error while inserting data into MySQL: {e}")
+        logging.error(f"Error while connecting to MySQL: {e}")
 
     finally:
         if connection.is_connected():
@@ -348,6 +387,11 @@ async def main():
         logging.info("Processing school information...")
         schools_info = process_schools(schools_data, websites)
         logging.info(f"Processed {len(schools_info)} schools.")
+
+        # Save the processed data to a JSON file
+        logging.info("Saving data to JSON file...")
+        save_to_json(schools_info, 'schools_data.json')
+        logging.info("Data saved to schools_data.json.")
 
         # Insert the processed data into the MySQL database
         logging.info("Inserting data into MySQL...")
