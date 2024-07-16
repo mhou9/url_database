@@ -4,7 +4,6 @@ import re
 import time
 from word2number import w2n
 
-addresses = set()
 
 def add_numeric_id(street):
     street_Ones = int(street) % 10
@@ -58,8 +57,7 @@ def format_address(address):
         ,\s+                                                                                    # Force a comma after the street
         (?: Ground\s+Floor,|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?                      # Remove " Ground Floor,"
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
-        (?P<State>[A-Z]{2}),?\s+                                                                # Matches 'MN ' and 'MN, '
-        (?P<ZIP>\d{5})                                                                          # Matches '56001'
+        (?P<State_ZIP>[A-Z]{2},\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'                                                                       
     '''
     regex1 = re.compile(regex1, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match1 = regex1.match(address) #store a match object that record detail info of the matched string, else None
@@ -72,8 +70,7 @@ def format_address(address):
         (?:Ground\s+Floor,|Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
         # Not neccssary detail
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
-        (?P<State>[A-Z]{2}),?\s+                                                                # Matches 'MN ' and 'MN, '
-        (?P<ZIP>\d{5})                                                                          # Matches '56001'
+        (?P<State_ZIP>[A-Z]{2},\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'  
     '''
     regex2 = re.compile(regex2, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match2 = regex2.match(address)
@@ -100,9 +97,6 @@ def format_address(address):
         # case where street number is written in word
         if convert_word_to_numeric(street) != False:
             street = convert_word_to_numeric(street)
-        else:
-            print("no match")
-            return address
 
         #Edge cases:
         # 285 Delancy Street, Manhattan, NY 10002
@@ -138,7 +132,6 @@ def format_address(address):
         print("After fixed2: " + address)
         return address
     else: 
-        print("no match")
         return address
 
 def main():
@@ -147,15 +140,17 @@ def main():
     r = requests.get(url = URL, verify=False)
     data = r.json()
 
+    addresses = []
+    count = 0
     for school in data:
+        count += 1
         address = school['primaryAddressLine'].lower() + ', ' + school['boroughName'] + ', ' + school['stateCode'] + ' ' + school['zip']
-        print(address)
         address_x = address.strip()
         loc = format_address(address_x)
-        print(loc)
-        addresses.add(loc)
-
+        addresses.append(loc)
+        
     addresses_list = list(addresses)
+    print(count)
     print(len(addresses_list))
     print(len(data))
     # Write formatted addresses to a JSON file
