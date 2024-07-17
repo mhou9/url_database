@@ -91,19 +91,28 @@ def add_numeric_id(street):
 
 # convert ordinal number as word to numeric with ending
 def convert_word_to_numeric(word):
-    word = word.strip().title()
-    ordinal_mapping = {
-            "First": "1st", "Second": "2nd", "Third": "3rd", "Fourth": "4th", "Fifth": "5th",
-            "Sixth": "6th", "Seventh": "7th", "Eighth": "8th", "Ninth": "9th", "Tenth": "10th",
-            "Eleventh": "11th", "Twelfth": "12th", "Thirteenth": "13th", "Fourteenth": "14th",
-            "Fifteenth": "15th", "Sixteenth": "16th", "Seventeenth": "17th", "Eighteenth": "18th",
-            "Nineteenth": "19th", "Twentieth": "20th", "Twenty-First": "21st", "Twenty-Second": "22nd",
-            "Twenty-Third": "23rd", "Twenty-Fourth": "24th", "Twenty-Fifth": "25th"
-        }
-    if word in ordinal_mapping:
-        return ordinal_mapping[word]
-    else:
-        return word  # Return the original word if not found in the mapping
+    try:
+        word = word.strip().title()
+        ordinal_mapping = {
+                "First": "1st", "Second": "2nd", "Third": "3rd", "Fourth": "4th", "Fifth": "5th",
+                "Sixth": "6th", "Seventh": "7th", "Eighth": "8th", "Ninth": "9th", "Tenth": "10th",
+                "Eleventh": "11th", "Twelfth": "12th", "Thirteenth": "13th", "Fourteenth": "14th",
+                "Fifteenth": "15th", "Sixteenth": "16th", "Seventeenth": "17th", "Eighteenth": "18th",
+                "Nineteenth": "19th", "Twentieth": "20th", "Twenty-First": "21st", "Twenty-Second": "22nd",
+                "Twenty-Third": "23rd", "Twenty-Fourth": "24th", "Twenty-Fifth": "25th"
+            }
+        if word.endswith(("st", "nd", "rd", "th")):
+            if word in ordinal_mapping:
+                return ordinal_mapping[word]
+            else:
+                return word  # Return the original word if not found in the mapping
+        else:
+            number = w2n.word_to_num(word)
+            if number:
+                number = add_numeric_id(str(number))
+                return number
+    except ValueError:
+        return False
 
 # This function is used to handle edge cases with address for geolocator
 def format_address(address):
@@ -120,7 +129,7 @@ def format_address(address):
         ,\s+                                                                                    # Force a comma after the street
         (?: Ground\s+Floor,|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?                      # Remove " Ground Floor,"
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
-        (?P<State_ZIP>[A-Z]{2},\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'                                                                       
+        (?P<State_ZIP>[A-Z]{2}\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'                                                                       
     '''
     regex1 = re.compile(regex1, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match1 = regex1.match(address) #store a match object that record detail info of the matched string, else None
@@ -133,7 +142,7 @@ def format_address(address):
         (?:Ground\s+Floor,|Aprt\s+\d+|Slip\s+\d+|Unit\s+\d+|Suite\s+\d+|Room\s+\d+|Shop\s+\d+|Office\s+\d+|Lot\s+\d+|Space\s+\d+|Bay\s+\d+|Box\s+\d+|(?:\w+\s*)?\d+(?:st|nd|rd|th|)\s+(?:\w+\s*)?)?
         # Not neccssary detail
         (?P<TownName>.*),\s+                                                                    # Matches 'MANKATO, '
-        (?P<State_ZIP>[A-Z]{2},\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'  
+        (?P<State_ZIP>[A-Z]{2}\s*\d{5})                                                       # Matches 'MN ' and 'MN, '# Matches '56001'  
     '''
     regex2 = re.compile(regex2, re.VERBOSE | re.IGNORECASE) #store all the set constriant in here, verbose and ignore case
     match2 = regex2.match(address)
@@ -150,26 +159,18 @@ def format_address(address):
         if townname == "Jamaica":
             townname = "Queens"
         address = match1.expand(fr'\g<HouseNumber> {direction} {street} \g<StreetDesignator>, {townname}, \g<State_ZIP>')
-        # print("After fixed: " + address)
+        print("After fixed: " + address)
         print("Format Address Function Runtime:", time.time()-start)
         return address
 
-    if match2:
+    elif match2:
         street = match2.group('StreetName')
         if street.isdigit():
             street = add_numeric_id(street)
 
         # case where street number is written in word
-        if street.title().endswith(("st", "nd", "rd", "th")):
+        if convert_word_to_numeric(street) != False:
             street = convert_word_to_numeric(street)
-        else:
-            try:
-                number = w2n.word_to_num(street.title())
-                if number:
-                    number = add_numeric_id(str(number))
-                    return number
-            except ValueError:
-                return False
 
         #Edge cases:
         # 285 Delancy Street, Manhattan, NY 10002
@@ -202,17 +203,17 @@ def format_address(address):
             address = match2.expand(fr'{housenumber} {street} {street_designator}, {townname}, \g<State_ZIP>')
         else:
             address = match2.expand(fr'{housenumber} {street}, {townname}, \g<State_ZIP>')
-        # print("After fixed2: " + address)
+        print("After fixed2: " + address)
+        print("Format Address Function Runtime:", time.time()-start)
+        return address
+    else:
+        print("no match")
         print("Format Address Function Runtime:", time.time()-start)
         return address
 
-    # print("no match")
-    print("Format Address Function Runtime:", time.time()-start)
-    return address
-
 def geocode_with_retry(geolocator, location): 
     try:
-        return geolocator.geocode(location, timeout=3)
+        return geolocator.geocode(location, timeout=5)
     except GeocoderUnavailable as e:
         print(f"GeocoderUnavailable: {e}")
         raise
@@ -234,8 +235,8 @@ def web_crawler_doe(doe_url, school_name):
         school_dict["School Website"] = url # 6th pair
         domain = urlparse(url).netloc.replace('www.', '').split('.')
         print(domain)
-        if domain[1] == "google": #skip
-            google_url.add(school_name)
+        if "google" in domain: #skip
+            google_url.append(school_name)
             school_dict["Domain_1"] = ''
             school_dict["Domain_2"] = ''
             school_dict["Domain_3"] = ''
@@ -249,7 +250,7 @@ def web_crawler_doe(doe_url, school_name):
         print("Web Crawler Doe Function Runtime:", time.time()-start)
 
     else:
-        no_url.add(school_name)
+        no_url.append(school_name)
         school_dict["School Website"] = ''
         school_dict["Domain_1"] = ''
         school_dict["Domain_2"] = ''
@@ -268,11 +269,11 @@ r = requests.get(url = URL, verify=False)
 data = r.json() 
 
 school_item_dict = {} #dict that stores all the info
-no_url = set() # store a list of school that return None when trying to locate its school url, which means it doesn't has its own url attached
-all_links = set() #get all links from the first layer
-address_issue_schools = set() # get the name of all schools that have unformatted address that unable to convert to coordinates
-school_name_issue_urls = set() #doe link is raise error of school name not found
-google_url = set() #  
+no_url = [] # store a list of school that return None when trying to locate its school url, which means it doesn't has its own url attached
+all_links = [] #get all links from the first layer
+address_issue_schools = [] # get the name of all schools that have unformatted address that unable to convert to coordinates
+school_name_issue_urls = [] #doe link is raise error of school name not found
+google_url = [] # 
 
 # Total : 2900 schools
 # loop through each school and store all the info:
@@ -283,7 +284,7 @@ google_url = set() #
 # 'profile' contains the school's private url link, need to turn lower case
 count = 0 
 for school in data: 
-    # if count >= 3: break 
+    if count >= 100: break 
 
     print("School:", school)
     school_dict = school_item_dict.setdefault(school['name'].strip(), {})
@@ -294,6 +295,7 @@ for school in data:
 
     # coordinates
     geolocator = Nominatim(user_agent="my_request")
+    # address_x = "211 72 Street, Brooklyn, NY 11209"#############
     loc = format_address(address_x) 
     print("Reformated Address:", loc) 
 
@@ -311,7 +313,7 @@ for school in data:
     else:
         school_dict["Latitude"] = "00000000000000000000000" #1st pair
         school_dict["Longitude"] = "0000000000000000000000000" #2nd pair
-        address_issue_schools.add(school['name'].strip())
+        address_issue_schools.append(school['name'].strip())
 
     school_dict["Grade"] = school['grades']
     school_dict["District"] = school['district']
@@ -335,8 +337,8 @@ for school in data:
         the_url = urlparse(the_url)
         domain = the_url.netloc.replace('www.', '').split('.')
         print(domain)
-        if domain[1] == "google": #skip
-            google_url.add(school['name'].strip())
+        if "google" in domain: #skip
+            google_url.append(school['name'].strip())
             school_dict["Domain_1"] = ''
             school_dict["Domain_2"] = ''
             school_dict["Domain_3"] = ''
@@ -350,15 +352,15 @@ for school in data:
     count+=1
     print("\n")
 
-# print(f"\nThis is list of schools without url provided in the DOE website (no private school url attached): {no_url}")
-# print(f"\nDOE link issue: {school_name_issue_urls}")
-# print(f"\nNo coordinate get for address converting: {address_issue_schools}")
-# print(f"\nThese are {len(google_url)} schools using google site as their url: {google_url}")
-# not_converted = len(address_issue_schools)
-# percentage = 100 - 100 * float(not_converted)/float(len(data))
-# no_url_number = len(no_url)
-# print(f"\nGeocode was not able to convert {not_converted} school addresses.\nThus, the converting percentage is {percentage}%.")
-# print(f"There are {no_url_number} schools with no private url provided.")
+print(f"\nThis is list of schools without url provided in the DOE website (no private school url attached): {no_url}")
+print(f"\nDOE link issue: {school_name_issue_urls}")
+print(f"\nNo coordinate get for address converting: {address_issue_schools}")
+print(f"\nThese are {len(google_url)} schools using google site as their url: {google_url}")
+not_converted = len(address_issue_schools)
+percentage = 100 - 100 * float(not_converted)/float(len(data))
+no_url_number = len(no_url)
+print(f"\nGeocode was not able to convert {not_converted} school addresses.\nThus, the converting percentage is {percentage}%.")
+print(f"There are {no_url_number} schools with no private url provided.")
 
 json_str = json.dumps(school_item_dict, indent= 4)
 with open("data_as_json.json", "w") as outfile:
