@@ -11,7 +11,8 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
-import traceback
+import concurrent.futures
+from geopy.extra.rate_limiter import RateLimiter
 
 # Disable insecure request warnings
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
@@ -154,16 +155,10 @@ def format_address(address):
     print("Format Address Function Runtime:", time.time()-start)
     return address
 
-def geocode_with_retry(geolocator, location): 
-    try:
-        return geolocator.geocode(location, timeout=5)
-    except GeocoderUnavailable as e:
-        print(f"GeocoderUnavailable: {e}")
-        raise
-
-async def web_crawler_doe_async(session, doe_url, school_name):
+async def web_crawler_doe_async(session, doe_url, school_name, index):
     try: 
         start = time.time()
+        print(f"start with index {index}")
         async with session.get(doe_url, timeout=10000) as response:
             html_content = await response.text()
             soup = BeautifulSoup(html_content, 'html.parser')
@@ -176,6 +171,7 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                 if "google" in domain:
                     google_url.append(school_name)
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
+                    print(f"completed index {index}")
                     return {
                         "School Website": '',
                         "Domain_1": '',
@@ -185,6 +181,7 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                     }
                 else:
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
+                    print(f"completed index {index}")
                     return {
                         "School Website": url,
                         "Domain_1": f"{domain[0]}.org",
@@ -194,6 +191,7 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                     }
             else:
                 no_url.append(school_name)
+                print(f"completed index {index}")
                 print("Web Crawler Doe Function Runtime:", time.time()-start)
                 return {
                     "School Website": '',
@@ -205,12 +203,9 @@ async def web_crawler_doe_async(session, doe_url, school_name):
     except Exception as e:
         # goes into this exception if doe url return 404 error
         print(f"Error fetching data for school {school_name}: {e}")
-        print(f"Exception type: {type(e)}")
-        print(f"Exception args: {e.args}")
         print("Web Crawler Doe Function Runtime:", time.time() - start)
-        print(traceback.format_exc())
-        traceback.print_stack()
         school_name_issue_urls.append(doe_url)
+        print(f"completed index {index}")
         return {
             "School Website": '',
             "Domain_1": '',
@@ -219,24 +214,35 @@ async def web_crawler_doe_async(session, doe_url, school_name):
             "Domain_4": ''
         }
     
-async def run_domain(doe_urls):
+async def run_domain(doe_urls, concurrent_requests):
     async with aiohttp.ClientSession() as session:
         tasks = []
         for url in doe_urls:
-            tasks.append(web_crawler_doe_async(session, url[0], url[1]))
+            for index in range(concurrent_requests):
+                tasks.append(web_crawler_doe_async(session, url[0], url[1], index = index))
 
-        results = await asyncio.gather(*tasks)
+            results = await asyncio.gather(*tasks)
 
         # Process results here (printing for demonstration)
         for result, url in zip(results, doe_urls):
             print(result)
             school_item_dict[url[1]].update(result)
 
+def geocode_with_retry(geolocator, location): 
+    try:
+        return geolocator.geocode(location, timeout=5)
+    except GeocoderUnavailable as e:
+        print(f"GeocoderUnavailable: {e}")
+        raise
+
+def geocode_to_coordinates():
+    geolocator = Nominatim(user_agent="my_request")
+    geocode_limit = RateLimiter(geo)
+
 
 # Main Program
 start = time.time()
 URL = "https://ws.schools.nyc/schooldata/GetSchools?search=&borough=&grade="
-geolocator = Nominatim(user_agent="my_request")
 r = requests.get(url = URL, verify=False)
 data = r.json() 
 
@@ -245,8 +251,10 @@ no_url = [] # store a list of school that return None when trying to locate its 
 all_links = [] #get all links from the first layer
 address_issue_schools = [] # get the name of all schools that have unformatted address that unable to convert to coordinates
 school_name_issue_urls = [] #doe link is raise error of school name not found
-google_url = [] # 
-doe_urls = []
+google_url = [] # store a list of school that have site.google as their domain
+
+doe_urls = [] # store all the doe urls and fetch them into the async function at once to run concurrently
+formatted_address = [] #store all the address for fetch into multithread geocoder at once
 
 # Total : 2900 schools
 # loop through each school and store all the info:
@@ -269,22 +277,23 @@ for school in data:
     # coordinates
     loc = format_address(address_x) 
     print("Reformated Address:", loc) 
+    formatted_address.append(loc)
 
-    geocode_time = time.time()
-    location = geocode_with_retry(geolocator, loc) 
-    print("Geocode with Retry Function Runtime:", time.time() - geocode_time)  
+    # geocode_time = time.time()
+    # location = geocode_with_retry(geolocator, loc) 
+    # print("Geocode with Retry Function Runtime:", time.time() - geocode_time)  
     # print("Location: ", location) 
 
-    if location != None:
-        print("Got location: " + location.address)
-        school_dict["Latitude"] = location.latitude #1st pair
-        school_dict["Longitude"] = location.longitude  #2nd pair
+    # if location != None:
+    #     print("Got location: " + location.address)
+    #     school_dict["Latitude"] = location.latitude #1st pair
+    #     school_dict["Longitude"] = location.longitude  #2nd pair
 
-    # Collect the name of all school where its address was not able to convert to coordinate
-    else:
-        school_dict["Latitude"] = "00000000000000000000000" #1st pair
-        school_dict["Longitude"] = "0000000000000000000000000" #2nd pair
-        address_issue_schools.append(school['name'].strip())
+    # # Collect the name of all school where its address was not able to convert to coordinate
+    # else:
+    #     school_dict["Latitude"] = "00000000000000000000000" #1st pair
+    #     school_dict["Longitude"] = "0000000000000000000000000" #2nd pair
+    #     address_issue_schools.append(school['name'].strip())
 
     school_dict["Grade"] = school['grades']
     school_dict["District"] = school['district']
@@ -327,7 +336,8 @@ for school in data:
     count+=1
     print("\n")
 
-asyncio.run(run_domain(doe_urls))
+concurrent_requests = 2891
+asyncio.run(run_domain(doe_urls, concurrent_requests = concurrent_requests))
 print(len(data))
 print(f"\nThis is list of schools without url provided in the DOE website (no private school url attached): {no_url}")
 print(f"\nDOE link issue: {school_name_issue_urls}")
@@ -340,7 +350,7 @@ print(f"\nGeocode was not able to convert {not_converted} school addresses.\nThu
 print(f"There are {no_url_number} schools with no private url provided.")
 
 json_str = json.dumps(school_item_dict, indent= 4)
-with open("new_output_file.json", "w") as outfile:
+with open("new_output2.json", "w") as outfile:
     outfile.write(json_str)
     print("\nSaved")
 

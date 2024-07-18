@@ -176,7 +176,7 @@ def check_word_in_json(data, word):
     return False
 
 # Read the JSON data from the file
-file_path = 'output.json'
+file_path = 'new_output_file.json'
 json_data = read_json_file(file_path)
 
 existed = []
