@@ -304,11 +304,10 @@ def batch_insert_schools(data, password):
         )
         if connection.is_connected():
             cursor = connection.cursor()
-            connection.ping(reconnect=True)
+            
             # Truncate the table to ensure it is empty before insertion
             logging.info("Truncating the table to ensure it's empty...")
             cursor.execute("TRUNCATE TABLE schools")
-            connection.commit()
 
             # Define the SQL insert query
             insert_query = """
@@ -316,25 +315,22 @@ def batch_insert_schools(data, password):
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
 
-            # Execute the batch insert in chunks
-            batch_size = 100
-            total_inserted = 0
-            for i in range(0, len(data), batch_size):
-                batch = data[i:i + batch_size]
-                try:
-                    print(cursor.alive)
-                    cursor.executemany(insert_query, batch)
-                    connection.commit()
-                    total_inserted += len(batch)
-                    logging.info(f"Successfully inserted batch {i // batch_size + 1} with {len(batch)} rows.")
-                except mysql.connector.Error as e:
-                    logging.error(f"Error while inserting batch {i // batch_size + 1}: {e}")
-                    connection.rollback()
-                except Exception as e:
-                    logging.error(f"Unexpected error while inserting batch {i // batch_size + 1}: {e}")
-                    connection.rollback()
+            # Define the SQL query to check if a school already exists
+            check_query = "SELECT COUNT(*) FROM schools WHERE name = %s"
 
-            logging.info(f"Successfully inserted {total_inserted} rows into the database.")
+            for school in data: 
+                try:
+                    # Check if the school already exists
+                    cursor.execute(check_query, (school[1],))
+                    result = cursor.fetchone()
+                    if result[0] == 0:
+                        cursor.execute(insert_query, school) 
+                    else:
+                        logging.info(f"School {school[1]} already exists in the database. Skipping insertion.")
+                except Exception as e:  
+                    logging.error(f"Error inserting data for school {school[1]}: {e}")
+
+            connection.commit()
 
     except Error as e:
         logging.error(f"Error while connecting to MySQL: {e}")
