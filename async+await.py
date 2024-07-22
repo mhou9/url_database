@@ -173,11 +173,11 @@ async def web_crawler_doe_async(session, doe_url, school_name, index):
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
                     print(f"completed index {index}")
                     return {
-                        "School Website": '',
-                        "Domain_1": '',
-                        "Domain_2": '',
-                        "Domain_3": '',
-                        "Domain_4": ''
+                        "School Website": None,
+                        "Domain_1": None,
+                        "Domain_2": None,
+                        "Domain_3": None,
+                        "Domain_4": None
                     }
                 else:
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
@@ -194,11 +194,11 @@ async def web_crawler_doe_async(session, doe_url, school_name, index):
                 print(f"completed index {index}")
                 print("Web Crawler Doe Function Runtime:", time.time()-start)
                 return {
-                    "School Website": '',
-                    "Domain_1": '',
-                    "Domain_2": '',
-                    "Domain_3": '',
-                    "Domain_4": ''
+                    "School Website": None,
+                    "Domain_1": None,
+                    "Domain_2": None,
+                    "Domain_3": None,
+                    "Domain_4": None
                 }
     except Exception as e:
         # goes into this exception if doe url return 404 error
@@ -207,11 +207,11 @@ async def web_crawler_doe_async(session, doe_url, school_name, index):
         school_name_issue_urls.append(doe_url)
         print(f"completed index {index}")
         return {
-            "School Website": '',
-            "Domain_1": '',
-            "Domain_2": '',
-            "Domain_3": '',
-            "Domain_4": ''
+            "School Website": None,
+            "Domain_1": None,
+            "Domain_2": None,
+            "Domain_3": None,
+            "Domain_4": None
         }
     
 async def run_domain(doe_urls, concurrent_requests):
