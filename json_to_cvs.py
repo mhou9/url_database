@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 # Read the JSON file
-with open('new_output_file.json', 'r') as file:
+with open('new_output_3001.json', 'r') as file:
     data = json.load(file)
 
 # Convert the dictionaries to a DataFrame
@@ -15,6 +15,6 @@ df.reset_index(inplace=True)
 df.rename(columns={'index': 'School Name'}, inplace=True)
 
 # Save the DataFrame to a CSV file
-df.to_csv('new_output_file.csv', index=False)
+df.to_csv('new_output_3001.csv', index=False)
 
 print("JSON data has been successfully converted to CSV and saved as 'schools.csv'")

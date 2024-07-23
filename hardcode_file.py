@@ -19,7 +19,7 @@ cursor = connection.cursor()
 # American Dream Charter School II
 # Imagine Early Learning Center @ City College - MBVK
 update_domain1 = """
-UPDATE new_output_2891 
+UPDATE new_output_2894 
 SET 
     `School Website` = 'https://www.adcs2.org/',
     Domain_1 = 'adcs2.org',
@@ -29,7 +29,7 @@ SET
 WHERE `School Name` = 'American Dream Charter School II'
 """
 update_domain2 = """
-UPDATE new_output_2891 
+UPDATE new_output_2894 
 SET 
     `School Website` = 'https://imagineelc.com/schools/city-college-child-development-center/',
     Domain_1 = 'imagineelc.org',
@@ -46,9 +46,9 @@ cursor.execute(update_domain2)
 # All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
 # Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
 update_name1 = """
-UPDATE new_output_2891 
+UPDATE new_output_2894 
 SET 
-    `School Name` = 'All My Children Day Care And Nursery School - MBZW'
+    `School Name` = 'All My Children Day Care And Nursery School - MBZW',
     `School Website` = 'https://allmychildrendaycare.com/',
     Domain_1 = 'allmychildrendaycare.org',
     Domain_2 = 'allmychildrendaycare.com',
@@ -59,9 +59,9 @@ SET
 WHERE `School Name` = 'All My Children Day Care And Nursery School'
 """
 update_name2 = """
-UPDATE new_output_2891 
+UPDATE new_output_2894 
 SET 
-    `School Name` = 'Imagine Early Learning Centers @ Jamaica Kids'
+    `School Name` = 'Imagine Early Learning Centers @ Jamaica Kids',
     `School Website` = 'https://imagineelc.com/schools/jamaica-kids-early-learning-center/',
     Domain_1 = 'imagineelc.org',
     Domain_2 = 'imagineelc.com',
@@ -74,10 +74,10 @@ WHERE `School Name` = 'Imagine Early Learning Center'
 cursor.execute(update_name1)
 cursor.execute(update_name2)
 
-# Update the coordinates and domain
+# Update the coordinates and domain : 35 schools
 updates = [
-    ("Metropolitan High School", "40.8278547454867", "-73.89699654561372"),
-    ("Happy Scholars, Inc", "40.61349543855342", "-74.00095981607727"),
+    ("Metropolitan High School, The", "40.8278547454867", "-73.89699654561372"),
+    ("Happy Scholars, Inc.", "40.61349543855342", "-74.00095981607727"),
     ("P.S. 004 Maurice Wollin", "40.5525482377547", "-74.19547485118717"),
     ("P.S. 057 Hubert H. Humphrey", "40.611260529300694", "-74.08378556643316"),
     ("P.S. 055 Benjamin Franklin", "40.83635881782132", "-73.90485064490468"),
@@ -96,24 +96,38 @@ updates = [
     ("The New American Academy at Roberto Clemente State Park", "40.85288194181465", "-73.92104215819913"),
     ("The Longwood Academy of Discovery", "40.82054115481338", "-73.89874503212259"),
     ("Bronx High School for the Visual Arts", "40.8519304393006", "-73.86451196095722"),
-    ("P.S. 277", "40.81360947234675", "-73.9135955553995")
+    ("P.S. 277", "40.81360947234675", "-73.9135955553995"),
+    ("Mott Haven Village Preparatory High School", "40.81843244053653", "-73.91176058908628"),
+    ("University Heights Secondary School", "40.818400937835776", "-73.91127711606919"),
+    ("Cpc-Tribeca Early Learning Center", "40.7217406342474", "-74.0055800456191"),
+    ("Rockaway Park High School for Environmental Sustainability", "40.58641541203024", "-73.82339948353565"),
+    ("Channel View School for Research", "40.58635306246096", "-73.82344309332062"),
+    ("New Visions Charter High School for the Humanities IV", "40.58652416520215", "-73.8238615179315"),
+    ("Rockaway Collegiate High School", "40.58628788034916", "-73.82367912771649"),
+    ("P.S. 204 Morris Heights", "40.8502301510138", "-73.91513130328504"),
+    ("Leaders of Excellence, Advocacy and Discovery", "40.82312645405477", "-73.92272148749917"),
+    ("P.S. X643", "40.81735842239108", "-73.91170701001546"),
+    ("Collegiate Academy for Mathematics and Personal Awareness Charter School", "40.65865283161577", "-73.88867595170069"),
+    ("P.S. 958", "40.653297074920076", "-74.00208730745949"),
+    ("Nayema Universal Child Center", "40.63434380970191", "-73.96646973168764"),
+    ("P.S. 048 P.O. Michael J. Buczek", "40.85341823492196", "-73.9336440272124")
 ]
 
 # Loop through the updates and execute the queries
 for school, latitude, longitude in updates:
-    sql = "UPDATE new_output_2891 SET latitude = %s, longitude = %s WHERE name = %s"
+    sql = "UPDATE new_output_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
     cursor.execute(sql, (latitude, longitude, school))
 
 # Insert two schools
 # All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
 # All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
 query1 = """
-INSERT INTO schools (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+INSERT INTO new_output_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - KDVD', '40.659935747380494', '-73.93083608794977', 'PK,3K', '18', 'Brooklyn', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
 query2 = """
-INSERT INTO schools (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+INSERT INTO new_output_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - MBXN', '40.71897858426893', '-73.98310226160082', 'PK,3K,EL', '1', 'Manhattan', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
