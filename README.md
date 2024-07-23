@@ -42,7 +42,7 @@ To achieve our objective, we will follow these steps:
 1. Clone this repo: git clone https://github.com/mhou9/url_database.git
 2. cd url_database
 3. Open MySQL, connect to localhost by enter your mysql password and database name
-4. In VSCode terminal, to run the following code files: 
+4. In VSCode terminal, run the following code files in order: 
   - to get all the extracted school informations into a json file: python async+await.py
   - to convert json file into cvs file: python json_to_cvs.py
   - to import the cvs file into MySQL and include the manually hardcoded schools' coordinates: python hardcode_file.py
