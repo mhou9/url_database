@@ -205,7 +205,7 @@ async def web_crawler_doe_async(session, doe_url, school_name):
         print(f"Error fetching data for school {school_name}: {e}")
         print("Web Crawler Doe Function Runtime:", time.time() - start)
         school_name_issue_urls.append(doe_url)
-        print(f"completed index {index}")
+        # print(f"completed index {index}")
         return {
             "School Website": None,
             "Domain_1": None,

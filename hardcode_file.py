@@ -15,11 +15,45 @@ connection = mysql.connector.connect(
 
 cursor = connection.cursor()
 
+csv_file_path = 'new_output_3001.csv'
+table_name = 'DOE_schools_data_2894'
+create_table_query = f"""
+CREATE TABLE IF NOT EXISTS {table_name} (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `School Name` VARCHAR(255),
+    Latitude DECIMAL(9, 6),
+    Longitude DECIMAL(9, 6),
+    Grade VARCHAR(50),
+    District VARCHAR(10),
+    Borough VARCHAR(50),
+    `School Website` VARCHAR(255),
+    Domain_1 VARCHAR(255),
+    Domain_2 VARCHAR(255),
+    Domain_3 VARCHAR(255),
+    Domain_4 VARCHAR(255)
+);
+"""
+
+# load data from CSV
+load_data_query = f"""
+LOAD DATA INFILE '{csv_file_path}'
+INTO TABLE {table_name}
+FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+"""
+cursor.execute(create_table_query)
+cursor.execute(load_data_query)
+connection.commit()
+print(f"Data imported into {table_name} successfully.")
+
+
 # Update domain
 # American Dream Charter School II
 # Imagine Early Learning Center @ City College - MBVK
 update_domain1 = """
-UPDATE new_output_2894 
+UPDATE DOE_schools_data_2894 
 SET 
     `School Website` = 'https://www.adcs2.org/',
     Domain_1 = 'adcs2.org',
@@ -29,7 +63,7 @@ SET
 WHERE `School Name` = 'American Dream Charter School II'
 """
 update_domain2 = """
-UPDATE new_output_2894 
+UPDATE DOE_schools_data_2894 
 SET 
     `School Website` = 'https://imagineelc.com/schools/city-college-child-development-center/',
     Domain_1 = 'imagineelc.org',
@@ -46,7 +80,7 @@ cursor.execute(update_domain2)
 # All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
 # Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
 update_name1 = """
-UPDATE new_output_2894 
+UPDATE DOE_schools_data_2894 
 SET 
     `School Name` = 'All My Children Day Care And Nursery School - MBZW',
     `School Website` = 'https://allmychildrendaycare.com/',
@@ -59,7 +93,7 @@ SET
 WHERE `School Name` = 'All My Children Day Care And Nursery School'
 """
 update_name2 = """
-UPDATE new_output_2894 
+UPDATE DOE_schools_data_2894 
 SET 
     `School Name` = 'Imagine Early Learning Centers @ Jamaica Kids',
     `School Website` = 'https://imagineelc.com/schools/jamaica-kids-early-learning-center/',
@@ -115,19 +149,19 @@ updates = [
 
 # Loop through the updates and execute the queries
 for school, latitude, longitude in updates:
-    sql = "UPDATE new_output_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
+    sql = "UPDATE DOE_schools_data_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
     cursor.execute(sql, (latitude, longitude, school))
 
 # Insert two schools
 # All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
 # All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
 query1 = """
-INSERT INTO new_output_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - KDVD', '40.659935747380494', '-73.93083608794977', 'PK,3K', '18', 'Brooklyn', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
 query2 = """
-INSERT INTO new_output_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - MBXN', '40.71897858426893', '-73.98310226160082', 'PK,3K,EL', '1', 'Manhattan', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
