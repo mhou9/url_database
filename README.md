@@ -41,12 +41,16 @@ To achieve our objective, we will follow these steps:
 1. Clone this repository
 2. Navigate to the project directory
 3. Open MySQL and connect to localhost by entering your MySQL password and database name.
-4.To run Part A, execute the Python script:
-  python school_crawler.py
+4. To run Part A, execute the Python script:
+
+    - python school_crawler.py
+
 5. The database table should display the correctly extracted school data.
-6. Run the MySQL script labeled: "hardcoded_schools" to account for any discrepancies.
+6. Run the MySQL script labeled "hardcoded_schools" to account for any discrepancies.
 7. To run Part B, execute the Python script:
-  python school_plotter.py
+
+    - python school_plotter.py
+
 8. The database table should now also display the coordinates of the schools (any failed coordinates will be logged).
 9. To view the map of the plotted data, open the file labeled "nyc_schools_map.html".
 
@@ -58,4 +62,5 @@ To achieve our objective, we will follow these steps:
 ## Contributors 
 
 Regina Rabkina
+
 Mingrong Hou
