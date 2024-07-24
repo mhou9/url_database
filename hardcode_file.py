@@ -5,7 +5,7 @@ import getpass
 password = getpass.getpass("Input your password for mysql: ")
 database = input("What is your database name? Please enter: ")
 
-# retrieve the coordinates
+# Connect to database
 connection = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -14,9 +14,18 @@ connection = mysql.connector.connect(
 )
 
 cursor = connection.cursor()
-
 csv_file_path = 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv'
 table_name = 'DOE_schools_data_2894'
+
+# Configure MySQL so it allow local file upload to database
+set_infile = """
+SET GLOBAL local_infile = 1;
+"""
+cursor.execute(set_infile)
+connection.commit()
+print("Successfully set local_infile to be TRUE.")
+
+# Define the table schema to create a table
 create_table_query = f"""
 CREATE TABLE IF NOT EXISTS {table_name} (
     `School Name` VARCHAR(255),
@@ -33,7 +42,7 @@ CREATE TABLE IF NOT EXISTS {table_name} (
 );
 """
 
-# load data from CSV
+# Load data from the csv file into the table
 load_data_query = f"""
 LOAD DATA INFILE '{csv_file_path}'
 INTO TABLE {table_name}
@@ -42,12 +51,13 @@ OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 """
+
 cursor.execute(create_table_query)
 cursor.execute(load_data_query)
 connection.commit()
 print(f"Data imported into {table_name} successfully.")
 
-# add primary key
+# Add primary key
 primary_key = f"""
 ALTER TABLE `database`.`{table_name}`
 ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
@@ -56,9 +66,9 @@ cursor.execute(primary_key)
 connection.commit()
 print("Added primary key.")
 
-# Update domain
-# American Dream Charter School II
-# Imagine Early Learning Center @ City College - MBVK
+# Update domain for these 2 schools
+#   1. American Dream Charter School II
+#   2. Imagine Early Learning Center @ City College - MBVK
 update_domain1 = """
 UPDATE DOE_schools_data_2894 
 SET 
@@ -79,13 +89,12 @@ SET
     Domain_4 = 'imagineelc.net'
 WHERE `School Name` = 'Imagine Early Learning Center @ City College - MBVK'
 """
-# Execute the queries
 cursor.execute(update_domain1)
 cursor.execute(update_domain2)
 
-# Update the school name, coordinates and domain
-# All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
-# Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
+# Update the school name, coordinates and domain for these 2 schools
+#   1. All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
+#   2. Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
 update_name1 = """
 UPDATE DOE_schools_data_2894 
 SET 
@@ -115,7 +124,7 @@ WHERE `School Name` = 'Imagine Early Learning Center'
 cursor.execute(update_name1)
 cursor.execute(update_name2)
 
-# Update the coordinates and domain : 35 schools
+# Update the coordinates for 35 schools
 updates = [
     ("Metropolitan High School, The", "40.8278547454867", "-73.89699654561372"),
     ("Happy Scholars, Inc.", "40.61349543855342", "-74.00095981607727"),
@@ -154,14 +163,13 @@ updates = [
     ("P.S. 048 P.O. Michael J. Buczek", "40.85341823492196", "-73.9336440272124")
 ]
 
-# Loop through the updates and execute the queries
 for school, latitude, longitude in updates:
     sql = "UPDATE DOE_schools_data_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
     cursor.execute(sql, (latitude, longitude, school))
 
-# Insert two schools
-# All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
-# All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
+# Append these 2 schools into the table, they got skipped because of same name for different branch
+#   1. All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
+#   2. All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
 query1 = """
 INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - KDVD', '40.659935747380494', '-73.93083608794977', 'PK,3K', '18', 'Brooklyn', 

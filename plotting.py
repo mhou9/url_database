@@ -6,15 +6,15 @@ import getpass
 password = getpass.getpass("Input your password for mysql: ")
 database = input("What is your database name? Please enter: ")
 
-# Retrieve the coordinates and school names
+# Connect to database to read the coordinates and school names from the table
 connection = mysql.connector.connect(
     host="localhost",
     user="root",
     passwd=password,
     database=database
 )
-
-query = "SELECT `School Name`, Latitude, Longitude FROM new_output_2894"
+tablename = "DOE_schools_data_2894"
+query = f"SELECT `School Name`, Latitude, Longitude FROM {tablename}"
 df = pd.read_sql(query, connection)
 connection.close()
 
@@ -36,5 +36,4 @@ for idx, row in df.iterrows():
     ).add_to(map)
 
 map.save('map.html')
-
 print("Map has been created and saved as 'map.html'")

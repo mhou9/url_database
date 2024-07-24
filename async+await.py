@@ -11,13 +11,13 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
-import concurrent.futures
-from geopy.extra.rate_limiter import RateLimiter
+# import concurrent.futures
+# from geopy.extra.rate_limiter import RateLimiter
 
 # Disable insecure request warnings
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
-# add the correct ending for all numbers
+# Add the correct ending for all numbers
 def add_numeric_id(street):
     street_Ones = int(street) % 10
     print(street_Ones)
@@ -33,7 +33,7 @@ def add_numeric_id(street):
         street = street + 'th'
     return street
 
-# convert ordinal number as word to numeric with ending
+# Convert ordinal number as word to numeric with ending
 def convert_word_to_numeric(word):
     try:
         word = word.strip().title()
@@ -58,7 +58,7 @@ def convert_word_to_numeric(word):
     except ValueError:
         return False
 
-# This function is used to handle edge cases with address for geolocator
+# Handle edge cases with address for geolocator
 def format_address(address):
     # Case 1 : 511 7 Ave, Brooklyn, NY 11215, 8-21 Bay 25 Street, Queens, NY 11691  -- 7 Avenue to 7th Avenue, detect Bay as direction
     # Case 2 : 10 South Street, Slip 7, Manhattan, NY 10004                         -- make sure South is detected under streetname and 'Slip 7' is removed
@@ -133,16 +133,6 @@ def format_address(address):
         street_designator = match2.group(3)
 
         housenumber = match2.group('HouseNumber')
-        # run geocode to see if locaiton is none, if none check for house number inconsistance 
-        # check if house number is xxx-xx, yes then remove -xx
-        # 4360-78 Broadway, Manhattan, NY 10033             -- 4360-78 to 4360
-        # 1962-84 Linden Blvd., Brooklyn, NY 11207
-        # location = geocode_with_retry(geolocator, address)
-        # ---------------------------let this be hard coded------------------------------#
-        # if location == None:
-        #     if '-' in housenumber:
-        #         housenumber = housenumber.split('-')[0].strip()
-        #         print("fixing round 2")
         if street_designator != None:
             address = match2.expand(fr'{housenumber} {street} {street_designator}, {townname}, \g<State_ZIP>')
         else:
@@ -155,10 +145,10 @@ def format_address(address):
     print("Format Address Function Runtime:", time.time()-start)
     return address
 
+# Get the private school website and domains from the doe url by web scraping the website using BeautifulSoup
 async def web_crawler_doe_async(session, doe_url, school_name):
     try: 
         start = time.time()
-        # print(f"start with index {index}")
         async with session.get(doe_url, timeout=10000) as response:
             html_content = await response.text()
             soup = BeautifulSoup(html_content, 'html.parser')
@@ -171,7 +161,6 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                 if "google" in domain:
                     google_url.append(school_name)
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
-                    # print(f"completed index {index}")
                     return {
                         "School Website": None,
                         "Domain_1": None,
@@ -181,7 +170,6 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                     }
                 else:
                     print("Web Crawler Doe Function Runtime:", time.time()-start)
-                    # print(f"completed index {index}")
                     return {
                         "School Website": url,
                         "Domain_1": f"{domain[0]}.org",
@@ -191,7 +179,6 @@ async def web_crawler_doe_async(session, doe_url, school_name):
                     }
             else:
                 no_url.append(school_name)
-                # print(f"completed index {index}")
                 print("Web Crawler Doe Function Runtime:", time.time()-start)
                 return {
                     "School Website": None,
@@ -213,7 +200,8 @@ async def web_crawler_doe_async(session, doe_url, school_name):
             "Domain_3": None,
             "Domain_4": None
         }
-    
+
+# Execue the web crawler function to get the private school website and domains
 async def run_domain(doe_urls):
     async with aiohttp.ClientSession() as session:
         tasks = []
@@ -223,9 +211,7 @@ async def run_domain(doe_urls):
 
         results = await asyncio.gather(*tasks)
 
-        # Process results here (printing for demonstration)
         for result, url in zip(results, doe_urls):
-            print(result)
             school_item_dict[url[1]].update(result)
 
 def geocode_with_retry(geolocator, location): 
@@ -238,7 +224,6 @@ def geocode_with_retry(geolocator, location):
 # def geocode_to_coordinates():
 #     geolocator = Nominatim(user_agent="my_request")
 #     geocode_limit = RateLimiter(geo)
-
 
 # Main Program
 start = time.time()
@@ -253,39 +238,30 @@ all_links = [] #get all links from the first layer
 address_issue_schools = [] # get the name of all schools that have unformatted address that unable to convert to coordinates
 school_name_issue_urls = [] #doe link is raise error of school name not found
 google_url = [] # store a list of school that have site.google as their domain
-
 doe_urls = [] # store all the doe urls and fetch them into the async function at once to run concurrently
 formatted_address = [] #store all the address for fetch into multithread geocoder at once
 
-# Total : 2900 schools
+# Total : 3001 schools in the API response object
 # loop through each school and store all the info:
 # {'locationCode': 'K001', 'type': 'DOE', 'boroughName': 'Brooklyn', 'boroughCode': 'K', 'name': 'P.S. 001 The Bergen', 
 # 'phoneNumber': '718-567-7661', 'primaryAddressLine': '309 47 STREET', 'zip': '11220', 'grades': 'PK,0K,01,02,03,04,05,SE', 
 # 'stateCode': 'NY', 'x': '-8238913.43780000', 'y': '4960699.12320000', 'profile': '', 'neighborhood': 'Sunset Park West                                                           ', 
 # 'district': '15', 'distance': '', 'dataflag': 'L'}
-# 'profile' contains the school's private url link, need to turn lower case
-count = 0 
 existed_key = []
 for school in data:
     if school['name'].strip() in school_item_dict:
         existed_key.append(school['name'].strip())
-        
+
     school_dict = school_item_dict.setdefault(school['name'].strip(), {})
     address = school['primaryAddressLine'].title() + ', ' + school['boroughName'] + ', ' + school['stateCode'] + ' ' + school['zip']
     address_x = address.strip()
-    print("Address:", address_x) 
 
-    #address_x = "1107-09 Newkirk Avenue, Brooklyn, NY, 11230" #########################
-
-    # coordinates
+    # Fetch the address into geolocator to get the coordinates
     loc = format_address(address_x) 
-    print("Reformated Address:", loc) 
     formatted_address.append(loc)
-
     geocode_time = time.time()
     location = geocode_with_retry(geolocator, loc) 
     print("Geocode with Retry Function Runtime:", time.time() - geocode_time)  
-    print("Location: ", location) 
 
     if location != None:
         print("Got location: " + location.address)
@@ -305,38 +281,6 @@ for school in data:
     # extract the school url using the exact path, if no school website is found, add the school name onto the no url list
     doe_url = f"http://www.schools.nyc.gov/schools/{school['locationCode']}"
     doe_urls.append([doe_url, school['name'].strip()])
-    # school_dict["School Website"] = school['profile'].lower()
-    # the_url = school['profile'].lower()
-    # print("URL:", the_url) 
-
-    # # if url is not found in the API database
-    # if the_url == ''or the_url == "-" or the_url == "n/a": 
-    #     print("Got no url thus get from doe link")
-    #     # get the private website from the doe website
-    #     # web_crawler_doe("http://www.schools.nyc.gov/schools/" + school['locationCode'], school['name'])
-    #     doe_url = f"http://www.schools.nyc.gov/schools/{school['locationCode']}"
-    #     doe_urls.append([doe_url, school['name'].strip()])
-
-    # else:
-    #     if the_url.startswith('https://') == False:
-    #         the_url = 'http://' + the_url
-
-    #     the_url = urlparse(the_url)
-    #     domain = the_url.netloc.replace('www.', '').split('.')
-    #     print(domain)
-    #     if "google" in domain: #skip
-    #         google_url.append(school['name'].strip())
-    #         school_dict["Domain_1"] = ''
-    #         school_dict["Domain_2"] = ''
-    #         school_dict["Domain_3"] = ''
-    #         school_dict["Domain_4"] = ''
-    #     else:
-    #         school_dict["Domain_1"] = domain[0] + ".org"
-    #         school_dict["Domain_2"] = domain[0] + ".com"
-    #         school_dict["Domain_3"] = domain[0] + ".edu"
-    #         school_dict["Domain_4"] = domain[0] + ".net"
-
-    count+=1
     print("\n")
 
 concurrent_requests = 2891
@@ -357,7 +301,6 @@ with open("new_output_3001.json", "w") as outfile:
     outfile.write(json_str)
     print("\nSaved")
 
-print(count)
 print(existed_key)
 print(f"There are {len(existed_key)} duplicate schools.")
 end = time.time()
