@@ -15,11 +15,10 @@ connection = mysql.connector.connect(
 
 cursor = connection.cursor()
 
-csv_file_path = 'new_output_3001.csv'
+csv_file_path = 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv'
 table_name = 'DOE_schools_data_2894'
 create_table_query = f"""
 CREATE TABLE IF NOT EXISTS {table_name} (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `School Name` VARCHAR(255),
     Latitude DECIMAL(9, 6),
     Longitude DECIMAL(9, 6),
@@ -48,6 +47,14 @@ cursor.execute(load_data_query)
 connection.commit()
 print(f"Data imported into {table_name} successfully.")
 
+# add primary key
+primary_key = f"""
+ALTER TABLE `database`.`{table_name}`
+ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+"""
+cursor.execute(primary_key)
+connection.commit()
+print("Added primary key.")
 
 # Update domain
 # American Dream Charter School II
@@ -168,7 +175,7 @@ VALUES ('All My Children Day Care And Nursery School - MBXN', '40.71897858426893
 cursor.execute(query1)
 cursor.execute(query2)
 
-
 connection.commit()
+print("Completed.")
 cursor.close()
 connection.close()
