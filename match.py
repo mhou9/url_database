@@ -408,7 +408,7 @@ def check_word_in_json(data, word):
     return False
 
 # Read the JSON data from the file
-file_path = 'new_output_file.json'
+file_path = 'new_output_3001.json'
 json_data = read_json_file(file_path)
 
 existed = []
@@ -422,4 +422,5 @@ for word in domain:
         nothere.append(word.lower())
 
 print(existed)
+print(f"\n{len(nothere)}")
 print(f"\nNot in the list: {nothere}")
