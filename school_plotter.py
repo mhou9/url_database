@@ -20,16 +20,6 @@ import requests
 from concurrent.futures import ThreadPoolExecutor
 
 
-# Hardcoded coordinates for specific addresses to bypass geocoding service limitations
-HARD_CODED_COORDINATES = {
-    "1010 Rev. J. A. Polite Avenue, Bronx, NY 10459": (40.82340686718089, -73.89869727191869),
-    "888 Rev J A Polite Ave, Bronx, NY 10459": (40.82052491636817, -73.89862701448244),
-    "275 Harlem River Park Bridge, Bronx, NY 10453": (40.852933023259034, -73.9210106451699),
-    "1780 Dr. Martin Luther King Jr. Blvd, Bronx, NY 10453": (40.850205804309994, -73.91516348935058),
-    "1 Jamaica Center Plaza, Queens, NY, 11432": (40.703136672958244, -73.80055241819312),
-    "10 South Street, Slip 7, Manhattan, NY 10004": (40.70114391299868, -74.01186340459385)
-}
-
 # Record the start time for performance tracking
 start_time = time.time()
 
@@ -179,15 +169,15 @@ def extract_coordinates_from_html(content):
 
     return None, None
 
-def geocode(addresses, retries=2, delay=2):
+def geocode(addresses, retries=2, delay=3):
     """
-    Geocodes a list of addresses using Nominatim, with hardcoded coordinates for known addresses.
-    
+    Geocodes a list of addresses using Nominatim.
+
     Args:
         addresses (list): List of addresses to geocode.
         retries (int): Number of retries in case of failure.
         delay (int): Delay between retries in seconds.
-    
+
     Returns:
         dict: Dictionary with addresses as keys and (latitude, longitude) tuples as values.
     """
@@ -195,11 +185,6 @@ def geocode(addresses, retries=2, delay=2):
     geocoded_data = {}
 
     for address in addresses:
-        # Check if the address is in the hardcoded coordinates list
-        if address in HARD_CODED_COORDINATES:
-            geocoded_data[address] = HARD_CODED_COORDINATES[address]
-            continue
-
         # Attempt geocoding with retries
         for attempt in range(retries):
             try:
@@ -220,7 +205,6 @@ def geocode(addresses, retries=2, delay=2):
             geocoded_data[address] = (None, None)
 
     return geocoded_data
-
 
 def update_geocoded_coordinates(connection):
     """
@@ -247,19 +231,10 @@ def update_geocoded_coordinates(connection):
             addresses = [school['formatted_address'] for school in batch]
             geocoded_data = {}
             
-            # Check hardcoded coordinates first
+            # Geocode addresses
+            batch_results = geocode(addresses)
             for address in addresses:
-                if address in HARD_CODED_COORDINATES:
-                    geocoded_data[address] = HARD_CODED_COORDINATES[address]
-                else:
-                    geocoded_data[address] = (None, None)  # Placeholder for real geocoding
-            
-            # Geocode addresses not covered by hardcoded list
-            uncoded_addresses = [address for address in addresses if geocoded_data[address] == (None, None)]
-            if uncoded_addresses:
-                batch_results = geocode(uncoded_addresses)
-                for address in uncoded_addresses:
-                    geocoded_data[address] = batch_results.get(address, (None, None))
+                geocoded_data[address] = batch_results.get(address, (None, None))
             
             # Update the database with the geocoded data
             for school in batch:
@@ -298,6 +273,11 @@ def log_failed_addresses(failed_addresses, file_path='failed_addresses.txt'):
         file_path (str): Path to the text file where failed addresses will be saved.
     """
     try:
+        # Open the file in write mode to clear its contents
+        with open(file_path, 'w') as file:
+            pass
+        
+        # Now append the failed addresses
         with open(file_path, 'a') as file:
             for address in failed_addresses:
                 file.write(f"{address}\n")
