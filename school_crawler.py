@@ -17,36 +17,6 @@ HOST = 'localhost'
 USER = 'root'
 DATABASE = 'schoolinfo'
 
-# Hardcoded edge case mappings for specific school URLs to their addresses
-EDGE_CASE_ADDRESSES = {
-    "https://www.schools.nyc.gov/schools/KBUF": "133 Kingsborough 1st Walk, Brooklyn, NY 11233",
-    "https://www.schools.nyc.gov/schools/KDVD": "561 Utica Ave, Brooklyn, NY 11203"
-}
-
-# Hardcoded school information used as a fallback for known schools
-HARD_CODED_SCHOOLS = [
-    {
-        'url': None,
-        'name': 'American Dream Charter School II',
-        'personal_website': 'https://www.adcs2.org/',
-        'domain_name': 'adcs2',
-        'district': '7',
-        'grades': '06,07,08,09,10,11,12',
-        'borough': 'Bronx',
-        'formatted_address': '510 E 141st St, Bronx, NY 10454'
-    },
-    {
-        'url': None,
-        'name': 'Imagine Early Learning Center @ City College',
-        'personal_website': 'https://imagineelc.com/schools/city-college-child-development-center/',
-        'domain_name': 'imagineelc',
-        'district': '',
-        'grades': 'PK',
-        'borough': 'Manhattan',
-        'formatted_address': '119 Convent Ave, New York, NY 10031'
-    }
-]
-
 
 def extract_domain(url):
     """
@@ -210,32 +180,12 @@ def process_schools(schools_data, websites):
         list: A list of tuples where each tuple represents a row to be inserted into the database.
     """
     schools_info = []
-    hardcoded_schools_dict = {school['name']: school for school in HARD_CODED_SCHOOLS}
 
     for i, (school, personal_website) in enumerate(zip(schools_data, websites), 1):
-        url = f"https://www.schools.nyc.gov/schools/{school['locationCode']}"
+        url = f"https://www.schools.nyc.gov/schools/{school.get('locationCode', '')}"
 
-        # Check if the school has hardcoded information
-        if school['name'] in hardcoded_schools_dict:
-            hardcoded_school = hardcoded_schools_dict[school['name']]
-            formatted_address = hardcoded_school['formatted_address']
-            domain_name = extract_domain(personal_website) if personal_website else hardcoded_school['domain_name']
-            schools_info.append((
-                hardcoded_school['url'],
-                hardcoded_school['name'],
-                hardcoded_school['personal_website'],
-                domain_name,
-                hardcoded_school['district'],
-                hardcoded_school['grades'],
-                hardcoded_school['borough'],
-                formatted_address
-            ))
-            continue
-
-        # Check if the school has an edge case address
-        address = EDGE_CASE_ADDRESSES.get(url, f"{school['primaryAddressLine']}, {school['boroughName']}, {school['stateCode']}, {school['zip']}")
-        
         # Format the address with an ordinal suffix
+        address = f"{school.get('primaryAddressLine', '')}, {school.get('boroughName', '')}, {school.get('stateCode', '')}, {school.get('zip', '')}"
         formatted_address = add_suffix(address)
 
         # Extract domain name from personal website if available
@@ -244,27 +194,13 @@ def process_schools(schools_data, websites):
         # Append the processed school information
         schools_info.append((
             url,
-            school['name'],
+            school.get('name', ''),
             personal_website,
             domain_name,
-            school['district'],
-            school['grades'],
-            school['boroughName'],
+            school.get('district', ''),
+            school.get('grades', ''),
+            school.get('boroughName', ''),
             formatted_address
-        ))
-
-    # Add the hardcoded schools
-    for school in HARD_CODED_SCHOOLS:
-        domain_name = extract_domain(school['personal_website']) if school['personal_website'] else None
-        schools_info.append((
-            school['url'],
-            school['name'],
-            school['personal_website'],
-            domain_name,
-            school['district'],
-            school['grades'],
-            school['borough'],
-            school['formatted_address']
         ))
 
     return schools_info
