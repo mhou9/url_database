@@ -47,6 +47,7 @@ To achieve our objective, we will follow these steps:
   - to convert json file into cvs file: python json_to_cvs.py
   - to import the cvs file into MySQL and include the manually hardcoded schools' coordinates: python hardcode_file.py
   - to plot all the schools into a map as a html file: python plotting.py
+  - to compare the all generated domains with existing domain list in a file(need to change the file path): python analyze_result.py
 
 ## Contributors 
 
