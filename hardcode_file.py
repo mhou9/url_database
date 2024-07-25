@@ -1,7 +1,23 @@
-# hard code into MySQL
+import pandas as pd
+import json
 import mysql.connector
 import getpass
 
+# json to csv
+with open('new_output_3001.json', 'r') as file:
+    data = json.load(file)
+
+df = pd.DataFrame.from_dict(data, orient='index')
+
+# Reset the index to make the school names a column and name as 'School Name'
+df.reset_index(inplace=True)
+df.rename(columns={'index': 'School Name'}, inplace=True)
+
+df.to_csv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv', index=False)
+print("JSON data has been successfully converted to CSV and saved as 'new_output_3001.csv'")
+
+
+# hard code into MySQL
 password = getpass.getpass("Input your password for mysql: ")
 database = input("What is your database name? Please enter: ")
 

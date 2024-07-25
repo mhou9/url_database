@@ -14,4 +14,4 @@ df.rename(columns={'index': 'School Name'}, inplace=True)
 # Save to a CSV file
 df.to_csv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv', index=False)
 
-print("JSON data has been successfully converted to CSV and saved as 'schools.csv'")
+print("JSON data has been successfully converted to CSV and saved as 'new_output_3001.csv'")

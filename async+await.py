@@ -270,8 +270,8 @@ for school in data:
 
     # Collect the name of all school where its address was not able to convert to coordinate
     else:
-        school_dict["Latitude"] = "00000000000000000000000" #1st pair
-        school_dict["Longitude"] = "0000000000000000000000000" #2nd pair
+        school_dict["Latitude"] = "0" #1st pair
+        school_dict["Longitude"] = "0" #2nd pair
         address_issue_schools.append(school['name'].strip())
 
     school_dict["Grade"] = school['grades']
