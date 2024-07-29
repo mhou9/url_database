@@ -57,7 +57,7 @@ To achieve our objective, we will follow these steps:
 ## Notes
 - Ensure that you have the necessary permissions and dependencies installed for running the scripts and accessing the MySQL database.
 - Modify the database connection settings in the script as needed to match your MySQL setup.
-- Certain schools have been hardcoded due to inconsistencies in the information presented on the NYC Schools website. For more information about these schools, please visit here.
+- Certain schools have been hardcoded due to inconsistencies in the information presented on the NYC Schools website. For more information about these schools, please visit [here](https://github.com/mhou9/url_database/blob/rrabkina/hardcoded_schools_info.txt).
 
 ## Contributors 
 
