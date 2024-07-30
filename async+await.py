@@ -156,6 +156,9 @@ async def web_crawler_doe_async(session, doe_url, school_name):
 
             if school_url_elements:
                 url = school_url_elements.get('href')
+                # formats some weird urls
+                if url.startswith("http:/") and not url.startswith("http://"):
+                    url = url.replace("http:/", "http://")
                 domain = urlparse(url).netloc.replace('www.', '').split('.')
 
                 if "google" in domain:
@@ -272,7 +275,7 @@ for school in data:
     else:
         school_dict["Latitude"] = "0" #1st pair
         school_dict["Longitude"] = "0" #2nd pair
-        address_issue_schools.append(school['name'].strip())
+        address_issue_schools.append((school['name'].strip(), address_x))
 
     school_dict["Grade"] = school['grades']
     school_dict["District"] = school['district']
@@ -297,9 +300,16 @@ print(f"\nGeocode was not able to convert {not_converted} school addresses.\nThu
 print(f"There are {no_url_number} schools with no private url provided.")
 
 json_str = json.dumps(school_item_dict, indent= 4)
-with open("new_output_3001.json", "w") as outfile:
+with open("testing-testing.json", "w") as outfile:
     outfile.write(json_str)
     print("\nSaved")
+
+with open('error.log', 'w') as file:
+    # Write each item in the list to a new line in the file
+    for item in address_issue_schools:
+        file.write(f"{item[0]} : {item[1]}\n")
+
+print(f"Schools that need to be hardcoded for its coordinate can be found in the file {'error.log'}")
 
 print(existed_key)
 print(f"There are {len(existed_key)} duplicate schools.")
