@@ -44,10 +44,10 @@ To achieve our objective, we will follow these steps:
 3. Open MySQL, connect to localhost by enter your mysql password and database name
 4. In VSCode terminal, run the following code files in order: 
   - to get all the extracted school informations into a json file: python async+await.py
-  - to convert json file into cvs file: python json_to_cvs.py
-  - to import the cvs file into MySQL and include the manually hardcoded schools' coordinates: python hardcode_file.py
+  - to convert JSON to CSV file then import into MySQL and include the manually hardcoded schools' coordinates: python hardcode_file.py
   - to plot all the schools into a map as a html file: python plotting.py
-  - to compare the all generated domains with existing domain list in a file(need to change the file path): python analyze_result.py
+  - to compare the all generated domains with existing domain list in a file: python analyze_result.py
+5. Run .sql file in MySQL to generate the data table
 
 ## Contributors 
 
