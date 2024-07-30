@@ -42,12 +42,15 @@ To achieve our objective, we will follow these steps:
 1. Clone this repo: git clone https://github.com/mhou9/url_database.git
 2. cd url_database
 3. Open MySQL, connect to localhost by enter your mysql password and database name
-4. In VSCode terminal, to run the code file run: python (filename).py
-5. Both the output JSON file and database table should display the correct extracted school data
+4. In VSCode terminal, run the following code files in order: 
+  - to get all the extracted school informations into a json file: python async+await.py
+  - to convert JSON to CSV file then import into MySQL and include the manually hardcoded schools' coordinates: python hardcode_file.py
+  - to plot all the schools into a map as a html file: python plotting.py
+  - to compare the all generated domains with existing domain list in a file: python analyze_result.py
+5. Run .sql file in MySQL to generate the data table
 
 ## Contributors 
 
 Mingrong Hou
 
 Regina Rabkina
- 
