@@ -25,6 +25,8 @@ To achieve our objective, we will follow these steps:
 ### Web Crawling:
 - The Python web crawler will navigate through the NYC Schools website (https://schoolsearch.schools.nyc/) and extract information about each public school.
 - Information to be extracted includes the school's website URL, name, domain, district, grades, borough, and address.
+- A JSON file of all the processed information will be saved.
+- A CSV file of all the unique (forbidden) domains will be saved.
 
 ### Database Creation:
 - A MySQL database schema will be created to store the collected information.
