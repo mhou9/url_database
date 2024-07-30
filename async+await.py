@@ -305,10 +305,8 @@ with open("testing-testing.json", "w") as outfile:
     print("\nSaved")
 
 with open('error.log', 'w') as file:
-    # Write each item in the list to a new line in the file
     for item in address_issue_schools:
         file.write(f"{item[0]} : {item[1]}\n")
-
 print(f"Schools that need to be hardcoded for its coordinate can be found in the file {'error.log'}")
 
 print(existed_key)
