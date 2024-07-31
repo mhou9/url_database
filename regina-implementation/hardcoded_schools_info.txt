@@ -1,0 +1,143 @@
+Imagine Early Learning Center
+Address: 1 Jamaica Center Plaza, Queens, NY, 11432
+Reason for hardcoding: Address is not being recognized by geocoder
+
+Metropolitan High School, The
+Address: 1180 Rev. J.A. Polite Ave., Bronx, NY 10459
+Reason for hardcoding: "
+
+Happy Scholars, Inc.
+Address: 2157336 New Utrecht Avenue, Brooklyn, NY, 11214
+Reason for hardcoding: "
+
+P.S. 004 Maurice Wollin
+Address: 200 Nedra Lane, Staten Island, NY 10312
+Reason for hardcoding: "
+
+P.S. 057 Hubert H. Humphrey
+Address: 140 Palma Drive, Staten Island, NY 10304
+Reason for hardcoding: "
+
+P.S. 055 Benjamin Franklin
+Address: 450 Saint Paul's Place, Bronx, NY 10456
+Reason for hardcoding: "
+
+Success Academy Charter School - Bronx 2
+Address: 450 Saint Paul's Place, Bronx, NY 10456
+Reason for hardcoding: "
+
+New Visions AIM Charter High School II
+Address: 1010 Rev. J. A. Polite Avenue, Bronx, NY 10459
+Reason for hardcoding: "
+
+Arturo A. Schomburg Satellite Academy Bronx
+Address: 1010 Rev. J. A. Polite Avenue, Bronx, NY 10459
+Reason for hardcoding: "
+
+Bronx Regional High School
+Address: 1010 Rev. J. A. Polite Avenue, Bronx, NY 10459
+Reason for hardcoding: "
+
+Bronx Engineering and Technology Academy
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+Bronx School of Law and Finance
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+English Language Learners and International Support Preparatory Academy (ELLIS)
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+Marble Hill High School for International Studies
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+New Visions Charter High School for Advanced Math and Science
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+Bronx Theatre High School
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+New Visions Charter High School for the Humanities
+Address: 99 Terrace View Avenue, Bronx, NY 10463
+Reason for hardcoding: "
+
+I.S. 229 Roland Patterson
+Address: 275 Harlem River Park Bridge, Bronx, NY 10453
+Reason for hardcoding: "
+
+The New American Academy at Roberto Clemente State Park
+Address: 275 Harlem River Park Bridge, Bronx, NY 10453
+Reason for hardcoding: "
+
+The Longwood Academy of Discovery
+Address: 888 Rev J A Polite Ave, Bronx, NY 10459
+Reason for hardcoding: "
+
+Bronx High School for the Visual Arts
+Address: 2040 Antin Pl, Bronx, NY 10462
+Reason for hardcoding: "
+
+P.S. 277
+Address: 519 St Anns Avenue, Bronx, NY 10455
+Reason for hardcoding: Street is missing an apostrophe
+
+Mott Haven Village Preparatory High School
+Address: 701 St. Anns Avenue, Bronx, NY 10455
+Reason for hardcoding: Street is missing an apostrophe
+
+University Heights Secondary School
+Address: 701 St. Anns Avenue, Bronx, NY 10455
+Reason for hardcoding: Street is missing an apostrophe
+
+Cpc-Tribeca Early Learning Center
+Address: 21 Saint Johns Lane, Manhattan, NY, 10013
+Reason for hardcoding: Address is not being recognized by geocoder
+
+Rockaway Park High School for Environmental Sustainability
+Address: 100-00 Beach Channel Drive, Queens, NY 11694
+Reason for hardcoding: "
+
+Channel View School for Research
+Address: 100-00 Beach Channel Drive, Queens, NY 11694
+Reason for hardcoding: "
+
+New Visions Charter High School for the Humanities IV
+Address: 100-00 Beach Channel Drive, Queens, NY 11694
+Reason for hardcoding: "
+
+Rockaway Collegiate High School
+Address: 100-00 Beach Channel Drive, Queens, NY 11694
+Reason for hardcoding: "
+
+P.S. 204 Morris Heights
+Address: 1780 Dr. Martin Luther King Jr. Blvd, Bronx, NY 10453
+Reason for hardcoding: "
+
+Leaders of Excellence, Advocacy and Discovery
+Address: 639 St Anns Avenue, Bronx, NY 10455
+Reason for hardcoding: Street is missing an apostrophe
+
+P.S. X643
+Address: 639 St Anns Avenue, Bronx, NY 10455
+Reason for hardcoding: Street is missing an apostrophe
+
+Collegiate Academy for Mathematics and Personal Awareness Charter School
+Address: 1962-84 Linden Blvd., Brooklyn, NY 11207
+Reason for hardcoding: House number is wrong; anything after – is not needed
+
+P.S. 958
+Address: 836-841 5th Avenue, Brooklyn, NY 11232
+Reason for hardcoding: House number is wrong
+
+Nayema Universal Child Center
+Address: 1107-09 Newkirk Avenue, Brooklyn, NY, 11230
+Reason for hardcoding: Address is not being recognized by geocoder
+
+P.S. 048 P.O. Michael J. Buczek
+Address: 4360-78 Broadway, Manhattan, NY 10033
+Reason for hardcoding: House number is wrong; anything after – is not needed
