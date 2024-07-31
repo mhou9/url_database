@@ -40,7 +40,7 @@ To achieve our objective, we will follow these steps:
 ## Usage Setup Commands
 
 1. Clone this repo: git clone https://github.com/mhou9/url_database.git
-2. cd url_database
+2. cd url_database/mingrong_implementation
 3. Open MySQL, connect to localhost by enter your mysql password and database name
 4. In VSCode terminal, run the following code files in order: 
   - to get all the extracted school informations into a json file: python async+await.py
@@ -54,4 +54,3 @@ To achieve our objective, we will follow these steps:
 Mingrong Hou
 
 Regina Rabkina
- 
