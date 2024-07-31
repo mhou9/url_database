@@ -7,10 +7,9 @@ import getpass
 import logging
 import aiohttp
 import asyncio
-import traceback
 import re
 from bs4 import BeautifulSoup
-import requests
+import csv
 
 # MySQL Credentials
 HOST = 'localhost'
@@ -206,6 +205,24 @@ def process_schools(schools_data, websites):
     return schools_info
 
 
+
+def write_to_csv(domain_names, filename='forbidden_domains.csv'):
+    """
+    Writes the domain names to a CSV file with the header "Forbidden Domain Names".
+
+    Args:
+        domain_names (list): A list of domain names.
+        filename (str): The name of the CSV file to write to. Default is 'forbidden_domains.csv'.
+    """
+    header = ['Forbidden Domain Names']
+
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(header)
+        for domain in domain_names:
+            writer.writerow([domain])
+
+
 def save_to_json(data, file_path):
     """
     Saves the processed school data to a JSON file.
@@ -319,6 +336,12 @@ async def main():
         logging.info("Processing school information...")
         schools_info = process_schools(schools_data, websites)
         logging.info(f"Processed {len(schools_info)} schools.")
+
+        # Save the processed domains to a CSV file
+        logging.info("Saving data to CSV file...")
+        # Extract unique domain names from the processed schools info
+        unique_domain_names = set(info[3] for info in schools_info if info[3] is not None)
+        write_to_csv(unique_domain_names)
 
         # Save the processed data to a JSON file
         logging.info("Saving data to JSON file...")

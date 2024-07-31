@@ -1,15 +1,8 @@
 import logging
 import re  
-import json
 import mysql.connector
-from mysql.connector import Error
 import time
-from urllib.parse import urlparse
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import getpass
 import folium
 from geopy.geocoders import Nominatim
@@ -169,6 +162,7 @@ def extract_coordinates_from_html(content):
 
     return None, None
 
+
 def geocode(addresses, retries=2, delay=3):
     """
     Geocodes a list of addresses using Nominatim.
@@ -206,6 +200,7 @@ def geocode(addresses, retries=2, delay=3):
 
     return geocoded_data
 
+
 def update_geocoded_coordinates(connection):
     """
     Updates the geocoded coordinates (latitude and longitude) for addresses in the database.
@@ -221,7 +216,7 @@ def update_geocoded_coordinates(connection):
         logging.info(f"Fetched {len(schools_data)} records to geocode.")
         
         # Divide addresses into batches to process
-        batch_size = 10  # Adjust based on needs and API rate limits
+        batch_size = 10  
         address_batches = [schools_data[i:i + batch_size] for i in range(0, len(schools_data), batch_size)]
         
         failed_addresses = []
