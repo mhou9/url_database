@@ -10,6 +10,8 @@ import asyncio
 import re
 from bs4 import BeautifulSoup
 import csv
+import dns.resolver
+import smtplib
 
 # MySQL Credentials
 HOST = 'localhost'
@@ -115,6 +117,43 @@ async def fetch_school_website_with_semaphore(session, semaphore, url):
     """
     async with semaphore:
         return await get_school_website(session, url)
+    
+
+def get_mx_record(domain):
+    """
+    Get the MX record for a given domain.
+    
+    Args:
+        domain (str): The domain to get the MX record for.
+        
+    Returns:
+        str: The MX record if found, else "some error".
+    """
+    try:
+        answers = dns.resolver.resolve(domain, 'MX')
+        mx_record = answers[0].exchange.to_text()
+    except:
+        mx_record = "some error"
+    return mx_record
+
+
+def is_valid_mx_record(mx_record):
+    """
+    Validate if the MX record allows sending an email.
+    
+    Args:
+        mx_record (str): The MX record to validate.
+        
+    Returns:
+        bool: True if valid, False otherwise.
+    """
+    try:
+        server = smtplib.SMTP(mx_record, timeout=10)
+        server.ehlo_or_helo_if_needed()
+        server.quit()
+        return True
+    except:
+        return False
 
 
 def add_suffix(address):
@@ -240,6 +279,7 @@ def save_to_json(data, file_path):
         json.dump(dict_data, json_file, indent=4)
 
 
+
 def batch_insert_schools(data, password):
     """
     Inserts school data into a MySQL database in batches.
@@ -264,8 +304,8 @@ def batch_insert_schools(data, password):
 
             # Define the SQL insert query
             insert_query = """
-                INSERT INTO schools (url, name, personal_website, domain_name, district, grades, borough, formatted_address)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO schools (url, name, personal_website, domain_name, district, grades, borough, formatted_address, mx_record, is_valid)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
 
             # Define the SQL query to check if a school already exists
@@ -277,7 +317,16 @@ def batch_insert_schools(data, password):
                     cursor.execute(check_query, (school[1],))
                     result = cursor.fetchone()
                     if result[0] == 0:
-                        cursor.execute(insert_query, school) 
+                        # Get the MX record for the domain
+                        domain_name = school[3]  # Assuming the domain name is the 4th element in the tuple
+                        if domain_name:
+                            mx_record = get_mx_record(domain_name)
+                            is_valid = is_valid_mx_record(mx_record)
+                        else:
+                            mx_record = "null"
+                            is_valid = False
+                        school_with_mx = school + (mx_record, is_valid)
+                        cursor.execute(insert_query, school_with_mx) 
                     else:
                         logging.info(f"School {school[1]} already exists in the database. Skipping insertion.")
                 except Exception as e:  
