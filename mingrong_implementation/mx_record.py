@@ -1,3 +1,127 @@
+# import dns.resolver
+# import pandas as pd
+# import time
+# import sys
+# import getpass
+# import mysql.connector
+# import sqlalchemy
+# import socket
+# import asyncio
+# import aiohttp
+
+# # def is_valid_mail_server(mx_record):
+# #     try:
+# #         # Attempt to connect to the mail server on port 25 (SMTP)
+# #         mail_server = mx_record.rstrip('.')
+# #         print(f"Trying to connect to {mail_server} on port 25...")
+# #         with socket.create_connection((mail_server, 25), timeout=10) as conn:
+# #             banner = conn.recv(1024).decode()
+# #             print(f"Received banner: {banner}")
+# #             if "220" in banner:
+# #                 return True
+# #     except Exception as e:
+# #         print(f"Failed to connect to {mail_server}: {e}")
+# #     return False
+
+# async def is_valid_mail_server(mail_server):
+#     try:
+#         async with aiohttp.ClientSession() as session:
+#             async with session.get(f'http://{mail_server}:25') as response:
+#                 if response.status == 220:
+#                     return True
+#     except Exception:
+#         return False
+
+# pd.__version__
+# dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
+# dns.resolver.default_resolver.nameservers = ['8.8.8.8']
+
+
+# password = getpass.getpass("Input your password for mysql: ")
+# database = input("What is your database name? Please enter: ")
+# engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
+
+# # Connect to database to read all the domains
+# connection = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     passwd=password,
+#     database=database
+# )
+# tablename = "DOE_schools_data_2894"
+# query = f"""SELECT `School Website`, Domain_1, Domain_2, Domain_3, Domain_4 FROM {tablename}"""
+# df = pd.read_sql(query, engine)
+# connection.close()
+
+# df['Domain_1'] = df['Domain_1'].str.strip()
+# df['Domain_2'] = df['Domain_2'].str.strip()
+# df['Domain_3'] = df['Domain_3'].str.strip()
+# df['Domain_4'] = df['Domain_4'].str.strip()
+
+# all_domains = pd.concat([df['Domain_1'], df['Domain_2'], df['Domain_3'], df['Domain_4']])
+# all_domains = all_domains.dropna().unique()
+
+# domain_1 = pd.Series(df['Domain_1'].dropna().unique())
+# domain_2 = pd.Series(df['Domain_2'].dropna().unique())
+# domain_3 = pd.Series(df['Domain_3'].dropna().unique())
+# domain_4 = pd.Series(df['Domain_4'].dropna().unique())
+    
+# mxRecords = []
+# emailAddresses = []
+# is_Valid = []
+# all_valid_domains = []
+
+# for domain in all_domains:
+#     try:
+#         answers = dns.resolver.resolve(domain, 'MX')
+#     except:
+#         mxRecord = "0"
+#     else:
+#         mxRecord = answers[0].exchange.to_text()
+
+#         if is_valid_mail_server(mxRecord):
+#             all_valid_domains.append(domain)
+
+# for d1, d2, d3, d4 in zip(domain_1, domain_2, domain_3, domain_4):
+#     domains = [d1, d2, d3, d4]
+#     validity_tuple = ()
+#     mx_tuple = ()
+#     for domain in domains:
+#         try:
+#             answers = dns.resolver.resolve(domain, 'MX')
+#             mxRecord = answers[0].exchange.to_text()
+#             mx_tuple = mx_tuple + (mxRecord,)
+#             if is_valid_mail_server(mxRecord):
+#                 validity_tuple = validity_tuple + (1,)
+#             else:
+#                 validity_tuple = validity_tuple + (0,)
+#         except Exception as e:
+#             print(f"Error resolving MX record for domain {domain}: {e}")
+#             mx_tuple = mx_tuple + ("error",)
+#             validity_tuple = validity_tuple + (0,)
+#         finally:
+#             mxRecords.append(mx_tuple)
+#             is_Valid.append(validity_tuple)
+
+
+# df = pd.DataFrame({
+#     'School Website': pd.Series(df['School Website'].dropna().unique()),
+#     'Domain': pd.Series(df['Domain_1'].dropna().unique()).str.replace(r'\.org$', '', regex=True),
+#     'Domain_1': domain_1,
+#     'Domain_2': domain_2,
+#     'Domain_3': domain_3,
+#     'Domain_4': domain_4,
+#     "MXRecords": mxRecords,
+#     "Valid MX Records": is_Valid
+# })
+
+# print ("\n", str(len(emailAddresses)), "records processed in total") 
+# print(f"\n {len(all_valid_domains)} domains have Valid mx records found.")
+
+# all_v = pd.DataFrame(all_valid_domains, columns=['Valid Domains'])
+# all_v.to_csv("Verified_domains.csv", index=False)
+# df.to_csv("mx_record.csv", index=True)
+
 import dns.resolver
 import pandas as pd
 import time
@@ -5,89 +129,113 @@ import sys
 import getpass
 import mysql.connector
 import sqlalchemy
-import socket
+import asyncio
+import aiohttp
 
-def is_valid_mail_server(mx_record):
+async def is_valid_mail_server(mail_server):
     try:
-        # Attempt to connect to the mail server on port 25 (SMTP)
-        mail_server = mx_record.rstrip('.')
-        print(f"Trying to connect to {mail_server} on port 25...")
-        with socket.create_connection((mail_server, 25), timeout=10) as conn:
-            banner = conn.recv(1024).decode()
-            print(f"Received banner: {banner}")
-            if "220" in banner:
-                return True
-    except Exception as e:
-        print(f"Failed to connect to {mail_server}: {e}")
-    return False
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'http://{mail_server}:25') as response:
+                if response.status == 220:
+                    return True
+    except Exception:
+        return False
 
-pd.__version__
-dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
-dns.resolver.default_resolver.nameservers = ['8.8.8.8']
-
-
-password = getpass.getpass("Input your password for mysql: ")
-database = input("What is your database name? Please enter: ")
-engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
-
-# Connect to database to read all the domains
-connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd=password,
-    database=database
-)
-tablename = "DOE_schools_data_2894"
-query = f"""SELECT `School Website`, Domain_1, Domain_2, Domain_3, Domain_4 FROM {tablename}"""
-df = pd.read_sql(query, engine)
-connection.close()
-
-df['Domain_1'] = df['Domain_1'].str.strip()
-df['Domain_2'] = df['Domain_2'].str.strip()
-df['Domain_3'] = df['Domain_3'].str.strip()
-df['Domain_4'] = df['Domain_4'].str.strip()
-
-all_domains = pd.concat([df['Domain_1'], df['Domain_2'], df['Domain_3'], df['Domain_4']])
-all_domains = all_domains.dropna().unique()
-
-new_df = pd.DataFrame({
-    'School Name': pd.Series(df['School Name'].dropna().unique()),
-    'Domain': pd.Series(df['Domain_1'].dropna().unique()).str.replace(r'\.org$', '', regex=True),
-    'Domain_1': pd.Series(df['Domain_1'].dropna().unique()),
-    'Domain_2': pd.Series(df['Domain_2'].dropna().unique()),
-    'Domain_3': pd.Series(df['Domain_3'].dropna().unique()),
-    'Domain_4': pd.Series(df['Domain_4'].dropna().unique())
-})
-    
-mxRecords = []
-emailAddresses = []
-with_mx_record = []
-count = 0
-for domain in all_domains:
-    # if count >= 100: break
+async def check_mx_records(domain):
     try:
         answers = dns.resolver.resolve(domain, 'MX')
-        with_mx_record.append(domain)
-    except:
-        print ("some error")
-        mxRecord = "00000000000000000000"
-    else:
-        mxRecord = answers[0].exchange.to_text()
-        mxRecords.append(mxRecord)
-    finally:
-        # mxRecords.append(mxRecord)
-        emailAddresses.append(domain)
-        print(domain)
-        time.sleep(.200)
-        count += 1
+        mx_record = answers[0].exchange.to_text()
+        valid = await is_valid_mail_server(mx_record)
+        return domain, mx_record, valid
+    except Exception as e:
+        print(f"Error resolving MX record for domain {domain}: {e}")
+        return domain, "error", False
 
-#a 200 ms pause is added for good measure
-#the rest of the program uses pandas to export everything neatly to CSV. It takes to lists "mxRecords" and "emailAddresses" and converts it to a dataframe.
+async def main():
+    pd.__version__
+    dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
+    dns.resolver.default_resolver.nameservers = ['8.8.8.8']
 
-df = pd.DataFrame({"Valid Domains":with_mx_record,
-                  "MXRecords":mxRecords})
+    password = getpass.getpass("Input your password for mysql: ")
+    database = input("What is your database name? Please enter: ")
+    engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
 
-print ("\n", str(len(emailAddresses)), "records processed in total") 
-print(f"\n {len(with_mx_record)} domains have mx records found.")
+    # Connect to database to read all the domains
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd=password,
+        database=database
+    )
+    tablename = "DOE_schools_data_2894"
+    query = f"""SELECT `School Website`, Domain_1, Domain_2, Domain_3, Domain_4 FROM {tablename}"""
+    df = pd.read_sql(query, engine)
+    connection.close()
 
-df.to_csv("mx_record.csv", index=True)
+    df['Domain_1'] = df['Domain_1'].str.strip()
+    df['Domain_2'] = df['Domain_2'].str.strip()
+    df['Domain_3'] = df['Domain_3'].str.strip()
+    df['Domain_4'] = df['Domain_4'].str.strip()
+
+    all_domains = pd.concat([df['Domain_1'], df['Domain_2'], df['Domain_3'], df['Domain_4']])
+    all_domains = all_domains.dropna().unique()
+
+    domain_1 = pd.Series(df['Domain_1'])
+    domain_2 = pd.Series(df['Domain_2'])
+    domain_3 = pd.Series(df['Domain_3'])
+    domain_4 = pd.Series(df['Domain_4'])
+
+    mxRecords = []
+    is_Valid = []
+    all_valid_domains = []
+    count = 0
+
+    # Task 1: Collect all domains with valid MX records
+    tasks = [check_mx_records(domain) for domain in all_domains]
+    results = await asyncio.gather(*tasks)
+
+    for domain, mx_record, valid in results:
+        if mx_record != "error" and valid:
+            all_valid_domains.append(domain)
+
+    # Task 2: Check domains row-wise and collect MX records and validity as tuples
+    for d1, d2, d3, d4 in zip(domain_1, domain_2, domain_3, domain_4):
+        if not any([d1, d2, d3, d4]):
+            mxRecords.append(("error", "error", "error", "error"))
+            is_Valid.append((0, 0, 0, 0))
+            continue  # Skip the current iteration if all domains are empty
+        
+        domains = [d1, d2, d3, d4]
+        validity_tuple = ()
+        mx_tuple = ()
+        tasks = [check_mx_records(domain) for domain in domains]
+        results = await asyncio.gather(*tasks)
+
+        for domain, mx_record, valid in results:
+            count += 1
+            mx_tuple = mx_tuple + (mx_record,)
+            validity_tuple = validity_tuple + (1 if valid else 0,)
+
+        mxRecords.append(mx_tuple)
+        is_Valid.append(validity_tuple)
+
+    df_result = pd.DataFrame({
+        'School Website': pd.Series(df['School Website'].dropna().unique()),
+        'Domain': pd.Series(df['Domain_1'].dropna().unique()).str.replace(r'\.org$', '', regex=True),
+        'Domain_1': domain_1,
+        'Domain_2': domain_2,
+        'Domain_3': domain_3,
+        'Domain_4': domain_4,
+        "MXRecords": mxRecords,
+        "Valid MX Records": is_Valid
+    })
+
+    print(f"\n{count} records processed in total")
+    print(f"\n {len(all_valid_domains)} domains have valid MX records found.")
+
+    all_v = pd.DataFrame(all_valid_domains, columns=['Valid Domains'])
+    all_v.to_csv("Verified_domains.csv", index=False)
+    df_result.to_csv("mx_record.csv", index=True)
+
+if __name__ == "__main__":
+    asyncio.run(main())
