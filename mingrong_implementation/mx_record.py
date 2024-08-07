@@ -134,12 +134,15 @@ import aiohttp
 
 async def is_valid_mail_server(mail_server):
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'http://{mail_server}:25') as response:
-                if response.status == 220:
-                    return True
-    except Exception:
-        return False
+        reader, writer = await asyncio.open_connection(mail_server, 25)
+        banner = await reader.read(1024)
+        writer.close()
+        await writer.wait_closed()
+        if b'220' in banner:
+            return True
+    except Exception as e:
+        print(f"Failed to connect to {mail_server}: {e}")
+    return False
 
 async def check_mx_records(domain):
     try:
@@ -151,7 +154,15 @@ async def check_mx_records(domain):
         print(f"Error resolving MX record for domain {domain}: {e}")
         return domain, "error", False
 
+df_result = pd.DataFrame()
+count = 0
+all_valid_domains = []
+
 async def main():
+    global df_result
+    global count 
+    global all_valid_domains
+
     pd.__version__
     dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
     dns.resolver.default_resolver.nameservers = ['8.8.8.8']
@@ -187,8 +198,7 @@ async def main():
 
     mxRecords = []
     is_Valid = []
-    all_valid_domains = []
-    count = 0
+   
 
     # Task 1: Collect all domains with valid MX records
     tasks = [check_mx_records(domain) for domain in all_domains]
@@ -204,7 +214,7 @@ async def main():
             mxRecords.append(("error", "error", "error", "error"))
             is_Valid.append((0, 0, 0, 0))
             continue  # Skip the current iteration if all domains are empty
-        
+
         domains = [d1, d2, d3, d4]
         validity_tuple = ()
         mx_tuple = ()
@@ -220,8 +230,8 @@ async def main():
         is_Valid.append(validity_tuple)
 
     df_result = pd.DataFrame({
-        'School Website': pd.Series(df['School Website'].dropna().unique()),
-        'Domain': pd.Series(df['Domain_1'].dropna().unique()).str.replace(r'\.org$', '', regex=True),
+        'School Website': pd.Series(df['School Website']),
+        'Domain': pd.Series(df['Domain_1']).str.replace(r'\.org$', '', regex=True),
         'Domain_1': domain_1,
         'Domain_2': domain_2,
         'Domain_3': domain_3,
@@ -230,12 +240,14 @@ async def main():
         "Valid MX Records": is_Valid
     })
 
+
+if __name__ == "__main__":
+    asyncio.run(main())
     print(f"\n{count} records processed in total")
     print(f"\n {len(all_valid_domains)} domains have valid MX records found.")
 
     all_v = pd.DataFrame(all_valid_domains, columns=['Valid Domains'])
     all_v.to_csv("Verified_domains.csv", index=False)
-    df_result.to_csv("mx_record.csv", index=True)
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    
+    df_result_cleaned = df_result.dropna(subset=['School Website'])
+    df_result_cleaned.to_csv("mx_record.csv", index=True)
