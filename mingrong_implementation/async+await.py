@@ -157,8 +157,8 @@ async def web_crawler_doe_async(session, doe_url, school_name):
             if school_url_elements:
                 url = school_url_elements.get('href')
                 # formats some weird urls
-                if url.startswith("http:/") and not url.startswith("http://"):
-                    url = url.replace("http:/", "http://")
+                if url.startswith("https:/") and not url.startswith("https://"):
+                    url = url.replace("https:/", "https://")
                 domain = urlparse(url).netloc.replace('www.', '').split('.')
 
                 if "google" in domain:

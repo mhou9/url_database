@@ -26,7 +26,7 @@
     "P.S. 003 The Bedford Village": {
         "Latitude": 40.68230255,
         "Longitude": -73.95554342370406,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps3brooklyn.org/",
@@ -50,7 +50,7 @@
     "P.S. 005 Dr. Ronald McNair": {
         "Latitude": 40.6855458,
         "Longitude": -73.9226032,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -86,7 +86,7 @@
     "The Emily Warren Roebling School": {
         "Latitude": 40.700800900000004,
         "Longitude": -73.99276080491771,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://ps8brooklyn.org/",
@@ -98,7 +98,7 @@
     "Public School 9 The Sarah Smith Garnet School": {
         "Latitude": 40.67852215,
         "Longitude": -73.96635964364509,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps9brooklyn.org/",
@@ -110,7 +110,7 @@
     "Magnet School of Math, Science and Design Technology": {
         "Latitude": 40.6609074,
         "Longitude": -73.98594269794096,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps10.org/",
@@ -122,7 +122,7 @@
     "P.S. 011 Purvis J. Behan": {
         "Latitude": 40.6855509,
         "Longitude": -73.96583810763471,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps11bk.org/",
@@ -194,7 +194,7 @@
     "P.S. 017 Henry D. Woodworth": {
         "Latitude": 40.7150849,
         "Longitude": -73.9569057,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps17kbrooklyn.org/",
@@ -218,7 +218,7 @@
     "P.S. 020 Clinton Hill": {
         "Latitude": 40.6910261,
         "Longitude": -73.97109904546058,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps20.org/",
@@ -278,7 +278,7 @@
     "P.S. 026 Jesse Owens": {
         "Latitude": 40.692207571428575,
         "Longitude": -73.93035842857142,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": "https://www.jesseowensps26.org/",
@@ -290,7 +290,7 @@
     "P.S. 029 John M. Harrigan": {
         "Latitude": 40.6868795,
         "Longitude": -73.99766793985955,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps29brooklyn.org/",
@@ -314,7 +314,7 @@
     "P.S. 031 Samuel F. Dupont": {
         "Latitude": 40.726907100000005,
         "Longitude": -73.95399598250972,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -326,7 +326,7 @@
     "P.S. 032 Samuel Mills Sprole": {
         "Latitude": 40.6804309,
         "Longitude": -73.9918421,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps32.org/",
@@ -338,7 +338,7 @@
     "P.S. 034 Oliver H. Perry": {
         "Latitude": 40.72639205,
         "Longitude": -73.9497692670706,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "http://www.ps34.org/",
@@ -374,7 +374,7 @@
     "Beginning with Children Charter School II": {
         "Latitude": 40.703832899999995,
         "Longitude": -73.95378415472399,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.bwccs2.org/",
@@ -527,10 +527,10 @@
         "Domain_3": "p53k.edu",
         "Domain_4": "p53k.net"
     },
-    "Detective Rafael Ramos": {
+    "P.S. 54 The Detective Rafael Ramos School": {
         "Latitude": 40.69265865,
         "Longitude": -73.9525150614117,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps54k.com/",
@@ -542,7 +542,7 @@
     "P.S. 056 Lewis H. Latimer": {
         "Latitude": 40.68427715,
         "Longitude": -73.96053616583004,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps56k.org/",
@@ -566,7 +566,7 @@
     "P.S. 058 The Carroll": {
         "Latitude": 40.680335,
         "Longitude": -73.99552423407575,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps58brooklyn.org/",
@@ -638,7 +638,7 @@
     "P.S. 067 Charles A. Dorsey": {
         "Latitude": 40.6950782,
         "Longitude": -73.9779092,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.thedorseyschool.org/",
@@ -698,7 +698,7 @@
     "P.S. K077": {
         "Latitude": 40.6788104,
         "Longitude": -73.9767438,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -1049,11 +1049,11 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "18",
         "Borough": "Brooklyn",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.ps114ryder.org",
+        "Domain_1": "ps114ryder.org",
+        "Domain_2": "ps114ryder.com",
+        "Domain_3": "ps114ryder.edu",
+        "Domain_4": "ps114ryder.net"
     },
     "P.S. 115 Daniel Mucatel School": {
         "Latitude": 40.63485025,
@@ -1070,7 +1070,7 @@
     "P.S. 116 Elizabeth L Farrell": {
         "Latitude": 40.698054850000005,
         "Longitude": -73.91658550299985,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "32",
         "Borough": "Brooklyn",
         "School Website": "https://ps116klma.com/",
@@ -1166,7 +1166,7 @@
     "Success Academy Charter School - Bed Stuy 2": {
         "Latitude": 40.6975041,
         "Longitude": -73.94348646048749,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -1214,7 +1214,7 @@
     "Success Academy Charter School - Cobble Hill": {
         "Latitude": 40.6851554,
         "Longitude": -73.99366125456649,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -1262,7 +1262,7 @@
     "P.S. 133 William A. Butler": {
         "Latitude": 40.68039791836735,
         "Longitude": -73.98064767346939,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps133brooklyn.org/",
@@ -1346,7 +1346,7 @@
     "P.S. K140": {
         "Latitude": 40.68191795,
         "Longitude": -73.94559669550401,
-        "Grade": "0K,01,02,03,04,05,06,07,08,10,11,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,11,12,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://p140k.org/",
@@ -1370,7 +1370,7 @@
     "P.S. 145 Andrew Jackson": {
         "Latitude": 40.7014771,
         "Longitude": -73.9323979,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "32",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps145k.org",
@@ -1464,8 +1464,8 @@
         "Domain_4": "ps153.net"
     },
     "The Windsor Terrace School": {
-        "Latitude": 40.65708505,
-        "Longitude": -73.97606296843452,
+        "Latitude": 40.65700525,
+        "Longitude": -73.97596950888456,
         "Grade": "0K,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
@@ -1526,7 +1526,7 @@
     "P.S. 159 Isaac Pitkin": {
         "Latitude": 40.67607785,
         "Longitude": -73.8696888484209,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -1550,7 +1550,7 @@
     "P.S. 161 The Crown": {
         "Latitude": 40.6658716,
         "Longitude": -73.9492320286737,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps161.org/",
@@ -1694,7 +1694,7 @@
     "P.S. 178 Saint Clair Mckelway": {
         "Latitude": 40.6752327,
         "Longitude": -73.9153616552255,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,01,02,03,04,05,06,07,08,SE",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -1742,7 +1742,7 @@
     "Success Academy Charter School - Williamsburg": {
         "Latitude": 40.71186055,
         "Longitude": -73.9601832564185,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -1898,7 +1898,7 @@
     "P.S. 196 Ten Eyck": {
         "Latitude": 40.70878505,
         "Longitude": -73.93973470119195,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -1922,7 +1922,7 @@
     "P.S. 198 Brooklyn": {
         "Latitude": 40.637350999999995,
         "Longitude": -73.93705446516478,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "22",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps198k.org/",
@@ -1970,7 +1970,7 @@
     "P.S. 202 Ernest S. Jenkyns": {
         "Latitude": 40.6660538,
         "Longitude": -73.87654194996011,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://preparedawesome202.org/",
@@ -2258,7 +2258,7 @@
     "J.H.S. 227 Edward B. Shallow": {
         "Latitude": 40.621948,
         "Longitude": -73.995105,
-        "Grade": "06,07,08,SE",
+        "Grade": "0K,06,07,08,SE",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": "https://k227.echalksites.com/",
@@ -2306,14 +2306,14 @@
     "P.S. K231": {
         "Latitude": 40.62661335,
         "Longitude": -73.98951483772123,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,SE",
         "District": "20",
         "Borough": "Brooklyn",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.p231k.com/",
+        "Domain_1": "p231k.org",
+        "Domain_2": "p231k.com",
+        "Domain_3": "p231k.edu",
+        "Domain_4": "p231k.net"
     },
     "P.S. 233 Langston Hughes": {
         "Latitude": 40.65157225,
@@ -2786,7 +2786,7 @@
     "The Gregory Jocko Jackson School of Sports, Art, and Technology": {
         "Latitude": 40.66695295,
         "Longitude": -73.90756195105419,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": "https://www.gjs284.org/",
@@ -2822,7 +2822,7 @@
     "P.S. 288 The Shirley Tanyhill": {
         "Latitude": 40.5742964,
         "Longitude": -73.9920943,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -2966,7 +2966,7 @@
     "P.S. 307 Daniel Hale Williams": {
         "Latitude": 40.70184925,
         "Longitude": -73.98177348467183,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps307brooklyn.org/",
@@ -3050,7 +3050,7 @@
     "P.S. 316 Elijah Stroud": {
         "Latitude": 40.67457635,
         "Longitude": -73.96092770912671,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps316brooklyn.org/",
@@ -3086,7 +3086,7 @@
     "P.S. 321 William Penn": {
         "Latitude": 40.6716239,
         "Longitude": -73.9778724,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://ps321.org/",
@@ -3098,7 +3098,7 @@
     "P.S./I.S. 323": {
         "Latitude": 40.66625475,
         "Longitude": -73.91146393616157,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,SE",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -3134,7 +3134,7 @@
     "P.S. 327 Dr. Rose B. English": {
         "Latitude": 40.6679799,
         "Longitude": -73.9120848,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": "https://www.rosebenglish.org/",
@@ -3170,7 +3170,7 @@
     "The Detective WenJian Liu School of Civics and Entrepreneurship": {
         "Latitude": 40.62705406122449,
         "Longitude": -74.00054553061224,
-        "Grade": "",
+        "Grade": "0K",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -3182,7 +3182,7 @@
     "Explore Exceed Charter School": {
         "Latitude": 40.6769735,
         "Longitude": -73.9601888,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "01,02,03,04,05,06,07,08,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "http://exploreschools.org/",
@@ -3374,7 +3374,7 @@
     "Achievement First Crown Heights Charter School": {
         "Latitude": 40.66199745,
         "Longitude": -73.93645592173652,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.achievementfirst.org/",
@@ -3470,7 +3470,7 @@
     "Success Academy Charter School - Bed Stuy 1": {
         "Latitude": 40.69670995,
         "Longitude": -73.94730064627268,
-        "Grade": "0K,01,05,06,07,08,09,10,SE",
+        "Grade": "0K,01,02,05,06,07,08,09,10,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -3506,7 +3506,7 @@
     "P.S. 370": {
         "Latitude": 40.576139,
         "Longitude": -73.969893,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": "https://370k.org/",
@@ -3554,7 +3554,7 @@
     "P.S. 375 Jackie Robinson School": {
         "Latitude": 40.6646489,
         "Longitude": -73.9596161,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -3590,7 +3590,7 @@
     "Explore Excel Charter School": {
         "Latitude": 40.64274715,
         "Longitude": -73.90804035597857,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "18",
         "Borough": "Brooklyn",
         "School Website": "http://exploreschools.org/",
@@ -3638,7 +3638,7 @@
     "J.H.S. 383 Philippa Schuyler": {
         "Latitude": 40.6977934,
         "Longitude": -73.9195423,
-        "Grade": "05,06,07,08,SE",
+        "Grade": "06,07,08,SE",
         "District": "32",
         "Borough": "Brooklyn",
         "School Website": "https://philippaschuyler383.org/",
@@ -3722,7 +3722,7 @@
     "P.S. 398 Walter Weaver": {
         "Latitude": 40.6640286,
         "Longitude": -73.92768,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps398brooklyn.org/",
@@ -3806,7 +3806,7 @@
     "School of Technology, Arts, and Research": {
         "Latitude": 40.618787187500004,
         "Longitude": -74.021925375,
-        "Grade": "",
+        "Grade": "06,SE",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -3950,7 +3950,7 @@
     "Global Innovators Academy": {
         "Latitude": 40.6507048,
         "Longitude": -74.0084756,
-        "Grade": "",
+        "Grade": "06,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -3962,7 +3962,7 @@
     "Digital Arts and Cinema Technology High School": {
         "Latitude": 40.6851554,
         "Longitude": -73.99366125456649,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.digitaltechhs.org/",
@@ -4043,7 +4043,7 @@
         "Domain_3": "racs446.edu",
         "Domain_4": "racs446.net"
     },
-    "The Math & Science Exploratory School": {
+    "The Exploratory School": {
         "Latitude": 40.6837209,
         "Longitude": -73.9802603,
         "Grade": "06,07,08,SE",
@@ -4070,7 +4070,7 @@
     "Brooklyn Latin School, The": {
         "Latitude": 40.7097173,
         "Longitude": -73.94447209848192,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://www.brooklynlatin.org/",
@@ -4130,7 +4130,7 @@
     "John Jay School for Law": {
         "Latitude": 40.6692988,
         "Longitude": -73.97867590182807,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "07,09,10,11,12,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.johnjaylawhs.org/",
@@ -4370,7 +4370,7 @@
     "P.S. 503: The School of Discovery": {
         "Latitude": 40.6422069,
         "Longitude": -74.0193859,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps503online.org/",
@@ -4394,7 +4394,7 @@
     "P.S. 506: The School of Journalism & Technology": {
         "Latitude": 40.6422069,
         "Longitude": -74.0193859,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": "https://www.ps506k.com/",
@@ -4514,7 +4514,7 @@
     "International High School at Prospect Heights": {
         "Latitude": 40.66994585,
         "Longitude": -73.96033977366244,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,12,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.ihsph.org/",
@@ -4526,7 +4526,7 @@
     "Edward R. Murrow High School": {
         "Latitude": 40.6197691,
         "Longitude": -73.95897805766066,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "07,09,10,11,12,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": "https://www.ermurrowhs.org/",
@@ -4658,7 +4658,7 @@
     "Science, Technology and Research Early College High School at Erasmus": {
         "Latitude": 40.6495043,
         "Longitude": -73.9582574,
-        "Grade": "06,07,08,09,10,11,12",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.starearlycollege.org/",
@@ -4706,7 +4706,7 @@
     "Brooklyn School for Music & Theatre": {
         "Latitude": 40.66994585,
         "Longitude": -73.96033977366244,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.bkmusicntheatre.com/",
@@ -4754,7 +4754,7 @@
     "All City Leadership Secondary School": {
         "Latitude": 40.697607617021276,
         "Longitude": -73.913059,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "32",
         "Borough": "Brooklyn",
         "School Website": "https://www.aclanyc.com/",
@@ -4776,11 +4776,11 @@
         "Domain_4": null
     },
     "Bushwick Leaders High School for Academic Excellence": {
-        "Latitude": 40.698981599999996,
-        "Longitude": -73.90252028796809,
+        "Latitude": 40.6954245,
+        "Longitude": -73.92764577297487,
         "Grade": "09,10,11,12,SE",
-        "District": "24",
-        "Borough": "Queens",
+        "District": "32",
+        "Borough": "Brooklyn",
         "School Website": "https://bushwickleadershs.com/",
         "Domain_1": "bushwickleadershs.org",
         "Domain_2": "bushwickleadershs.com",
@@ -5078,7 +5078,7 @@
     "Bedford Academy High School": {
         "Latitude": 40.68552125,
         "Longitude": -73.95401870628382,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -5222,7 +5222,7 @@
     "Academy of Innovative Technology": {
         "Latitude": 40.6930081,
         "Longitude": -73.86907525829018,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.aoiths.org/",
@@ -5246,7 +5246,7 @@
     "Achievement First Brownsville Charter School": {
         "Latitude": 40.67449860000001,
         "Longitude": -73.91352113697846,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": "https://www.achievementfirst.org/",
@@ -5258,7 +5258,7 @@
     "Brighter Choice Community School": {
         "Latitude": 40.69375945,
         "Longitude": -73.94073649598081,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": "https://www.welovebccs.org/",
@@ -5450,7 +5450,7 @@
     "Brooklyn Ascend Charter School": {
         "Latitude": 40.66069715384615,
         "Longitude": -73.91951787692308,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "18",
         "Borough": "Brooklyn",
         "School Website": "https://www.ascendlearning.org/",
@@ -5592,8 +5592,8 @@
         "Domain_4": null
     },
     "Benjamin Banneker Academy": {
-        "Latitude": 40.6816373,
-        "Longitude": -73.9665647,
+        "Latitude": 40.6895318,
+        "Longitude": -73.9680935,
         "Grade": "09,10,11,12,SE",
         "District": "13",
         "Borough": "Brooklyn",
@@ -5606,7 +5606,7 @@
     "Mott Hall Bridges Academy": {
         "Latitude": 40.66625475,
         "Longitude": -73.91146393616157,
-        "Grade": "06,07,08,SE",
+        "Grade": "06,07,08,09,SE",
         "District": "23",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -5642,7 +5642,7 @@
     "Red Hook Neighborhood School": {
         "Latitude": 40.677848,
         "Longitude": -74.00497798628628,
-        "Grade": "02,03,04,05,06,07,SE",
+        "Grade": "03,04,05,06,07,08,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.nyharbormiddleschool.org/",
@@ -5678,7 +5678,7 @@
     "Achievement First Aspire Charter School": {
         "Latitude": 40.6660538,
         "Longitude": -73.87654194996011,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.achievementfirst.org/",
@@ -5882,7 +5882,7 @@
     "Brooklyn Prospect Charter School - CSD 15": {
         "Latitude": 40.6532454,
         "Longitude": -74.0069426,
-        "Grade": "05",
+        "Grade": "05,06",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.brooklynprospect.org/",
@@ -5894,7 +5894,7 @@
     "Brownsville Collegiate Charter School": {
         "Latitude": 40.70699245,
         "Longitude": -73.94379095790649,
-        "Grade": "0K,01,02,03,04,08",
+        "Grade": "0K,01,02,03,04,05,08",
         "District": "14",
         "Borough": "Brooklyn",
         "School Website": "https://nyc.uncommonschools.org/brownsville-collegiate/",
@@ -5930,7 +5930,7 @@
     "P.S. K721 - Brooklyn Occupational Training Center": {
         "Latitude": 40.58906175,
         "Longitude": -73.98129535602811,
-        "Grade": "0K,01,02,04,05,06,09,10,11,12,SE",
+        "Grade": "01,02,05,06,07,09,10,11,12,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": "https://www.p721k.org/",
@@ -5990,7 +5990,7 @@
     "Brooklyn Excelsior Charter School": {
         "Latitude": 40.6897108,
         "Longitude": -73.92512729101203,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": "https://www.nhaschools.com/schools/Brooklyn-Excelsior-Charter-School/en",
@@ -6062,7 +6062,7 @@
     "Brooklyn Scholars Charter School": {
         "Latitude": 40.66942065,
         "Longitude": -73.8673122636462,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.nhaschools.com/schools/Brooklyn-Scholars-Charter-School/en",
@@ -6158,7 +6158,7 @@
     "Success Academy Charter School - Fort Greene": {
         "Latitude": 40.59351635,
         "Longitude": -73.93667411834863,
-        "Grade": "0K,01",
+        "Grade": "0K,01,02",
         "District": "22",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -6182,7 +6182,7 @@
     "Success Academy Charter School - Prospect Heights": {
         "Latitude": 40.6739501,
         "Longitude": -73.95135813183899,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -6278,7 +6278,7 @@
     "Brooklyn Prospect Charter School - CSD 13.2": {
         "Latitude": 40.6532454,
         "Longitude": -74.0069426,
-        "Grade": "0K,01,02,03,04,05,06",
+        "Grade": "0K,01,02,03,04,05,06,07",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.icsnyc.org/",
@@ -6314,7 +6314,7 @@
     "P.S. K771": {
         "Latitude": 40.5801886,
         "Longitude": -74.0086004,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": "https://p771k.org/",
@@ -6326,7 +6326,7 @@
     "Success Academy Charter School - Bensonhurst": {
         "Latitude": 40.6077255,
         "Longitude": -73.9849061,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "21",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -6338,7 +6338,7 @@
     "Achievement First Apollo Charter School": {
         "Latitude": 40.6770611,
         "Longitude": -73.883707,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.achievementfirst.org/",
@@ -6398,7 +6398,7 @@
     "Bedford Stuyvesant New Beginnings Charter School": {
         "Latitude": 40.69462565,
         "Longitude": -73.93772428256541,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": "http://bsnbcs.org/",
@@ -6469,8 +6469,8 @@
     },
     "Brooklyn Dreams Charter School": {
         "Latitude": 40.6320714,
-        "Longitude": -73.96974945,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Longitude": -73.96974950656941,
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "22",
         "Borough": "Brooklyn",
         "School Website": "https://www.nhaschools.com/schools/Brooklyn-Dreams-Charter-School/en",
@@ -6482,7 +6482,7 @@
     "Cultural Arts Academy Charter School At Spring Creek": {
         "Latitude": 40.6541728,
         "Longitude": -73.908325036594,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "01,02,03,04,05,06",
         "District": "18",
         "Borough": "Brooklyn",
         "School Website": "https://www.culturalartsacademy.org/",
@@ -6516,8 +6516,8 @@
         "Domain_4": "brooklynlaboratoryschool.net"
     },
     "Collegiate Academy for Mathematics and Personal Awareness Charter School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "06,07,08",
         "District": "19",
         "Borough": "Brooklyn",
@@ -6530,7 +6530,7 @@
     "P.S. K811 Connie Lekas School": {
         "Latitude": 40.5913896,
         "Longitude": -73.9389975,
-        "Grade": "06,07,08,09,10,11,12,SE",
+        "Grade": "0K,06,07,08,09,10,11,12,SE",
         "District": "22",
         "Borough": "Brooklyn",
         "School Website": "https://www.p811k.org/",
@@ -6578,7 +6578,7 @@
     "Achievement First Voyager Charter School": {
         "Latitude": 40.6562148,
         "Longitude": -73.9540269,
-        "Grade": "06,07,08",
+        "Grade": "07,08",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.achievementfirst.org/",
@@ -6602,7 +6602,7 @@
     "Success Academy Charter School - Bushwick": {
         "Latitude": 40.6960423,
         "Longitude": -73.91947687271497,
-        "Grade": "0K,01,02,03,04",
+        "Grade": "0K,01,02,03,04,05",
         "District": "32",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -6614,7 +6614,7 @@
     "Success Academy Charter School - Bed Stuy 3": {
         "Latitude": 40.6914563,
         "Longitude": -73.94091575049436,
-        "Grade": "02,05,06,07,08,SE",
+        "Grade": "02,03,04,05,06,07,08,SE",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -6626,7 +6626,7 @@
     "Success Academy Charter School - Flatbush": {
         "Latitude": 40.6487592,
         "Longitude": -73.95749540942698,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.successacademies.org/",
@@ -6662,7 +6662,7 @@
     "Brooklyn Emerging Leaders Academy Charter School": {
         "Latitude": 40.6913175,
         "Longitude": -73.9334866,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "16",
         "Borough": "Brooklyn",
         "School Website": "https://www.belahs.org/",
@@ -6722,7 +6722,7 @@
     "Cypress Hills Ascend Charter School": {
         "Latitude": 40.681120043478266,
         "Longitude": -73.86688334782609,
-        "Grade": "0K,01,02,03,04,05,06",
+        "Grade": "0K,01,02,03,04,05,06,07",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": "https://www.ascendlearning.org/lower-schools/cypress-hills-ascend-lower/",
@@ -6734,7 +6734,7 @@
     "Edmund W. Gordon Brooklyn Laboratory Charter School": {
         "Latitude": 40.6998892,
         "Longitude": -73.9874333,
-        "Grade": "06,07,08",
+        "Grade": "06,07,08,09",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -6782,7 +6782,7 @@
     "Brooklyn Prospect Charter School - CSD 15.2": {
         "Latitude": 40.6478648,
         "Longitude": -73.9786759,
-        "Grade": "0K,01,02,03,06,07,08,09,10,11,12",
+        "Grade": "0K,01,02,03,04,06,07,08,09,10,11,12",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.brooklynprospect.org/",
@@ -6818,7 +6818,7 @@
     "Flatbush Ascend Charter School": {
         "Latitude": 40.6525868,
         "Longitude": -73.9540381,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "17",
         "Borough": "Brooklyn",
         "School Website": "https://www.ascendlearning.org/",
@@ -6866,7 +6866,7 @@
     "Brooklyn RISE Charter School": {
         "Latitude": 40.6889951,
         "Longitude": -73.9822109,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": "https://www.brooklynrise.org/",
@@ -6878,7 +6878,7 @@
     "P.S. 938": {
         "Latitude": 40.6808542,
         "Longitude": -73.8761024,
-        "Grade": "PK,0K,01,02,03,SE",
+        "Grade": "PK,0K,01,02,03,04,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -6890,7 +6890,7 @@
     "Sunset School of Cultural Learning": {
         "Latitude": 40.64286355,
         "Longitude": -74.02056972314787,
-        "Grade": "0K,01,02,03,SE",
+        "Grade": "0K,01,02,03,04,SE",
         "District": "20",
         "Borough": "Brooklyn",
         "School Website": "https://ps939.org/",
@@ -6924,9 +6924,9 @@
         "Domain_4": null
     },
     "P.S. 958": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
-        "Grade": "PK,0K,01,SE",
+        "Latitude": "0",
+        "Longitude": "0",
+        "Grade": "PK,0K,01,02,SE",
         "District": "15",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -6950,7 +6950,7 @@
     "Design Works High School": {
         "Latitude": 40.6820817,
         "Longitude": -73.9736156,
-        "Grade": "09,SE",
+        "Grade": "09,10,SE",
         "District": "13",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -6974,7 +6974,7 @@
     "Bard High School Early College Broooklyn": {
         "Latitude": 40.6713428,
         "Longitude": -73.8936057,
-        "Grade": "",
+        "Grade": "09,SE",
         "District": "19",
         "Borough": "Brooklyn",
         "School Website": null,
@@ -7356,8 +7356,8 @@
         "Domain_4": null
     },
     "The Cheder": {
-        "Latitude": 40.62711485714286,
-        "Longitude": -73.97621914285715,
+        "Latitude": 40.6271613,
+        "Longitude": -73.9757645,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Brooklyn",
@@ -9108,8 +9108,8 @@
         "Domain_4": null
     },
     "Nayema Universal Child Center": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK",
         "District": "",
         "Borough": "Brooklyn",
@@ -10428,8 +10428,8 @@
         "Domain_4": null
     },
     "Mohdc Canarsie": {
-        "Latitude": 40.649155,
-        "Longitude": -73.9000824,
+        "Latitude": 40.6427565,
+        "Longitude": -73.909977,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Brooklyn",
@@ -10536,8 +10536,8 @@
         "Domain_4": null
     },
     "Happy Scholars, Inc.": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Brooklyn",
@@ -10644,8 +10644,8 @@
         "Domain_4": null
     },
     "Neshama 1 Inc.": {
-        "Latitude": 40.5784259,
-        "Longitude": -73.967769,
+        "Latitude": 40.5755466,
+        "Longitude": -73.9684336,
         "Grade": "PK",
         "District": "",
         "Borough": "Brooklyn",
@@ -11280,8 +11280,8 @@
         "Domain_4": null
     },
     "All My Children Day Care And Nursery School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Manhattan",
@@ -11570,7 +11570,7 @@
     "P.S. 002 Meyer London": {
         "Latitude": 40.71293865,
         "Longitude": -73.9919604871198,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": null,
@@ -11630,7 +11630,7 @@
     "P.S. 007 Samuel Stern": {
         "Latitude": 40.8006515,
         "Longitude": -73.93944394258054,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,01,02,03,04,05,06,07,08,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://psms007.org/",
@@ -11714,7 +11714,7 @@
     "P.S. 020 Anna Silver": {
         "Latitude": 40.7215194,
         "Longitude": -73.98616703856953,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://ps20m.org/",
@@ -11750,7 +11750,7 @@
     "P.S. 033 Chelsea Prep": {
         "Latitude": 40.74892885,
         "Longitude": -74.00036945926249,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.ps33chelseaprep.org/",
@@ -11786,7 +11786,7 @@
     "P.S. 036 Margaret Douglas": {
         "Latitude": 40.810614099999995,
         "Longitude": -73.95738621798066,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": null,
@@ -11810,7 +11810,7 @@
     "P.S. 38 Roberto Clemente": {
         "Latitude": 40.788639149999995,
         "Longitude": -73.94478261576629,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,06,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": null,
@@ -11822,7 +11822,7 @@
     "P.S. 040 Augustus Saint-Gaudens": {
         "Latitude": 40.7355177,
         "Longitude": -73.9814466,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.ps40.org/",
@@ -11837,7 +11837,7 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "02",
         "Borough": "Manhattan",
-        "School Website": "https://ps41.org/",
+        "School Website": "https://www.ps41.org/",
         "Domain_1": "ps41.org",
         "Domain_2": "ps41.com",
         "Domain_3": "ps41.edu",
@@ -11880,9 +11880,9 @@
         "Domain_4": "47aslhs.net"
     },
     "P.S. 048 P.O. Michael J. Buczek": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Latitude": "0",
+        "Longitude": "0",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": null,
@@ -11930,7 +11930,7 @@
     "James Weldon Johnson": {
         "Latitude": 40.79738245,
         "Longitude": -73.94153211731518,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,01,02,03,04,05,06,07,08,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://psms57.org/",
@@ -11978,7 +11978,7 @@
     "Democracy Preparatory Endurance Charter School": {
         "Latitude": 40.8015727,
         "Longitude": -73.9351046,
-        "Grade": "PK,0K,01,02,03,04,08,09,10,11",
+        "Grade": "PK,0K,01,02,03,04,05,08,09,10,11,12",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "http://democracyprep.org/",
@@ -12062,7 +12062,7 @@
     "Manhattan Charter School II": {
         "Latitude": 40.7133609,
         "Longitude": -73.98630237698414,
-        "Grade": "01,02,03,04,05",
+        "Grade": "02,03,04,05,06",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "http://www.manhattancharterschool.org/",
@@ -12122,7 +12122,7 @@
     "P.S. 89": {
         "Latitude": 40.71726085,
         "Longitude": -74.01385072972263,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": null,
@@ -12134,7 +12134,7 @@
     "P.S. 092 Mary McLeod Bethune": {
         "Latitude": 40.8149449,
         "Longitude": -73.94547102226522,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": null,
@@ -12194,7 +12194,7 @@
     "P.S. 102 Jacques Cartier": {
         "Latitude": 40.795031949999995,
         "Longitude": -73.9384842306217,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://www.ps102m.org/",
@@ -12242,7 +12242,7 @@
     "P.S. 110 Florence Nightingale": {
         "Latitude": 40.71564914285714,
         "Longitude": -73.98030657142857,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://ps110.org/",
@@ -12302,7 +12302,7 @@
     "P.S. 116 Mary Lindley Murray": {
         "Latitude": 40.744491,
         "Longitude": -73.97771030631628,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.ps116.org/",
@@ -12443,7 +12443,7 @@
         "Domain_3": "ps134.edu",
         "Domain_4": "ps134.net"
     },
-    "The Urban Assembly Early College High School for Emergency Medicine": {
+    "The Urban Assembly Early College High School of Emergency Medicine": {
         "Latitude": 40.71115855,
         "Longitude": -74.00166723468016,
         "Grade": "09,10,11,12,SE",
@@ -12626,7 +12626,7 @@
     "P.S. 155 William Paca": {
         "Latitude": 40.79748875,
         "Longitude": -73.93616605873218,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://www.d4ps155.org/",
@@ -12638,7 +12638,7 @@
     "The Urban Assembly School for Global Commerce": {
         "Latitude": 40.8070452,
         "Longitude": -73.9387486,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": null,
@@ -12650,7 +12650,7 @@
     "P.S. 158 Bayard Taylor": {
         "Latitude": 40.770249199999995,
         "Longitude": -73.95092552107815,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.ps158.org/",
@@ -12686,7 +12686,7 @@
     "P.S. 165 Robert E. Simon": {
         "Latitude": 40.80266,
         "Longitude": -73.96609436264265,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "https://www.ps165nyc.org/",
@@ -12746,7 +12746,7 @@
     "Success Academy Charter School - Hell's Kitchen": {
         "Latitude": 40.76367915,
         "Longitude": -73.99034619959448,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -12770,7 +12770,7 @@
     "P.S. 173": {
         "Latitude": 40.84550725,
         "Longitude": -73.94009470674837,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,01,02,03,04,05,06,07,08,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": null,
@@ -12926,7 +12926,7 @@
     "P.S. 189": {
         "Latitude": 40.852929849999995,
         "Longitude": -73.92786211001504,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://www.ps189m.com/",
@@ -12938,7 +12938,7 @@
     "The Riverside School for Makers and Artists": {
         "Latitude": 40.7729377,
         "Longitude": -73.990154,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,01,02,03,04,05,06,07,08,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": null,
@@ -12962,7 +12962,7 @@
     "P.S. 194 Countee Cullen": {
         "Latitude": 40.8213013,
         "Longitude": -73.94086722955089,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://www.ps194cc.com",
@@ -12986,7 +12986,7 @@
     "P.S. 198 Isador E. Ida Straus": {
         "Latitude": 40.7849967,
         "Longitude": -73.9502957,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.ps198m.org/",
@@ -12998,7 +12998,7 @@
     "P.S. 199 Jessie Isador Straus": {
         "Latitude": 40.77776595,
         "Longitude": -73.98473310032742,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": null,
@@ -13022,7 +13022,7 @@
     "Great Oaks Charter School": {
         "Latitude": 40.7306989,
         "Longitude": -74.0027968,
-        "Grade": "06,07,08,09,10,11",
+        "Grade": "06,07,08,09,10,11,12",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://greatoakscharter.org/",
@@ -13190,7 +13190,7 @@
     "P.S. 242 - The Young Diplomats Magnet Academy": {
         "Latitude": 40.8061986,
         "Longitude": -73.94851756429208,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "http://www.ps242.com/",
@@ -13241,11 +13241,11 @@
         "Grade": "06,07,08,SE",
         "District": "02",
         "Borough": "Manhattan",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.salkschool.org/",
+        "Domain_1": "salkschool.org",
+        "Domain_2": "salkschool.com",
+        "Domain_3": "salkschool.edu",
+        "Domain_4": "salkschool.net"
     },
     "Lafayette Academy": {
         "Latitude": 40.7914827,
@@ -13274,7 +13274,7 @@
     "The Clinton School": {
         "Latitude": 40.7361103,
         "Longitude": -73.99235060557399,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://theclintonschool.net/",
@@ -13298,7 +13298,7 @@
     "Success Academy Charter School - Washington Heights": {
         "Latitude": 40.8578609,
         "Longitude": -73.93540497485876,
-        "Grade": "0K,01,02,03,04,05,06,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -13334,7 +13334,7 @@
     "Paula Hedbavny School": {
         "Latitude": 40.86099591666667,
         "Longitude": -73.92133666666668,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "01,02,03,04,05,06,07,08,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "http://psms278.org/",
@@ -13370,7 +13370,7 @@
     "The River School": {
         "Latitude": 40.74449615,
         "Longitude": -73.97245896210029,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://ps281.org/",
@@ -13382,7 +13382,7 @@
     "Urban Assembly Maker Academy": {
         "Latitude": 40.71115855,
         "Longitude": -74.00166723468016,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "09,10,11,12",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.uamaker.nyc/",
@@ -13394,7 +13394,7 @@
     "Harlem Children's Zone Promise Academy Charter School": {
         "Latitude": 40.8125657,
         "Longitude": -73.94828095493924,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://hczpromise.org/",
@@ -13514,7 +13514,7 @@
     "School in the Square Public Charter School": {
         "Latitude": 40.8489085882353,
         "Longitude": -73.93576852941176,
-        "Grade": "PK,0K,01,02,03,06,07,08",
+        "Grade": "PK,0K,01,02,03,04,06,07,08,09",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://www.schoolinthesquare.org/",
@@ -13574,7 +13574,7 @@
     "Facing History School, The": {
         "Latitude": 40.7655631,
         "Longitude": -73.9935861,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://facinghistoryschool.org/",
@@ -13598,7 +13598,7 @@
     "Urban Assembly Academy of Government and Law, The": {
         "Latitude": 40.71728865,
         "Longitude": -73.98933649714921,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.uaagl.org/",
@@ -13742,7 +13742,7 @@
     "Manhattan Charter School": {
         "Latitude": 40.71822745,
         "Longitude": -73.98401743355555,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "01,02,03,04,05",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "http://www.manhattancharterschool.org/",
@@ -13790,7 +13790,7 @@
     "Harlem Link Charter School": {
         "Latitude": 40.7982472,
         "Longitude": -73.9503564,
-        "Grade": "PK,0K,01,02,03,04,05,07,SE",
+        "Grade": "PK,01,02,03,04,05,06,08,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "http://harlemlink.org/",
@@ -13802,7 +13802,7 @@
     "Girls Preparatory Charter School of New York": {
         "Latitude": 40.72913185,
         "Longitude": -73.98248508603542,
-        "Grade": "01,02,03,04,05,06,07,08,09,10,SE",
+        "Grade": "02,03,04,05,06,07,08,09,10,11",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://www.publicprep.org/",
@@ -13850,7 +13850,7 @@
     "Harlem Village Academy East Charter School": {
         "Latitude": 40.79930915,
         "Longitude": -73.93422968652985,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://harlemvillageacademies.org/",
@@ -13874,7 +13874,7 @@
     "NYC Autism Charter School East Harlem": {
         "Latitude": 40.785553765306126,
         "Longitude": -73.9424733877551,
-        "Grade": "0K,01,02,03,04,05,06,08,09,10,12,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,11,12,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://www.nycautismcharterschool.org/",
@@ -13886,7 +13886,7 @@
     "WHIN Music Community Charter School": {
         "Latitude": 40.8378722,
         "Longitude": -73.9397594,
-        "Grade": "0K,01,02,03,04,05,06,07",
+        "Grade": "0K,01,02,03,04,05,06,07,08",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://whinmusic.org/",
@@ -14006,7 +14006,7 @@
     "Success Academy Charter School - Harlem 6": {
         "Latitude": 40.8163779,
         "Longitude": -73.95336995472942,
-        "Grade": "0K,01,04,SE",
+        "Grade": "0K,01,02,05,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -14018,7 +14018,7 @@
     "Success Academy Charter School - Hudson Yards": {
         "Latitude": 40.7589757,
         "Longitude": -73.996389,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -14030,7 +14030,7 @@
     "The Children's Workshop School": {
         "Latitude": 40.72763415,
         "Longitude": -73.97843592695241,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://cwsnyc.org/",
@@ -14042,7 +14042,7 @@
     "Columbia Secondary School": {
         "Latitude": 40.8107237,
         "Longitude": -73.9562682,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://www.columbiasecondary.org/",
@@ -14054,7 +14054,7 @@
     "Neighborhood School": {
         "Latitude": 40.724446650000004,
         "Longitude": -73.98632270282695,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "http://tnsny.org/",
@@ -14066,7 +14066,7 @@
     "Earth School": {
         "Latitude": 40.723649249999994,
         "Longitude": -73.98186974915427,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": null,
@@ -14081,16 +14081,16 @@
         "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "06",
         "Borough": "Manhattan",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.whacademy.org/",
+        "Domain_1": "whacademy.org",
+        "Domain_2": "whacademy.com",
+        "Domain_3": "whacademy.edu",
+        "Domain_4": "whacademy.net"
     },
     "The William Lynch School": {
         "Latitude": 40.8264487,
         "Longitude": -73.9474571570359,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://ps368.org/",
@@ -14138,7 +14138,7 @@
     "Zeta Charter Schools - Inwood": {
         "Latitude": 40.871025,
         "Longitude": -73.911877,
-        "Grade": "PK,0K,01,02,03,04,05,06",
+        "Grade": "PK,0K,01,02,03,04,05,06,07",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://zetaschools.org/",
@@ -14189,11 +14189,11 @@
         "Grade": "06,07,08,SE",
         "District": "04",
         "Borough": "Manhattan",
-        "School Website": "https://www.rsams377.com/",
-        "Domain_1": "rsams377.org",
-        "Domain_2": "rsams377.com",
-        "Domain_3": "rsams377.edu",
-        "Domain_4": "rsams377.net"
+        "School Website": null,
+        "Domain_1": null,
+        "Domain_2": null,
+        "Domain_3": null,
+        "Domain_4": null
     },
     "School for Global Leaders": {
         "Latitude": 40.7200452,
@@ -14210,7 +14210,7 @@
     "Harlem Village Academy West 2 Charter School": {
         "Latitude": 40.8068156,
         "Longitude": -73.9455625,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://harlemvillageacademies.org/",
@@ -14234,7 +14234,7 @@
     "Storefront Academy Harlem Charter School": {
         "Latitude": 40.8076222,
         "Longitude": -73.93769597024118,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": null,
@@ -14246,7 +14246,7 @@
     "Success Academy Charter School - Harlem 2": {
         "Latitude": 40.8048236,
         "Longitude": -73.9324254,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -14270,7 +14270,7 @@
     "Success Academy Charter School - Harlem 4": {
         "Latitude": 40.801682,
         "Longitude": -73.9553307,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "https://www.successacademies.org/",
@@ -14318,7 +14318,7 @@
     "Amber Charter School Inwood": {
         "Latitude": 40.8703251,
         "Longitude": -73.91758805615727,
-        "Grade": "0K,01,02,03",
+        "Grade": "0K,01,02,03,04",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": null,
@@ -14366,7 +14366,7 @@
     "A School Without Walls": {
         "Latitude": 40.70896375,
         "Longitude": -74.01248159058053,
-        "Grade": "09,10,SE",
+        "Grade": "09,10,11",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://aschoolwithoutwalls.org/",
@@ -14474,7 +14474,7 @@
     "Professional Performing Arts High School": {
         "Latitude": 40.7615114,
         "Longitude": -73.9886384,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "http://www.ppasnyc.org/",
@@ -14486,7 +14486,7 @@
     "Baruch College Campus High School": {
         "Latitude": 40.7417975,
         "Longitude": -73.985941,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.bcchsnyc.net/",
@@ -14498,7 +14498,7 @@
     "N.Y.C. Lab School for Collaborative Studies": {
         "Latitude": 40.7424139,
         "Longitude": -74.0025156,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.nyclabschool.org/",
@@ -14534,7 +14534,7 @@
     "Wadleigh Secondary School for the Performing & Visual Arts": {
         "Latitude": 40.802606999999995,
         "Longitude": -73.95429411836136,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "https://wadleigharts.org/",
@@ -14546,7 +14546,7 @@
     "Eleanor Roosevelt High School": {
         "Latitude": 40.7702874,
         "Longitude": -73.9532703536936,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.erhsnyc.org/",
@@ -14594,7 +14594,7 @@
     "High School for Health Professions and Human Services": {
         "Latitude": 40.732711,
         "Longitude": -73.9825978,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "08,09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.hphsnyc.org/",
@@ -14748,8 +14748,8 @@
         "Domain_4": "manhattanvillageacademy.net"
     },
     "Ballet Tech, NYC Public School for Dance": {
-        "Latitude": 40.7386698,
-        "Longitude": -73.9900129,
+        "Latitude": 40.7255725,
+        "Longitude": -73.9966543,
         "Grade": "04,05,06,07,08",
         "District": "02",
         "Borough": "Manhattan",
@@ -14894,7 +14894,7 @@
     "Inwood Academy for Leadership Charter School": {
         "Latitude": 40.8654196,
         "Longitude": -73.9184593,
-        "Grade": "05,06,07,08,09,10,11,12",
+        "Grade": "0K,01,05,06,07,08,09,10,11,12",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": "https://inwoodacademy.org/",
@@ -15002,7 +15002,7 @@
     "Park East High School": {
         "Latitude": 40.790186750000004,
         "Longitude": -73.94401226282724,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://www.parkeasths.org/",
@@ -15050,7 +15050,7 @@
     "Home Instruction": {
         "Latitude": 40.8318405,
         "Longitude": -73.8274838,
-        "Grade": "02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "03,04,05,06,07,08,09,10,11,12,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://www.homeinstructionschools.com/",
@@ -15086,7 +15086,7 @@
     "Castle Bridge School": {
         "Latitude": 40.8413745,
         "Longitude": -73.9390543,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,SE",
         "District": "06",
         "Borough": "Manhattan",
         "School Website": null,
@@ -15110,7 +15110,7 @@
     "Lower East Side Preparatory High School": {
         "Latitude": 40.7200452,
         "Longitude": -73.9860347601194,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://www.lespnyc.com/",
@@ -15122,7 +15122,7 @@
     "Teachers College Community School": {
         "Latitude": 40.8125,
         "Longitude": -73.9536111,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://www.tccsps517.org/",
@@ -15158,7 +15158,7 @@
     "Murry Bergtraum High School for Business Careers": {
         "Latitude": 40.71115855,
         "Longitude": -74.00166723468016,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "09,10,11,12",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": null,
@@ -15230,7 +15230,7 @@
     "Repertory Company High School for Theatre Arts": {
         "Latitude": 40.7560233,
         "Longitude": -73.9845629,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.repertorycompanyhs.org/",
@@ -15245,7 +15245,7 @@
         "Grade": "09,10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
-        "School Website": "https://unionsquareacademy.org/",
+        "School Website": "https://www.unionsquareacademy.org/",
         "Domain_1": "unionsquareacademy.org",
         "Domain_2": "unionsquareacademy.com",
         "Domain_3": "unionsquareacademy.edu",
@@ -15266,7 +15266,7 @@
     "New Explorations into Science, Technology and Math High School": {
         "Latitude": 40.719443299999995,
         "Longitude": -73.97965192134006,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "01",
         "Borough": "Manhattan",
         "School Website": "https://nestmk12.net/",
@@ -15410,7 +15410,7 @@
     "High School M560 - City As School": {
         "Latitude": 40.7293243,
         "Longitude": -74.0063104,
-        "Grade": "10,11,12",
+        "Grade": "11,12",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.cityas.org/",
@@ -15422,7 +15422,7 @@
     "Urban Academy Laboratory High School": {
         "Latitude": 40.76576752941177,
         "Longitude": -73.96082970588236,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "10,11,12,SE",
         "District": "02",
         "Borough": "Manhattan",
         "School Website": "https://www.urbanacademy.org/",
@@ -15638,7 +15638,7 @@
     "Amber Charter School East Harlem": {
         "Latitude": 40.790919599999995,
         "Longitude": -73.94391867257167,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "https://www.ambercharter.org/",
@@ -15662,7 +15662,7 @@
     "Harlem Prep Charter School": {
         "Latitude": 40.8015727,
         "Longitude": -73.9351046,
-        "Grade": "03,04,05,06,07,08,09,10,11,12",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "04",
         "Borough": "Manhattan",
         "School Website": "http://democracyprep.org/",
@@ -15674,7 +15674,7 @@
     "Harlem Village Academy West Charter School": {
         "Latitude": 40.8213013,
         "Longitude": -73.94086722955089,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,12",
+        "Grade": "PK,05,06,07,08,09,10,11,12",
         "District": "05",
         "Borough": "Manhattan",
         "School Website": "https://harlemvillageacademies.org/",
@@ -15758,7 +15758,7 @@
     "Special Music School": {
         "Latitude": 40.7752346,
         "Longitude": -73.9829549,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": "https://www.kaufmanmusiccenter.org/sms/",
@@ -15782,7 +15782,7 @@
     "Future Leaders Institute Charter School": {
         "Latitude": 40.8061986,
         "Longitude": -73.94851756429208,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "03",
         "Borough": "Manhattan",
         "School Website": null,
@@ -16644,8 +16644,8 @@
         "Domain_4": null
     },
     "Washington Heights DCC": {
-        "Latitude": 40.8462414,
-        "Longitude": -73.9385925,
+        "Latitude": 40.8448905,
+        "Longitude": -73.9352862,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Manhattan",
@@ -16872,8 +16872,8 @@
         "Domain_4": null
     },
     "Cpc-Tribeca Early Learning Center": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "3K,EL,PK",
         "District": "",
         "Borough": "Manhattan",
@@ -17318,7 +17318,7 @@
     "P.S. 009": {
         "Latitude": 40.7183488,
         "Longitude": -73.9122407,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://walterreedschool.wixsite.com/p009q",
@@ -17390,7 +17390,7 @@
     "P.S. 015 Jackie Robinson": {
         "Latitude": 40.68606245,
         "Longitude": -73.75655134546483,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": "https://www.ps15q.com/",
@@ -17436,8 +17436,8 @@
         "Domain_4": "ps18q.net"
     },
     "P.S. 019 Marino Jeantet": {
-        "Latitude": 40.749257,
-        "Longitude": -73.8669434,
+        "Latitude": 40.747214,
+        "Longitude": -73.865249,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "24",
         "Borough": "Queens",
@@ -17486,7 +17486,7 @@
     "P.S. Q023 @ Queens Children Center": {
         "Latitude": 40.73947115,
         "Longitude": -73.9286769207732,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": null,
@@ -17570,7 +17570,7 @@
     "P.S. 032 State Street": {
         "Latitude": 40.7649525,
         "Longitude": -73.7944015,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": "https://www.ps32q.org/",
@@ -17630,7 +17630,7 @@
     "Cynthia Jenkins School": {
         "Latitude": 40.6762584,
         "Longitude": -73.75830950424,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": "https://www.ps37q.com/",
@@ -17642,7 +17642,7 @@
     "P.S. 038 Rosedale": {
         "Latitude": 40.6711528,
         "Longitude": -73.73377917295882,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "01,02,03,04,05,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": null,
@@ -17666,7 +17666,7 @@
     "P.S. 041 Crocheron": {
         "Latitude": 40.77026995,
         "Longitude": -73.77124661803023,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": null,
@@ -17777,16 +17777,16 @@
         "Grade": "PK,0K,01,SE",
         "District": "27",
         "Borough": "Queens",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.ps51q.org/",
+        "Domain_1": "ps51q.org",
+        "Domain_2": "ps51q.com",
+        "Domain_3": "ps51q.edu",
+        "Domain_4": "ps51q.net"
     },
     "P.S. 052 Queens": {
         "Latitude": 40.6612514,
         "Longitude": -73.7669235,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": null,
@@ -17846,7 +17846,7 @@
     "P.S. 58 - The School of Heroes": {
         "Latitude": 40.7287324,
         "Longitude": -73.89015763213266,
-        "Grade": "PK,0K,01,02,03,04,05,06,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://www.ps58q.org/",
@@ -17882,7 +17882,7 @@
     "I.S. 061 Leonardo Da Vinci": {
         "Latitude": 40.74201385,
         "Longitude": -73.86286385962171,
-        "Grade": "06,07,08,SE",
+        "Grade": "06,07,08,09,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": null,
@@ -17894,7 +17894,7 @@
     "P. S. 62 - Chester Park School": {
         "Latitude": 40.68829045,
         "Longitude": -73.83574811659838,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://www.ps062.org/",
@@ -17945,11 +17945,11 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "27",
         "Borough": "Queens",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "http://www.ps66q.com/",
+        "Domain_1": "ps66q.org",
+        "Domain_2": "ps66q.com",
+        "Domain_3": "ps66q.edu",
+        "Domain_4": "ps66q.net"
     },
     "J.H.S. 067 Louis Pasteur": {
         "Latitude": 40.76245685,
@@ -17969,11 +17969,11 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "24",
         "Borough": "Queens",
-        "School Website": "https:/ps68q.org/",
-        "Domain_1": ".org",
-        "Domain_2": ".com",
-        "Domain_3": ".edu",
-        "Domain_4": ".net"
+        "School Website": "https://ps68q.org/",
+        "Domain_1": "ps68q.org",
+        "Domain_2": "ps68q.com",
+        "Domain_3": "ps68q.edu",
+        "Domain_4": "ps68q.net"
     },
     "P.S. 069 Jackson Heights": {
         "Latitude": 40.749864,
@@ -18002,7 +18002,7 @@
     "P.S. 071 Forest": {
         "Latitude": 40.7114276,
         "Longitude": -73.90477358174039,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": null,
@@ -18050,7 +18050,7 @@
     "Robert E. Peary School": {
         "Latitude": 40.7004115,
         "Longitude": -73.9037742,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://p75q.org/",
@@ -18062,7 +18062,7 @@
     "P.S. 076 William Hallet": {
         "Latitude": 40.7606413,
         "Longitude": -73.9414231,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "http://www.ps76q.org/",
@@ -18146,7 +18146,7 @@
     "Central Queens Academy Charter School": {
         "Latitude": 40.7378683,
         "Longitude": -73.8770427,
-        "Grade": "0K,01,02,03,05,06,07,08",
+        "Grade": "0K,01,02,03,04,05,06,07,08",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://www.centralqueensacademy.org/",
@@ -18338,7 +18338,7 @@
     "P.S. 099 Kew Gardens": {
         "Latitude": 40.7113527,
         "Longitude": -73.8281111,
-        "Grade": "0K,01,02,03,04,05,06,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": null,
@@ -18350,7 +18350,7 @@
     "P.S. 100 Glen Morris": {
         "Latitude": 40.67980995,
         "Longitude": -73.82133694482174,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://www.ps100q.com/",
@@ -18410,7 +18410,7 @@
     "Lighthouse Elementary School": {
         "Latitude": 40.5945548,
         "Longitude": -73.7670173532922,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://ps106q.echalksites.com/",
@@ -18422,7 +18422,7 @@
     "P.S. 107 Thomas A Dooley": {
         "Latitude": 40.75555975,
         "Longitude": -73.7996911083717,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": null,
@@ -18470,7 +18470,7 @@
     "P.S. 111 Jacob Blackwell": {
         "Latitude": 40.7585995,
         "Longitude": -73.9393734,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.ps111q.org/",
@@ -18636,8 +18636,8 @@
         "Domain_4": "psms124q.net"
     },
     "I.S. 125 Thom J. McCann Woodside": {
-        "Latitude": 40.7400962,
-        "Longitude": -73.9051726,
+        "Latitude": 40.7389925,
+        "Longitude": -73.8923382,
         "Grade": "06,07,08,SE",
         "District": "24",
         "Borough": "Queens",
@@ -18731,7 +18731,7 @@
         "Domain_3": null,
         "Domain_4": null
     },
-    "P.S. 133 Queens": {
+    "P.S. 133 The Bellerose School of Excellence": {
         "Latitude": 40.73219335,
         "Longitude": -73.71792870256795,
         "Grade": "PK,0K,01,02,03,04,05,SE",
@@ -18818,7 +18818,7 @@
     "P.S. 140 Edward K Ellington": {
         "Latitude": 40.68755885,
         "Longitude": -73.78132844883348,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://ps140q.org/",
@@ -18950,7 +18950,7 @@
     "P.S. 152 Gwendoline N. Alleyne School": {
         "Latitude": 40.7532558,
         "Longitude": -73.9002981,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": null,
@@ -18962,7 +18962,7 @@
     "P.S. 153 Maspeth Elem": {
         "Latitude": 40.7163344,
         "Longitude": -73.9039189165306,
-        "Grade": "PK,0K,01,02,03,04,05,06,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://www.ps153online.org/",
@@ -18986,7 +18986,7 @@
     "P.S. 155": {
         "Latitude": 40.6794231,
         "Longitude": -73.8103291,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://ps155q.wixsite.com/ps155",
@@ -19238,7 +19238,7 @@
     "P.S. Q177": {
         "Latitude": 40.74347245,
         "Longitude": -73.78738740338511,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": "https://www.publicschool177q.com/",
@@ -19394,7 +19394,7 @@
     "P.S. 193 Alfred J. Kennedy": {
         "Latitude": 40.7920602,
         "Longitude": -73.80899584101236,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": "https://ps193q.weebly.com/",
@@ -19430,7 +19430,7 @@
     "P.S. 196 Grand Central Parkway": {
         "Latitude": 40.722814650000004,
         "Longitude": -73.83761840575083,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://www.ps196q.com",
@@ -19574,7 +19574,7 @@
     "P.S. 209 Clearview Gardens": {
         "Latitude": 40.7837143,
         "Longitude": -73.7950273,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": "https://www.ps209q.com/",
@@ -19814,7 +19814,7 @@
     "P.S. Q233": {
         "Latitude": 40.7085334,
         "Longitude": -73.8558047,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://www.p233q.com/",
@@ -19838,7 +19838,7 @@
     "Academy for New Americans": {
         "Latitude": 40.766708,
         "Longitude": -73.9230525,
-        "Grade": "06,07,08",
+        "Grade": "07,08",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.is235.org/",
@@ -19910,7 +19910,7 @@
     "Queens High School for Language Studies": {
         "Latitude": 40.76494565,
         "Longitude": -73.82658167141781,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": null,
@@ -19982,7 +19982,7 @@
     "P.S. 251 Queens": {
         "Latitude": 40.6651991,
         "Longitude": -73.7596248,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": "http://www.ps251q.org/",
@@ -19994,7 +19994,7 @@
     "Queens School of Inquiry, The": {
         "Latitude": 40.724521,
         "Longitude": -73.8085459,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "25",
         "Borough": "Queens",
         "School Website": null,
@@ -20018,7 +20018,7 @@
     "P.S. 254 - The Rosa Parks School": {
         "Latitude": 40.6971097,
         "Longitude": -73.8478139,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://www.ps254q27.com/",
@@ -20088,8 +20088,8 @@
         "Domain_4": "voyagessouth.net"
     },
     "Channel View School for Research": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "06,07,08,09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -20162,7 +20162,7 @@
     "P.S./I.S. 268": {
         "Latitude": 40.7004207,
         "Longitude": -73.7811286,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": "http://www.PSIS268Q.org/",
@@ -20294,7 +20294,7 @@
     "Young Women's Leadership School, Astoria": {
         "Latitude": 40.7713666,
         "Longitude": -73.92430669144174,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.tywls-astoria.org/",
@@ -20342,7 +20342,7 @@
     "Hunters Point Community Middle School": {
         "Latitude": 40.7426947,
         "Longitude": -73.95951536594,
-        "Grade": "06,07,08,SE",
+        "Grade": "06,07,08,09,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.hunterspointcms.org/",
@@ -20390,7 +20390,7 @@
     "Pan American International High School": {
         "Latitude": 40.74336015,
         "Longitude": -73.87151385881586,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "24",
         "Borough": "Queens",
         "School Website": "https://panamericanihs.org/",
@@ -20712,8 +20712,8 @@
         "Domain_4": "scholarsnyc.net"
     },
     "Rockaway Park High School for Environmental Sustainability": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -20762,7 +20762,7 @@
     "High School for Community Leadership": {
         "Latitude": 40.71421795,
         "Longitude": -73.79792451616927,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://www.nychscl.com/",
@@ -20774,7 +20774,7 @@
     "East Elmhurst Community School": {
         "Latitude": 40.76167495,
         "Longitude": -73.8719473755132,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://ps329q.echalksites.com/",
@@ -20784,8 +20784,8 @@
         "Domain_4": "ps329q.net"
     },
     "Helen M. Marshall School": {
-        "Latitude": 40.761586,
-        "Longitude": -73.8440341,
+        "Latitude": 40.7599548,
+        "Longitude": -73.8466993,
         "Grade": "0K,01,02,03,04,05,SE",
         "District": "24",
         "Borough": "Queens",
@@ -20825,11 +20825,11 @@
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
-        "School Website": "https://www.epicnorth.org/",
-        "Domain_1": "epicnorth.org",
-        "Domain_2": "epicnorth.com",
-        "Domain_3": "epicnorth.edu",
-        "Domain_4": "epicnorth.net"
+        "School Website": null,
+        "Domain_1": null,
+        "Domain_2": null,
+        "Domain_3": null,
+        "Domain_4": null
     },
     "Success Academy Charter School - Rosedale": {
         "Latitude": 40.655513400000004,
@@ -20882,7 +20882,7 @@
     "Riverton Street Charter School": {
         "Latitude": 40.6892263,
         "Longitude": -73.76385925797149,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "29",
         "Borough": "Queens",
         "School Website": "https://www.nhaschools.com/schools/Riverton-Street-Charter-School/en",
@@ -20940,8 +20940,8 @@
         "Domain_4": "jamaicagateway.net"
     },
     "Rockaway Collegiate High School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -21026,7 +21026,7 @@
     "The Woodside Community School": {
         "Latitude": 40.7434074,
         "Longitude": -73.9080276,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.ps361q.org/",
@@ -21050,7 +21050,7 @@
     "Motion Picture Technical High School": {
         "Latitude": 40.749979,
         "Longitude": -73.911625,
-        "Grade": "",
+        "Grade": "09,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": null,
@@ -21072,8 +21072,8 @@
         "Domain_4": "gugcs.net"
     },
     "New Visions Charter High School for the Humanities IV": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12",
         "District": "27",
         "Borough": "Queens",
@@ -21086,7 +21086,7 @@
     "Success Academy Charter School - South Jamaica": {
         "Latitude": 40.6802031,
         "Longitude": -73.8008883,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "27",
         "Borough": "Queens",
         "School Website": "https://www.successacademies.org/",
@@ -21134,7 +21134,7 @@
     "Forte Preparatory Academy Charter School": {
         "Latitude": 40.738087,
         "Longitude": -73.8782798,
-        "Grade": "05,06,07,08,09",
+        "Grade": "05,06,07,08,09,10",
         "District": "24",
         "Borough": "Queens",
         "School Website": "http://www.forteprep.org/",
@@ -21206,7 +21206,7 @@
     "The CIVIC School of Bayside Hills": {
         "Latitude": 40.7505039,
         "Longitude": -73.7648562,
-        "Grade": "PK,0K,01,02,03,SE",
+        "Grade": "PK,0K,01,02,03,04,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": null,
@@ -21218,7 +21218,7 @@
     "The Hector Figueroa School": {
         "Latitude": 40.7527761,
         "Longitude": -73.89669902267741,
-        "Grade": "PK,0K,01,02,03,04,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.ps398queens.org/",
@@ -21242,7 +21242,7 @@
     "Renaissance Charter School 2": {
         "Latitude": 40.7407628,
         "Longitude": -73.88221154237472,
-        "Grade": "0K,01,02,03,04,09",
+        "Grade": "0K,01,02,03,04,05,06,09,10",
         "District": "24",
         "Borough": "Queens",
         "School Website": null,
@@ -21266,7 +21266,7 @@
     "Achievement First Legacy Charter School": {
         "Latitude": 40.6882594,
         "Longitude": -73.76344958278094,
-        "Grade": "0K,01,02",
+        "Grade": "0K,01,02,03",
         "District": "29",
         "Borough": "Queens",
         "School Website": null,
@@ -21288,9 +21288,9 @@
         "Domain_4": "q417.net"
     },
     "Our World Neighborhood Charter School 3": {
-        "Latitude": 40.7525652,
-        "Longitude": -73.8525027,
-        "Grade": "0K,01,02",
+        "Latitude": 40.7532491,
+        "Longitude": -73.8502095,
+        "Grade": "0K,01,02,03",
         "District": "24",
         "Borough": "Queens",
         "School Website": null,
@@ -21314,7 +21314,7 @@
     "Success Academy Charter School - NYC 14": {
         "Latitude": 40.6843804,
         "Longitude": -73.8142113,
-        "Grade": "",
+        "Grade": "05",
         "District": "28",
         "Borough": "Queens",
         "School Website": null,
@@ -21350,7 +21350,7 @@
     "I.S 429": {
         "Latitude": 40.749979,
         "Longitude": -73.911625,
-        "Grade": "06,SE",
+        "Grade": "06,07,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://www.is429q.com/",
@@ -21362,7 +21362,7 @@
     "Francis Lewis High School": {
         "Latitude": 40.74067635,
         "Longitude": -73.79371047658186,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "03,09,10,11,12,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": "https://www.francislewishs.org/",
@@ -21413,11 +21413,11 @@
         "Grade": "09,10,11,12,SE",
         "District": "30",
         "Borough": "Queens",
-        "School Website": "https://ny01000947.schoolwires.net/",
-        "Domain_1": "ny01000947.org",
-        "Domain_2": "ny01000947.com",
-        "Domain_3": "ny01000947.edu",
-        "Domain_4": "ny01000947.net"
+        "School Website": null,
+        "Domain_1": null,
+        "Domain_2": null,
+        "Domain_3": null,
+        "Domain_4": null
     },
     "Newtown High School": {
         "Latitude": 40.7408886,
@@ -21456,8 +21456,8 @@
         "Domain_4": "richmondhillhs.net"
     },
     "John Adams High School": {
-        "Latitude": 40.678589,
-        "Longitude": -73.833015,
+        "Latitude": 40.6807007,
+        "Longitude": -73.8447101,
         "Grade": "09,10,11,12,SE",
         "District": "27",
         "Borough": "Queens",
@@ -21554,7 +21554,7 @@
     "Hillcrest High School": {
         "Latitude": 40.7096425,
         "Longitude": -73.80264202436206,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "08,09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://www.hillcrestweb.com/",
@@ -21623,7 +21623,7 @@
         "Domain_3": "highschoolforartsandbusiness.edu",
         "Domain_4": "highschoolforartsandbusiness.net"
     },
-    "Newcomers High School": {
+    "ATLAS": {
         "Latitude": 40.7514099,
         "Longitude": -73.9368787,
         "Grade": "09,10,11,12,SE",
@@ -21674,7 +21674,7 @@
     "Baccalaureate School for Global Education": {
         "Latitude": 40.75499815,
         "Longitude": -73.92696594492458,
-        "Grade": "07,08,09,10,11,SE",
+        "Grade": "07,08,09,10,11,12,SE",
         "District": "30",
         "Borough": "Queens",
         "School Website": "https://bsge.org/",
@@ -21758,7 +21758,7 @@
     "Queens Gateway to Health Sciences Secondary School": {
         "Latitude": 40.7184618,
         "Longitude": -73.80595274577445,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://28q680-queens-gateway-to-health-sciences-secondary-school.echalksites.com/",
@@ -21782,7 +21782,7 @@
     "Queens High School for the Sciences at York College": {
         "Latitude": 40.70089455,
         "Longitude": -73.7983386,
-        "Grade": "09,10,11",
+        "Grade": "09,10,11,12",
         "District": "28",
         "Borough": "Queens",
         "School Website": "https://qhss.org/",
@@ -21806,7 +21806,7 @@
     "Merrick Academy - Queens Public Charter School": {
         "Latitude": 40.6761786,
         "Longitude": -73.7531994,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "29",
         "Borough": "Queens",
         "School Website": "http://www.merrickacademy.org/",
@@ -21818,7 +21818,7 @@
     "Renaissance Charter School": {
         "Latitude": 40.7499509,
         "Longitude": -73.8851651,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,12",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "30",
         "Borough": "Queens",
         "School Website": "http://www.renaissancecharter.org/",
@@ -21866,7 +21866,7 @@
     "Queens Transition Center": {
         "Latitude": 40.683713600000004,
         "Longitude": -73.80076969488417,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "08,09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": null,
@@ -21890,7 +21890,7 @@
     "P.S. Q811": {
         "Latitude": 40.7564394,
         "Longitude": -73.72864418284965,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": "https://www.p811q.com/",
@@ -21902,7 +21902,7 @@
     "Young Women's Leadership School, Queens": {
         "Latitude": 40.7084336,
         "Longitude": -73.80417774604753,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "28",
         "Borough": "Queens",
         "School Website": null,
@@ -21914,7 +21914,7 @@
     "P.S. Q993": {
         "Latitude": 40.734234400000005,
         "Longitude": -73.7086289138486,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "26",
         "Borough": "Queens",
         "School Website": "https://p993q.echalksites.com/",
@@ -22116,8 +22116,8 @@
         "Domain_4": null
     },
     "Our Lady Queen of Martyrs Catholic Academy": {
-        "Latitude": 40.7200913,
-        "Longitude": -73.8445734,
+        "Latitude": 40.717199,
+        "Longitude": -73.838617,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -22548,8 +22548,8 @@
         "Domain_4": null
     },
     "Imagine Early Learning Center": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -22896,8 +22896,8 @@
         "Domain_4": null
     },
     "All My Children Day Care 8": {
-        "Latitude": 40.7310731,
-        "Longitude": -73.8643631,
+        "Latitude": 40.7309475,
+        "Longitude": -73.8644352,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -23040,8 +23040,8 @@
         "Domain_4": null
     },
     "Child Center of NY 2": {
-        "Latitude": 40.7603512,
-        "Longitude": -73.8614552,
+        "Latitude": 40.7582816,
+        "Longitude": -73.8610793,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -23580,8 +23580,8 @@
         "Domain_4": null
     },
     "Apple Tree Nursery School": {
-        "Latitude": 40.7382043,
-        "Longitude": -73.8045817,
+        "Latitude": 40.7180969,
+        "Longitude": -73.8035688,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -24156,8 +24156,8 @@
         "Domain_4": null
     },
     "Towers Play-N-Learn, Inc.": {
-        "Latitude": 40.7400962,
-        "Longitude": -73.9051726,
+        "Latitude": 40.7389925,
+        "Longitude": -73.8923382,
         "Grade": "PK",
         "District": "",
         "Borough": "Queens",
@@ -24264,8 +24264,8 @@
         "Domain_4": null
     },
     "Aim High Leadership Center Four, Inc.": {
-        "Latitude": 40.678589,
-        "Longitude": -73.833015,
+        "Latitude": 40.6807007,
+        "Longitude": -73.8447101,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -24792,8 +24792,8 @@
         "Domain_4": null
     },
     "The Learning Experience - Bayside": {
-        "Latitude": 40.7609035,
-        "Longitude": -73.7647573,
+        "Latitude": 40.7598239,
+        "Longitude": -73.7711343,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -25368,8 +25368,8 @@
         "Domain_4": null
     },
     "Playhouse Nyc, Inc": {
-        "Latitude": 40.7493056,
-        "Longitude": -73.936619,
+        "Latitude": 40.7509465,
+        "Longitude": -73.9347832,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Queens",
@@ -25416,8 +25416,8 @@
         "Domain_4": "ps3blueherons.net"
     },
     "P.S. 004 Maurice Wollin": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "31",
         "Borough": "Staten Island",
@@ -25454,10 +25454,10 @@
     "I.S. 007 Elias Bernstein": {
         "Latitude": 40.5233111,
         "Longitude": -74.1859247,
-        "Grade": "06,07,08,SE",
+        "Grade": "03,06,07,08,SE",
         "District": "31",
         "Borough": "Staten Island",
-        "School Website": "https://www.is7vikings.org/",
+        "School Website": "https://is7vikings.org/",
         "Domain_1": "is7vikings.org",
         "Domain_2": "is7vikings.com",
         "Domain_3": "is7vikings.edu",
@@ -25514,7 +25514,7 @@
     "New Ventures Charter School": {
         "Latitude": 40.603204405063295,
         "Longitude": -74.18337430379746,
-        "Grade": "10,11,12,SE",
+        "Grade": "11,12,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": null,
@@ -25682,7 +25682,7 @@
     "P.S. 029 Bardwell": {
         "Latitude": 40.6137576,
         "Longitude": -74.1159045,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://www.ps29bengals.net/",
@@ -25694,7 +25694,7 @@
     "P.S. 030 Westerleigh": {
         "Latitude": 40.6180184,
         "Longitude": -74.1328466,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://www.ps30.org/",
@@ -25910,7 +25910,7 @@
     "I.S. 051 Edwin Markham": {
         "Latitude": 40.6235375,
         "Longitude": -74.14430575,
-        "Grade": "06,07,08,SE",
+        "Grade": "0K,06,07,08,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://www.is51.org/",
@@ -25980,8 +25980,8 @@
         "Domain_4": null
     },
     "P.S. 057 Hubert H. Humphrey": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "31",
         "Borough": "Staten Island",
@@ -26066,7 +26066,7 @@
     "Gaynor McCown Expeditionary Learning School": {
         "Latitude": 40.581701800000005,
         "Longitude": -74.1592210846182,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://www.gaynormccownels.org/",
@@ -26126,7 +26126,7 @@
     "Lois and Richard Nicotra Early College Charter School": {
         "Latitude": 40.603204405063295,
         "Longitude": -74.18337430379746,
-        "Grade": "08,09,10,11,12,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": null,
@@ -26162,7 +26162,7 @@
     "P.S. 74 Future Leaders Elementary School": {
         "Latitude": 40.6388301,
         "Longitude": -74.07950973559923,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://flesonline.org/",
@@ -26198,7 +26198,7 @@
     "Hellenic Classical Charter School - Staten Island": {
         "Latitude": 40.6077193,
         "Longitude": -74.16134803156942,
-        "Grade": "PK,0K,01,02,03,04,05",
+        "Grade": "PK,0K,01,02,03,04,05,06",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "http://www.hccs-nys.org/",
@@ -26234,7 +26234,7 @@
     "Richmond Preparatory Charter School": {
         "Latitude": 40.603204405063295,
         "Longitude": -74.18337430379746,
-        "Grade": "06,07,08,SE",
+        "Grade": "06,07,08,09,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": null,
@@ -26258,7 +26258,7 @@
     "The Young Women\u2019s Leadership School of Staten Island": {
         "Latitude": 40.61830208333333,
         "Longitude": -74.08509791666667,
-        "Grade": "06,07,SE",
+        "Grade": "06,07,08,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": null,
@@ -26270,7 +26270,7 @@
     "Staten Island Hebrew Public Charter School": {
         "Latitude": 40.57589985,
         "Longitude": -74.08335283534959,
-        "Grade": "0K,01,02",
+        "Grade": "0K,01,02,03",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": null,
@@ -26318,7 +26318,7 @@
     "Curtis High School": {
         "Latitude": 40.645539,
         "Longitude": -74.08236650848119,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "08,09,10,11,12,SE",
         "District": "31",
         "Borough": "Staten Island",
         "School Website": "https://www.curtishs.org/",
@@ -27048,8 +27048,8 @@
         "Domain_4": null
     },
     "Blessed Sacrament Early Childhood Academy": {
-        "Latitude": 40.62767495,
-        "Longitude": -74.12604568744902,
+        "Latitude": 40.6277589,
+        "Longitude": -74.12606378913321,
         "Grade": "PK",
         "District": "",
         "Borough": "Staten Island",
@@ -27230,7 +27230,7 @@
     "P.S. 9 Ryer Avenue Elementary School": {
         "Latitude": 40.857192142857144,
         "Longitude": -73.89954657142857,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -27242,7 +27242,7 @@
     "P.S. X010": {
         "Latitude": 40.8272124,
         "Longitude": -73.82899946263558,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://p10x.org/",
@@ -27326,7 +27326,7 @@
     "P.S. 018 John Peter Zenger": {
         "Latitude": 40.8162146,
         "Longitude": -73.92228612675652,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": null,
@@ -27564,8 +27564,8 @@
         "Domain_4": null
     },
     "P.S. 044 David C. Farragut": {
-        "Latitude": 40.842610199999996,
-        "Longitude": -73.89090235434728,
+        "Latitude": 40.842610050000005,
+        "Longitude": -73.8909020936155,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "12",
         "Borough": "Bronx",
@@ -27662,7 +27662,7 @@
     "P.S./I.S. 54": {
         "Latitude": 40.86490695,
         "Longitude": -73.88779013379127,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.ps54.org/",
@@ -27672,8 +27672,8 @@
         "Domain_4": "ps54.net"
     },
     "P.S. 055 Benjamin Franklin": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "09",
         "Borough": "Bronx",
@@ -27686,7 +27686,7 @@
     "P.S. 056 Norwood Heights": {
         "Latitude": 40.875224153846155,
         "Longitude": -73.87517623076923,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,06,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -27734,7 +27734,7 @@
     "P.S. 061 Francisco Oller": {
         "Latitude": 40.83634215,
         "Longitude": -73.89285903660965,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://x.com/61public/",
@@ -27770,7 +27770,7 @@
     "P.S. 065 Mother Hale Academy": {
         "Latitude": 40.807728499999996,
         "Longitude": -73.91290908854566,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": null,
@@ -27878,7 +27878,7 @@
     "P.S. 75 School of Research and Discovery": {
         "Latitude": 40.822319050000004,
         "Longitude": -73.88916385535259,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": null,
@@ -27950,7 +27950,7 @@
     "P.S. 083 Donald Hertz": {
         "Latitude": 40.8491705,
         "Longitude": -73.85903699134182,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "01,02,03,04,05,06,07,08,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "http://www.PS83.org/",
@@ -28010,7 +28010,7 @@
     "P.S. 089 Bronx": {
         "Latitude": 40.8625411,
         "Longitude": -73.85945168293887,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.ps89x.org/",
@@ -28022,7 +28022,7 @@
     "P.S. 091 Bronx": {
         "Latitude": 40.8582868,
         "Longitude": -73.9076886,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.ps91x.org/",
@@ -28070,7 +28070,7 @@
     "P.S. 096 Richard Rodgers": {
         "Latitude": 40.86102547297297,
         "Longitude": -73.8686149054054,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": null,
@@ -28118,7 +28118,7 @@
     "P.S. 103 Hector Fontanez": {
         "Latitude": 40.8922453,
         "Longitude": -73.8616222,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.ps103.net/",
@@ -28154,7 +28154,7 @@
     "P.S. 107": {
         "Latitude": 40.81886285,
         "Longitude": -73.86842769840953,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": null,
@@ -28166,7 +28166,7 @@
     "P.S. 108 Philip J. Abinanti": {
         "Latitude": 40.85455865,
         "Longitude": -73.85302709296339,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.publicschool108.net/",
@@ -28296,8 +28296,8 @@
         "Domain_4": null
     },
     "Children's Aid College Preparatory Charter School": {
-        "Latitude": 40.8437456,
-        "Longitude": -73.8902988,
+        "Latitude": 40.84381285,
+        "Longitude": -73.89050181101334,
         "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "12",
         "Borough": "Bronx",
@@ -28550,7 +28550,7 @@
     "P.S. 160 Walt Disney": {
         "Latitude": 40.8643916,
         "Longitude": -73.8242406,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.thewaltdisneyschool.org/",
@@ -28742,7 +28742,7 @@
     "P186X Walter J. Damrosch School": {
         "Latitude": 40.8317254,
         "Longitude": -73.8981335,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://p186x.org/",
@@ -28835,9 +28835,9 @@
         "Domain_3": null,
         "Domain_4": null
     },
-    "New Visions AIM Charter High School II": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+    "Urban Dove Team Charter School III": {
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12",
         "District": "12",
         "Borough": "Bronx",
@@ -28850,7 +28850,7 @@
     "New Visions Charter High School for Advanced Math and Science II": {
         "Latitude": 40.8217383,
         "Longitude": -73.90265606788392,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": null,
@@ -28860,8 +28860,8 @@
         "Domain_4": null
     },
     "P.S. 204 Morris Heights": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "09",
         "Borough": "Bronx",
@@ -28874,7 +28874,7 @@
     "P.S. 205 Fiorello LaGuardia": {
         "Latitude": 40.8555159,
         "Longitude": -73.88139855636211,
-        "Grade": "0K,01,02,03,04,05,SE",
+        "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.ps205x.org/",
@@ -28932,8 +28932,8 @@
         "Domain_4": "ps209x.net"
     },
     "P.S. 211": {
-        "Latitude": 40.8437456,
-        "Longitude": -73.8902988,
+        "Latitude": 40.84381285,
+        "Longitude": -73.89050181101334,
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "12",
         "Borough": "Bronx",
@@ -28944,8 +28944,8 @@
         "Domain_4": "csx211.net"
     },
     "Bronx Engineering and Technology Academy": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -29090,18 +29090,18 @@
     "Jonas Bronck Academy": {
         "Latitude": 40.8609885,
         "Longitude": -73.89155009255,
-        "Grade": "06,07,08,09,SE",
+        "Grade": "06,07,08,09,10,SE",
         "District": "10",
         "Borough": "Bronx",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://www.jonasbronckacademy.org/",
+        "Domain_1": "jonasbronckacademy.org",
+        "Domain_2": "jonasbronckacademy.com",
+        "Domain_3": "jonasbronckacademy.edu",
+        "Domain_4": "jonasbronckacademy.net"
     },
     "I.S. 229 Roland Patterson": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "06,07,08,SE",
         "District": "09",
         "Borough": "Bronx",
@@ -29232,8 +29232,8 @@
         "Domain_4": "poecenter246.net"
     },
     "Metropolitan High School, The": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "12",
         "Borough": "Bronx",
@@ -29306,7 +29306,7 @@
     "Bronx Charter School for Excellence": {
         "Latitude": 40.83405485,
         "Longitude": -73.8585459459819,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.excellencecommunityschools.org/bronx-excellence",
@@ -29330,7 +29330,7 @@
     "Bronx Center for Science and Mathematics": {
         "Latitude": 40.8339233,
         "Longitude": -73.90268856251569,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "09",
         "Borough": "Bronx",
         "School Website": "http://www.bxcsm.com/",
@@ -29378,7 +29378,7 @@
     "Bronx Latin": {
         "Latitude": 40.8277475,
         "Longitude": -73.900672,
-        "Grade": "06,07,08,09,10,11,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://bronxlatin.com/",
@@ -29448,8 +29448,8 @@
         "Domain_4": null
     },
     "The New American Academy at Roberto Clemente State Park": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "09",
         "Borough": "Bronx",
@@ -29472,8 +29472,8 @@
         "Domain_4": "facebook.net"
     },
     "P.S. 277": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "07",
         "Borough": "Bronx",
@@ -29486,7 +29486,7 @@
     "P.S. 279 Captain Manuel Rivera, Jr.": {
         "Latitude": 40.85469365,
         "Longitude": -73.90506295409841,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "01,02,03,04,05,06,07,08,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://psms279.com/",
@@ -29520,8 +29520,8 @@
         "Domain_4": "thewae.net"
     },
     "Bronx School of Law and Finance": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -29702,7 +29702,7 @@
     "I.S. X303 Leadership & Community Service": {
         "Latitude": 40.8494603,
         "Longitude": -73.91566918306961,
-        "Grade": "06,07,08,SE",
+        "Grade": "03,06,07,08,SE",
         "District": "09",
         "Borough": "Bronx",
         "School Website": "http://mycis303.weebly.com/",
@@ -29750,7 +29750,7 @@
     "South Bronx Charter School for International Cultures and the Arts": {
         "Latitude": 40.8029763,
         "Longitude": -73.9177343,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "http://www.sbcsica.org/",
@@ -29822,7 +29822,7 @@
     "P.S. 315 Lab School": {
         "Latitude": 40.8735954,
         "Longitude": -73.89982868128281,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://ps315labschool.org/",
@@ -29844,8 +29844,8 @@
         "Domain_4": "kappaiii.net"
     },
     "I.S. X318 Math, Science & Technology Through Arts": {
-        "Latitude": 40.8437456,
-        "Longitude": -73.8902988,
+        "Latitude": 40.84381285,
+        "Longitude": -73.89050181101334,
         "Grade": "06,07,08,SE",
         "District": "12",
         "Borough": "Bronx",
@@ -29964,8 +29964,8 @@
         "Domain_4": "ms331.net"
     },
     "The Longwood Academy of Discovery": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "08",
         "Borough": "Bronx",
@@ -30041,7 +30041,7 @@
         "Grade": "06,07,08,09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
-        "School Website": "https://islaschool.com/",
+        "School Website": "https://www.islaschool.org/",
         "Domain_1": "islaschool.org",
         "Domain_2": "islaschool.com",
         "Domain_3": "islaschool.edu",
@@ -30098,7 +30098,7 @@
     "International Leadership Charter High School": {
         "Latitude": 40.88089075510204,
         "Longitude": -73.9098653877551,
-        "Grade": "06,09,10,11,12",
+        "Grade": "06,07,09,10,11,12",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.ilchs.org/",
@@ -30204,9 +30204,9 @@
         "Domain_4": null
     },
     "Leaders of Excellence, Advocacy and Discovery": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Latitude": "0",
+        "Longitude": "0",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.cves359.com/",
@@ -30458,7 +30458,7 @@
     "Brilla College Preparatory Charter School": {
         "Latitude": 40.81276885,
         "Longitude": -73.91934021267804,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://brillaschools.org/",
@@ -30470,7 +30470,7 @@
     "Pan American International High School at Monroe": {
         "Latitude": 40.8318142,
         "Longitude": -73.8787019,
-        "Grade": "09,10,11",
+        "Grade": "09,10,11,12,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://www.paihsmonroe.org/",
@@ -30542,7 +30542,7 @@
     "Mott Haven Charter School": {
         "Latitude": 40.80631085,
         "Longitude": -73.92088527745298,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://havenacademy.org/",
@@ -30576,8 +30576,8 @@
         "Domain_4": "ps-396.net"
     },
     "English Language Learners and International Support Preparatory Academy (ELLIS)": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12",
         "District": "10",
         "Borough": "Bronx",
@@ -30590,7 +30590,7 @@
     "Bronx Community Charter School": {
         "Latitude": 40.87244990243902,
         "Longitude": -73.87532275609756,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "http://www.bronxcommunity.org/",
@@ -30660,8 +30660,8 @@
         "Domain_4": "X413.net"
     },
     "Bronx High School for the Visual Arts": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "11",
         "Borough": "Bronx",
@@ -30722,7 +30722,7 @@
     "Charter High School for Law and Social Justice": {
         "Latitude": 40.85301475831528,
         "Longitude": -73.91268790234994,
-        "Grade": "09,10,11,12",
+        "Grade": "06,09,10,11,12",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.chslsj.org/",
@@ -30782,7 +30782,7 @@
     "Fordham Leadership Academy": {
         "Latitude": 40.8598397,
         "Longitude": -73.8882951,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.fordhamleadership.com/",
@@ -30842,7 +30842,7 @@
     "The Bronx High School of Science": {
         "Latitude": 40.8783886,
         "Longitude": -73.89095497482518,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://bxscience.edu/",
@@ -30852,9 +30852,9 @@
         "Domain_4": "bxscience.net"
     },
     "Arturo A. Schomburg Satellite Academy Bronx": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
-        "Grade": "09,10,11,12",
+        "Latitude": "0",
+        "Longitude": "0",
+        "Grade": "09,10,11,12,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": null,
@@ -30893,11 +30893,11 @@
         "Grade": "PK,0K,01,02,03,04,05,SE",
         "District": "09",
         "Borough": "Bronx",
-        "School Website": null,
-        "Domain_1": null,
-        "Domain_2": null,
-        "Domain_3": null,
-        "Domain_4": null
+        "School Website": "https://grantavenueschool.weebly.com/",
+        "Domain_1": "grantavenueschool.org",
+        "Domain_2": "grantavenueschool.com",
+        "Domain_3": "grantavenueschool.edu",
+        "Domain_4": "grantavenueschool.net"
     },
     "Gotham Collaborative High School": {
         "Latitude": 40.8209151,
@@ -31010,7 +31010,7 @@
     "Success Academy Charter School - Bronx 4": {
         "Latitude": 40.82358945,
         "Longitude": -73.85992832524946,
-        "Grade": "0K,01,02,03,04,SE",
+        "Grade": "0K,01,02,03,04,05,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://www.successacademies.org/",
@@ -31022,7 +31022,7 @@
     "Boys Preparatory Charter School of New York": {
         "Latitude": 40.8202974,
         "Longitude": -73.9274141,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.publicprep.org/our-schools/boysprep",
@@ -31092,8 +31092,8 @@
         "Domain_4": "flacs3.net"
     },
     "Mott Haven Village Preparatory High School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "07",
         "Borough": "Bronx",
@@ -31104,8 +31104,8 @@
         "Domain_4": null
     },
     "Marble Hill High School for International Studies": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -31140,8 +31140,8 @@
         "Domain_4": "bccprep.net"
     },
     "Bronx Regional High School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "10,11,12",
         "District": "12",
         "Borough": "Bronx",
@@ -31214,7 +31214,7 @@
     "Girls Preparatory Charter School of the Bronx": {
         "Latitude": 40.8156756,
         "Longitude": -73.9017701,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,09,10,11",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://www.publicprep.org/",
@@ -31226,7 +31226,7 @@
     "The Equality Charter School": {
         "Latitude": 40.8643916,
         "Longitude": -73.8242406,
-        "Grade": "06,07,08,09,10,11,12,SE",
+        "Grade": "01,06,07,08,09,10,11,12,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "http://www.equalitycharterschool.org/",
@@ -31274,7 +31274,7 @@
     "Success Academy Charter School - Bronx 1": {
         "Latitude": 40.8136843,
         "Longitude": -73.9260669,
-        "Grade": "0K,01,02,03,04,05,06",
+        "Grade": "0K,01,02,03,04,05,06,07",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.successacademies.org/",
@@ -31284,8 +31284,8 @@
         "Domain_4": "successacademies.net"
     },
     "Success Academy Charter School - Bronx 2": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "09",
         "Borough": "Bronx",
@@ -31296,9 +31296,9 @@
         "Domain_4": "successacademies.net"
     },
     "University Heights Secondary School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
-        "Grade": "09,10,11,SE",
+        "Latitude": "0",
+        "Longitude": "0",
+        "Grade": "09,10,11,12,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://universityheightshighschool.org/",
@@ -31382,7 +31382,7 @@
     "High School of Language and Innovation": {
         "Latitude": 40.8598996,
         "Longitude": -73.8603222,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://languageandinnovation.org/",
@@ -31466,7 +31466,7 @@
     "Crotona International High School": {
         "Latitude": 40.8552778,
         "Longitude": -73.8825,
-        "Grade": "09,10,11,12",
+        "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.crotonaihs.org/",
@@ -31478,7 +31478,7 @@
     "Bronx Leadership Academy High School": {
         "Latitude": 40.8433249,
         "Longitude": -73.90289659999999,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "09",
         "Borough": "Bronx",
         "School Website": null,
@@ -31584,8 +31584,8 @@
         "Domain_4": "icahncharterschool5.net"
     },
     "New Visions Charter High School for Advanced Math and Science": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -31610,7 +31610,7 @@
     "High School for Violin and Dance": {
         "Latitude": 40.8273033,
         "Longitude": -73.9045098,
-        "Grade": "09,10,11,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "09",
         "Borough": "Bronx",
         "School Website": "https://hsvd.org/",
@@ -31644,8 +31644,8 @@
         "Domain_4": null
     },
     "Bronx Theatre High School": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -31704,8 +31704,8 @@
         "Domain_4": "bronxletters.net"
     },
     "New Visions Charter High School for the Humanities": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "09,10,11,12,SE",
         "District": "10",
         "Borough": "Bronx",
@@ -31922,7 +31922,7 @@
     "Brilla Veritas Charter School": {
         "Latitude": 40.818658799999994,
         "Longitude": -73.90933570628529,
-        "Grade": "0K,01,02,03,04,05,06",
+        "Grade": "0K,01,02,03,04,05,06,07",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://brillaschools.org/",
@@ -31934,7 +31934,7 @@
     "NYC Autism Charter School Bronx": {
         "Latitude": 40.82856325,
         "Longitude": -73.90005873855092,
-        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
+        "Grade": "0K,01,02,03,04,05,06,07,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://www.nycautismcharterschool.org/",
@@ -31946,7 +31946,7 @@
     "South Bronx Classical Charter School IV": {
         "Latitude": 40.82390745,
         "Longitude": -73.92327145,
-        "Grade": "0K,01,02,03,04,05,06,07",
+        "Grade": "0K,01,02,03,04,05,06,07,08",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://classicalcharterschools.org/schools/",
@@ -31958,7 +31958,7 @@
     "Bronx Charter School for Excellence 3": {
         "Latitude": 40.888802,
         "Longitude": -73.863173,
-        "Grade": "0K,01,02,03,04,05,06,07",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.excellencecommunityschools.org/bronx-excellence",
@@ -32018,7 +32018,7 @@
     "P.S. X596": {
         "Latitude": 40.8751536,
         "Longitude": -73.83309185007242,
-        "Grade": "PK,0K,01,02,03,04,05,06,07,SE",
+        "Grade": "PK,0K,01,02,03,04,05,06,07,08,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.p596x.org/",
@@ -32040,9 +32040,9 @@
         "Domain_4": "urbanassembly.net"
     },
     "KIPP Freedom Charter School": {
-        "Latitude": 40.842610199999996,
-        "Longitude": -73.89090235434728,
-        "Grade": "0K,01,02,06,07,08",
+        "Latitude": 40.842610050000005,
+        "Longitude": -73.8909020936155,
+        "Grade": "0K,01,02,03,06,07,08",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://www.kippnyc.org/",
@@ -32090,7 +32090,7 @@
     "Bronx Charter School for Excellence 4": {
         "Latitude": 40.8986605,
         "Longitude": -73.8423481,
-        "Grade": "0K,01,02,03,04,05,06",
+        "Grade": "0K,01,02,03,04,05,06,07",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://www.excellencecommunityschools.org/bronx-excellence",
@@ -32102,7 +32102,7 @@
     "Zeta Charter Schools - South Bronx": {
         "Latitude": 40.8165318,
         "Longitude": -73.9160072,
-        "Grade": "PK,0K,01,02,03,04,05,06",
+        "Grade": "PK,0K,01,02,03,04,05,06,07",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://zetaschools.org/",
@@ -32150,7 +32150,7 @@
     "Bold Charter School": {
         "Latitude": 40.82527004081633,
         "Longitude": -73.88210473469388,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://boldschools.org/",
@@ -32162,7 +32162,7 @@
     "Dream Charter School Mott Haven": {
         "Latitude": 40.80732280555555,
         "Longitude": -73.92841688888889,
-        "Grade": "0K,01,02,03,04,06,07,08,09,10,11,12",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.wearedream.org/",
@@ -32186,7 +32186,7 @@
     "KIPP Bronx Charter School II": {
         "Latitude": 40.8686445,
         "Longitude": -73.89614638725891,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "01,02,03,04,05,06,07,08",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://www.kippnyc.org/",
@@ -32198,7 +32198,7 @@
     "KIPP Bronx Charter School III": {
         "Latitude": 40.820158,
         "Longitude": -73.928897,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.kippnyc.org/",
@@ -32210,7 +32210,7 @@
     "Bronx Arts and Science Charter School": {
         "Latitude": 40.826882,
         "Longitude": -73.8365289,
-        "Grade": "PK,0K,01,02,03,04,05,SE",
+        "Grade": "PK,01,02,03,04,05,06,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "http://thebronxcharter.org/",
@@ -32234,7 +32234,7 @@
     "Neighborhood Charter School: Bronx": {
         "Latitude": 40.80957436842105,
         "Longitude": -73.9085322631579,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://ncschools.org/",
@@ -32258,7 +32258,7 @@
     "Capital Preparatory Bronx Charter School": {
         "Latitude": 40.8799345,
         "Longitude": -73.8272554,
-        "Grade": "06,07,08,09,10",
+        "Grade": "06,07,08,09,10,11,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": null,
@@ -32270,7 +32270,7 @@
     "Brilla Caritas Charter School": {
         "Latitude": 40.8618989,
         "Longitude": -73.90659321382287,
-        "Grade": "0K,01,02,03",
+        "Grade": "0K,01,02,03,04",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -32282,7 +32282,7 @@
     "Brilla Pax Charter School": {
         "Latitude": 40.8618989,
         "Longitude": -73.90659321382287,
-        "Grade": "0K,01,02,03",
+        "Grade": "0K,01,02,03,04",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -32294,7 +32294,7 @@
     "Girls Preparatory Charter School of the Bronx II": {
         "Latitude": 40.86914735,
         "Longitude": -73.90196920274653,
-        "Grade": "0K,01,02,03",
+        "Grade": "0K,01,02,03,04,05,06,07,08",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -32306,7 +32306,7 @@
     "Zeta Charter School \u2013 Mount Eden": {
         "Latitude": 40.83862279591837,
         "Longitude": -73.91896938775511,
-        "Grade": "PK,0K,01,02,03",
+        "Grade": "PK,0K,01,02,03,04",
         "District": "09",
         "Borough": "Bronx",
         "School Website": null,
@@ -32318,7 +32318,7 @@
     "Zeta Charter School \u2013 Tremont Park": {
         "Latitude": 40.845440749999995,
         "Longitude": -73.89302124536346,
-        "Grade": "PK,0K,01,02,03",
+        "Grade": "PK,0K,01,02,03,04",
         "District": "12",
         "Borough": "Bronx",
         "School Website": null,
@@ -32366,7 +32366,7 @@
     "Virtual Innovators Academy": {
         "Latitude": 40.8233916,
         "Longitude": -73.907801,
-        "Grade": "09,10,SE",
+        "Grade": "09,10,11,12,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://www.virtualacademynyc.org/",
@@ -32378,7 +32378,7 @@
     "Success Academy Charter School \u2013 Bronx 5 Lower": {
         "Latitude": 40.806988204081634,
         "Longitude": -73.91601320408164,
-        "Grade": "0K,01,SE",
+        "Grade": "0K,01,02,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": null,
@@ -32390,7 +32390,7 @@
     "Success Academy Charter School \u2013 Bronx 5 Upper": {
         "Latitude": 40.806988204081634,
         "Longitude": -73.91601320408164,
-        "Grade": "02,03,04,SE",
+        "Grade": "03,04,05,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": null,
@@ -32402,7 +32402,7 @@
     "Dream Charter School Highbridge": {
         "Latitude": 40.83259965,
         "Longitude": -73.91190948199576,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "0K,01,02,03,04,05,06",
         "District": "09",
         "Borough": "Bronx",
         "School Website": null,
@@ -32414,7 +32414,7 @@
     "Family Life Academy Charter Schools High School": {
         "Latitude": 40.823164133333336,
         "Longitude": -73.9111884,
-        "Grade": "09,10",
+        "Grade": "09,10,11",
         "District": "07",
         "Borough": "Bronx",
         "School Website": null,
@@ -32438,7 +32438,7 @@
     "South Bronx Literacy Academy": {
         "Latitude": 40.8231408,
         "Longitude": -73.9227542,
-        "Grade": "02,03,SE",
+        "Grade": "03,SE",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.sblitacademy.org/",
@@ -32448,8 +32448,8 @@
         "Domain_4": "sblitacademy.net"
     },
     "P.S. X643": {
-        "Latitude": "00000000000000000000000",
-        "Longitude": "0000000000000000000000000",
+        "Latitude": "0",
+        "Longitude": "0",
         "Grade": "0K,01,02,03,04,05,06,07,08",
         "District": "07",
         "Borough": "Bronx",
@@ -32462,7 +32462,7 @@
     "Bronx Debate Academy": {
         "Latitude": 40.83903068670877,
         "Longitude": -73.92143610865415,
-        "Grade": "",
+        "Grade": "06,SE",
         "District": "09",
         "Borough": "Bronx",
         "School Website": null,
@@ -32474,7 +32474,7 @@
     "Success Academy Charter School - NYC 5": {
         "Latitude": 40.87608,
         "Longitude": -73.86380271175331,
-        "Grade": "",
+        "Grade": "0K",
         "District": "11",
         "Borough": "Bronx",
         "School Website": null,
@@ -32486,7 +32486,7 @@
     "Success Academy Charter School - NYC 6": {
         "Latitude": 40.87608,
         "Longitude": -73.86380271175331,
-        "Grade": "",
+        "Grade": "01",
         "District": "11",
         "Borough": "Bronx",
         "School Website": null,
@@ -32498,7 +32498,7 @@
     "Success Academy Charter School - NYC 12": {
         "Latitude": 40.82899934693878,
         "Longitude": -73.8513867755102,
-        "Grade": "",
+        "Grade": "05",
         "District": "08",
         "Borough": "Bronx",
         "School Website": null,
@@ -32558,7 +32558,7 @@
     "High School of American Studies at Lehman College": {
         "Latitude": 40.874771949999996,
         "Longitude": -73.89519869929767,
-        "Grade": "09,10,11",
+        "Grade": "09,10,11,12",
         "District": "10",
         "Borough": "Bronx",
         "School Website": "https://hsas-lehman.org/",
@@ -32582,7 +32582,7 @@
     "KIPP Academy Charter School": {
         "Latitude": 40.8224572,
         "Longitude": -73.9213117,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11",
+        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12",
         "District": "07",
         "Borough": "Bronx",
         "School Website": "https://www.kippnyc.org/",
@@ -32594,7 +32594,7 @@
     "Family Life Academy Charter School": {
         "Latitude": 40.84026825,
         "Longitude": -73.91866275281552,
-        "Grade": "0K,01,02,03,04,05",
+        "Grade": "01,02,03,04,05,09",
         "District": "09",
         "Borough": "Bronx",
         "School Website": "https://www.flacsnyc.com/",
@@ -32654,7 +32654,7 @@
     "P.S. 723": {
         "Latitude": 40.8828711,
         "Longitude": -73.8325016,
-        "Grade": "0K,01,02,03,04,05,06,07,08,09,10,11,12,SE",
+        "Grade": "01,02,03,04,05,06,07,08,09,10,11,12,SE",
         "District": "11",
         "Borough": "Bronx",
         "School Website": "https://p723x.org/",
@@ -32666,7 +32666,7 @@
     "Bronx Charter School for the Arts": {
         "Latitude": 40.8216921,
         "Longitude": -73.88638885,
-        "Grade": "0K,01,02,03,04,05,06,07,08",
+        "Grade": "0K,01,02,03,04,05,06,07,08,SE",
         "District": "08",
         "Borough": "Bronx",
         "School Website": "https://www.bronxarts.net/",
@@ -32690,7 +32690,7 @@
     "P.S. X811": {
         "Latitude": 40.83042101639795,
         "Longitude": -73.88757036376627,
-        "Grade": "09,10,11,12,SE",
+        "Grade": "06,07,08,09,10,11,12,SE",
         "District": "12",
         "Borough": "Bronx",
         "School Website": "https://www.ps811x.org/",
@@ -32702,7 +32702,7 @@
     "Success Academy Charter School - NYC 7": {
         "Latitude": 40.86914735,
         "Longitude": -73.90196920274653,
-        "Grade": "",
+        "Grade": "0K,01",
         "District": "10",
         "Borough": "Bronx",
         "School Website": null,
@@ -33180,8 +33180,8 @@
         "Domain_4": null
     },
     "Children's Aid At P.S. 211": {
-        "Latitude": 40.8437456,
-        "Longitude": -73.8902988,
+        "Latitude": 40.84381285,
+        "Longitude": -73.89050181101334,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Bronx",
@@ -34092,8 +34092,8 @@
         "Domain_4": null
     },
     "Cheer And Grow Learning Academy Corp.": {
-        "Latitude": 40.8356877,
-        "Longitude": -73.86903,
+        "Latitude": 40.836144,
+        "Longitude": -73.8715518,
         "Grade": "3K,PK",
         "District": "",
         "Borough": "Bronx",

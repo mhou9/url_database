@@ -156,11 +156,13 @@ async def check_mx_records(domain):
 
 df_result = pd.DataFrame()
 count = 0
+count_d = 0
 all_valid_domains = []
 
 async def main():
     global df_result
     global count 
+    global count_d
     global all_valid_domains
 
     pd.__version__
@@ -205,11 +207,13 @@ async def main():
     results = await asyncio.gather(*tasks)
 
     for domain, mx_record, valid in results:
+        count_d += 1
         if mx_record != "error" and valid:
             all_valid_domains.append(domain)
 
     # Task 2: Check domains row-wise and collect MX records and validity as tuples
     for d1, d2, d3, d4 in zip(domain_1, domain_2, domain_3, domain_4):
+        count += 1
         if not any([d1, d2, d3, d4]):
             mxRecords.append(("error", "error", "error", "error"))
             is_Valid.append((0, 0, 0, 0))
@@ -222,7 +226,6 @@ async def main():
         results = await asyncio.gather(*tasks)
 
         for domain, mx_record, valid in results:
-            count += 1
             mx_tuple = mx_tuple + (mx_record,)
             validity_tuple = validity_tuple + (1 if valid else 0,)
 
@@ -244,10 +247,12 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
     print(f"\n{count} records processed in total")
-    print(f"\n {len(all_valid_domains)} domains have valid MX records found.")
+    print(f"\n {len(all_valid_domains)} domains have valid MX records found in total of {count_d} domains.")
 
     all_v = pd.DataFrame(all_valid_domains, columns=['Valid Domains'])
     all_v.to_csv("Verified_domains.csv", index=False)
-    
+
+    df_result['School Website'] = df_result['School Website'].str.strip()
     df_result_cleaned = df_result.dropna(subset=['School Website'])
+    df_result_cleaned = df_result_cleaned[df_result_cleaned['School Website'] != '']
     df_result_cleaned.to_csv("mx_record.csv", index=True)

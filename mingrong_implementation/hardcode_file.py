@@ -41,6 +41,9 @@ cursor.execute(set_infile)
 connection.commit()
 print("Successfully set local_infile to be TRUE.")
 
+# drop the table
+drop_table = f"DROP TABLE IF EXISTS `{table_name}`"
+
 # Define the table schema to create a table
 create_table_query = f"""
 CREATE TABLE IF NOT EXISTS {table_name} (
@@ -68,6 +71,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 """
 
+cursor.execute(drop_table)
 cursor.execute(create_table_query)
 cursor.execute(load_data_query)
 connection.commit()
@@ -85,8 +89,8 @@ print("Added primary key.")
 # Update domain for these 2 schools
 #   1. American Dream Charter School II
 #   2. Imagine Early Learning Center @ City College - MBVK
-update_domain1 = """
-UPDATE DOE_schools_data_2894 
+update_domain1 = f"""
+UPDATE {table_name} 
 SET 
     `School Website` = 'https://www.adcs2.org/',
     Domain_1 = 'adcs2.org',
@@ -95,8 +99,8 @@ SET
     Domain_4 = 'adcs2.net'
 WHERE `School Name` = 'American Dream Charter School II'
 """
-update_domain2 = """
-UPDATE DOE_schools_data_2894 
+update_domain2 = f"""
+UPDATE {table_name} 
 SET 
     `School Website` = 'https://imagineelc.com/schools/city-college-child-development-center/',
     Domain_1 = 'imagineelc.org',
@@ -111,8 +115,8 @@ cursor.execute(update_domain2)
 # Update the school name, coordinates and domain for these 2 schools
 #   1. All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
 #   2. Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
-update_name1 = """
-UPDATE DOE_schools_data_2894 
+update_name1 = f"""
+UPDATE {table_name} 
 SET 
     `School Name` = 'All My Children Day Care And Nursery School - MBZW',
     `School Website` = 'https://allmychildrendaycare.com/',
@@ -124,8 +128,8 @@ SET
     Longitude = '-73.97312802020215'
 WHERE `School Name` = 'All My Children Day Care And Nursery School'
 """
-update_name2 = """
-UPDATE DOE_schools_data_2894 
+update_name2 = f"""
+UPDATE {table_name} 
 SET 
     `School Name` = 'Imagine Early Learning Centers @ Jamaica Kids',
     `School Website` = 'https://imagineelc.com/schools/jamaica-kids-early-learning-center/',
@@ -180,19 +184,19 @@ updates = [
 ]
 
 for school, latitude, longitude in updates:
-    sql = "UPDATE DOE_schools_data_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
+    sql = f"UPDATE {table_name} SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
     cursor.execute(sql, (latitude, longitude, school))
 
 # Append these 2 schools into the table, they got skipped because of same name for different branch
 #   1. All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
 #   2. All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
-query1 = """
-INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+query1 = f"""
+INSERT INTO {table_name} (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - KDVD', '40.659935747380494', '-73.93083608794977', 'PK,3K', '18', 'Brooklyn', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
-query2 = """
-INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+query2 = f"""
+INSERT INTO {table_name} (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - MBXN', '40.71897858426893', '-73.98310226160082', 'PK,3K,EL', '1', 'Manhattan', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
