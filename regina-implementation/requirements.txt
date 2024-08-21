@@ -1,0 +1,9 @@
+mysql-connector-python
+aiohttp
+beautifulsoup4
+dnspython
+selenium
+folium
+geopy
+openlocationcode
+requests
