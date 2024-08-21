@@ -1,7 +1,8 @@
 import pandas as pd
 import json
 import mysql.connector
-import getpass
+#import getpass
+import os
 
 # json to csv
 with open('new_output_3001.json', 'r') as file:
@@ -13,24 +14,37 @@ df = pd.DataFrame.from_dict(data, orient='index')
 df.reset_index(inplace=True)
 df.rename(columns={'index': 'School Name'}, inplace=True)
 
-df.to_csv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv', index=False)
+df.to_csv('/app/output/new_output_3001.csv', index=False)
 print("JSON data has been successfully converted to CSV and saved as 'new_output_3001.csv'")
 
 
 # hard code into MySQL
-password = getpass.getpass("Input your password for mysql: ")
-database = input("What is your database name? Please enter: ")
+# password = getpass.getpass("Input your password for mysql: ")
+# database = input("What is your database name? Please enter: ")
+db_host = os.getenv('DB_HOST', 'localhost')
+db_user = os.getenv('DB_USER', 'root')
+db_name = os.getenv('DB_NAME', 'database')
+password_file = os.getenv('DB_PASSWORD_FILE')
+with open(password_file, 'r') as f:
+    db_password = f.read().strip()
 
 # Connect to database
+# connection = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     passwd= password,
+#     database= database
+# )
+
 connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd= password,
-    database= database
+    host=db_host,
+    user=db_user,
+    passwd=db_password,
+    database=db_name
 )
 
 cursor = connection.cursor()
-csv_file_path = 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv'
+csv_file_path = '/app/output/new_output_3001.csv'
 table_name = 'DOE_schools_data_2894'
 
 # Configure MySQL so it allow local file upload to database
