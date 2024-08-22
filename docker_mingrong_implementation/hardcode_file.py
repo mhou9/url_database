@@ -1,7 +1,8 @@
 import pandas as pd
 import json
 import mysql.connector
-import getpass
+#import getpass
+import os
 
 # json to csv
 with open('new_output_3001.json', 'r') as file:
@@ -13,24 +14,37 @@ df = pd.DataFrame.from_dict(data, orient='index')
 df.reset_index(inplace=True)
 df.rename(columns={'index': 'School Name'}, inplace=True)
 
-df.to_csv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv', index=False)
+df.to_csv('/app/output/new_output_3001.csv', index=False)
 print("JSON data has been successfully converted to CSV and saved as 'new_output_3001.csv'")
 
 
 # hard code into MySQL
-password = getpass.getpass("Input your password for mysql: ")
-database = input("What is your database name? Please enter: ")
+# password = getpass.getpass("Input your password for mysql: ")
+# database = input("What is your database name? Please enter: ")
+db_host = os.getenv('DB_HOST', 'localhost')
+db_user = os.getenv('DB_USER', 'root')
+db_name = os.getenv('DB_NAME', 'database')
+password_file = os.getenv('DB_PASSWORD_FILE')
+with open(password_file, 'r', encoding='utf-16-le') as f:
+    db_password = f.read().strip()
 
 # Connect to database
+# connection = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     passwd= password,
+#     database= database
+# )
+
 connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd= password,
-    database= database
+    host=db_host,
+    user=db_user,
+    passwd=db_password,
+    database=db_name
 )
 
 cursor = connection.cursor()
-csv_file_path = 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/new_output_3001.csv'
+csv_file_path = '/app/output/new_output_3001.csv'
 table_name = 'DOE_schools_data_2894'
 
 # Configure MySQL so it allow local file upload to database
@@ -40,9 +54,6 @@ SET GLOBAL local_infile = 1;
 cursor.execute(set_infile)
 connection.commit()
 print("Successfully set local_infile to be TRUE.")
-
-# drop the table
-drop_table = f"DROP TABLE IF EXISTS `{table_name}`"
 
 # Define the table schema to create a table
 create_table_query = f"""
@@ -71,7 +82,6 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 """
 
-cursor.execute(drop_table)
 cursor.execute(create_table_query)
 cursor.execute(load_data_query)
 connection.commit()
@@ -89,8 +99,8 @@ print("Added primary key.")
 # Update domain for these 2 schools
 #   1. American Dream Charter School II
 #   2. Imagine Early Learning Center @ City College - MBVK
-update_domain1 = f"""
-UPDATE {table_name} 
+update_domain1 = """
+UPDATE DOE_schools_data_2894 
 SET 
     `School Website` = 'https://www.adcs2.org/',
     Domain_1 = 'adcs2.org',
@@ -99,8 +109,8 @@ SET
     Domain_4 = 'adcs2.net'
 WHERE `School Name` = 'American Dream Charter School II'
 """
-update_domain2 = f"""
-UPDATE {table_name} 
+update_domain2 = """
+UPDATE DOE_schools_data_2894 
 SET 
     `School Website` = 'https://imagineelc.com/schools/city-college-child-development-center/',
     Domain_1 = 'imagineelc.org',
@@ -115,8 +125,8 @@ cursor.execute(update_domain2)
 # Update the school name, coordinates and domain for these 2 schools
 #   1. All My Children Day Care And Nursery School (All My Children Day Care And Nursery School - KDVD)
 #   2. Imagine Early Learning Center (Imagine Early Learning Centers @ Jamaica Kids)
-update_name1 = f"""
-UPDATE {table_name} 
+update_name1 = """
+UPDATE DOE_schools_data_2894 
 SET 
     `School Name` = 'All My Children Day Care And Nursery School - MBZW',
     `School Website` = 'https://allmychildrendaycare.com/',
@@ -128,8 +138,8 @@ SET
     Longitude = '-73.97312802020215'
 WHERE `School Name` = 'All My Children Day Care And Nursery School'
 """
-update_name2 = f"""
-UPDATE {table_name} 
+update_name2 = """
+UPDATE DOE_schools_data_2894 
 SET 
     `School Name` = 'Imagine Early Learning Centers @ Jamaica Kids',
     `School Website` = 'https://imagineelc.com/schools/jamaica-kids-early-learning-center/',
@@ -184,19 +194,19 @@ updates = [
 ]
 
 for school, latitude, longitude in updates:
-    sql = f"UPDATE {table_name} SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
+    sql = "UPDATE DOE_schools_data_2894 SET Latitude = %s, Longitude = %s WHERE `School Name` = %s"
     cursor.execute(sql, (latitude, longitude, school))
 
 # Append these 2 schools into the table, they got skipped because of same name for different branch
 #   1. All My Children Day Care And Nursery School - MBZW 40.659935747380494, -73.93083608794977
 #   2. All My Children Day Care And Nursery School - MBXN 40.71897858426893, -73.98310226160082
-query1 = f"""
-INSERT INTO {table_name} (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+query1 = """
+INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - KDVD', '40.659935747380494', '-73.93083608794977', 'PK,3K', '18', 'Brooklyn', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
-query2 = f"""
-INSERT INTO {table_name} (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
+query2 = """
+INSERT INTO DOE_schools_data_2894 (`School Name`, Latitude, Longitude, Grade, District, Borough, `School Website`, Domain_1, Domain_2, Domain_3, Domain_4) 
 VALUES ('All My Children Day Care And Nursery School - MBXN', '40.71897858426893', '-73.98310226160082', 'PK,3K,EL', '1', 'Manhattan', 
     'https://allmychildrendaycare.com/', 'allmychildrendaycare.org', 'allmychildrendaycare.com', 'allmychildrendaycare.edu', 'allmychildrendaycare.net')
 """
