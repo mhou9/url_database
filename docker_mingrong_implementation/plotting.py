@@ -1,18 +1,35 @@
 import mysql.connector
 import pandas as pd
 import folium
-import getpass
+# import getpass
+import os
 
-password = getpass.getpass("Input your password for mysql: ")
-database = input("What is your database name? Please enter: ")
+# password = getpass.getpass("Input your password for mysql: ")
+# database = input("What is your database name? Please enter: ")
 
-# Connect to database to read the coordinates and school names from the table
+# # Connect to database to read the coordinates and school names from the table
+# connection = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     passwd=password,
+#     database=database
+# )
+
+db_host = os.getenv('DB_HOST', 'localhost')
+db_user = os.getenv('DB_USER', 'root')
+db_name = os.getenv('DB_NAME', 'database')
+password_file = os.getenv('DB_PASSWORD_FILE')
+with open(password_file, 'r', encoding='utf-16-le') as f:
+    db_password = f.read().strip()
+
 connection = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd=password,
-    database=database
+    host=db_host,
+    user=db_user,
+    passwd=db_password,
+    database=db_name
 )
+
+
 tablename = "DOE_schools_data_2894"
 query = f"SELECT `School Name`, Latitude, Longitude FROM {tablename}"
 df = pd.read_sql(query, connection)

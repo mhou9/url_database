@@ -1,7 +1,8 @@
 import pandas as pd
-import getpass
+# import getpass
 import mysql.connector
 import sqlalchemy
+import os
 
 # Put all 4 types of domains into one column and insert some doe domains
 def get_all_domains(df):
@@ -70,20 +71,34 @@ def perform_batch_insertion(sql_file, table, column, domain_list):
         file.write(sql)
 
 def main():
-    password = getpass.getpass("Input your password for mysql: ")
-    database = input("What is your database name? Please enter: ")
-    engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
+    # password = getpass.getpass("Input your password for mysql: ")
+    # database = input("What is your database name? Please enter: ")
+    # engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
 
-    # Connect to database to read all the domains
+    # # Connect to database to read all the domains
+    # connection = mysql.connector.connect(
+    #     host="localhost",
+    #     user="root",
+    #     passwd=password,
+    #     database=database
+    # )
+    db_host = os.getenv('DB_HOST', 'localhost')
+    db_user = os.getenv('DB_USER', 'root')
+    db_name = os.getenv('DB_NAME', 'database')
+    password_file = os.getenv('DB_PASSWORD_FILE')
+    with open(password_file, 'r', encoding='utf-16-le') as f:
+        db_password = f.read().strip()
+
     connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd=password,
-        database=database
+        host=db_host,
+        user=db_user,
+        passwd=db_password,
+        database=db_name
     )
+
     tablename = "DOE_schools_data_2894"
     query = f"""SELECT Domain_1, Domain_2, Domain_3, Domain_4 FROM {tablename}"""
-    df = pd.read_sql(query, engine)
+    df = pd.read_sql(query, connection)
     connection.close()
     
     # Store all new domains into csv file

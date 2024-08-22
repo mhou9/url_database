@@ -25,7 +25,7 @@ db_host = os.getenv('DB_HOST', 'localhost')
 db_user = os.getenv('DB_USER', 'root')
 db_name = os.getenv('DB_NAME', 'database')
 password_file = os.getenv('DB_PASSWORD_FILE')
-with open(password_file, 'r') as f:
+with open(password_file, 'r', encoding='utf-16-le') as f:
     db_password = f.read().strip()
 
 # Connect to database

@@ -124,13 +124,12 @@
 
 import dns.resolver
 import pandas as pd
-import time
-import sys
 import getpass
 import mysql.connector
 import sqlalchemy
 import asyncio
 import aiohttp
+import os
 
 async def is_valid_mail_server(mail_server):
     try:
@@ -169,20 +168,33 @@ async def main():
     dns.resolver.default_resolver = dns.resolver.Resolver(configure=False)
     dns.resolver.default_resolver.nameservers = ['8.8.8.8']
 
-    password = getpass.getpass("Input your password for mysql: ")
-    database = input("What is your database name? Please enter: ")
-    engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
+    # password = getpass.getpass("Input your password for mysql: ")
+    # database = input("What is your database name? Please enter: ")
+    # engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@localhost/{database}")
 
-    # Connect to database to read all the domains
+    # # Connect to database to read all the domains
+    # connection = mysql.connector.connect(
+    #     host="localhost",
+    #     user="root",
+    #     passwd=password,
+    #     database=database
+    # )
+    db_host = os.getenv('DB_HOST', 'localhost')
+    db_user = os.getenv('DB_USER', 'root')
+    db_name = os.getenv('DB_NAME', 'database')
+    password_file = os.getenv('DB_PASSWORD_FILE')
+    with open(password_file, 'r', encoding='utf-16-le') as f:
+        db_password = f.read().strip()
+
     connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd=password,
-        database=database
+        host=db_host,
+        user=db_user,
+        passwd=db_password,
+        database=db_name
     )
     tablename = "DOE_schools_data_2894"
     query = f"""SELECT `School Website`, Domain_1, Domain_2, Domain_3, Domain_4 FROM {tablename}"""
-    df = pd.read_sql(query, engine)
+    df = pd.read_sql(query, connection)
     connection.close()
 
     df['Domain_1'] = df['Domain_1'].str.strip()

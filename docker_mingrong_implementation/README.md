@@ -39,6 +39,7 @@ To achieve our objective, we will follow these steps:
   
 ## Usage Setup Commands
 
+Running in local machine:
 1. Clone this repo: git clone https://github.com/mhou9/url_database.git
 2. cd url_database/mingrong_implementation
 3. Open MySQL, connect to localhost by enter your mysql password and database name
@@ -48,6 +49,9 @@ To achieve our objective, we will follow these steps:
   - to plot all the schools into a map as a html file: python plotting.py
   - to compare the all generated domains with existing domain list in a file: python analyze_result.py
 5. Run .sql file in MySQL to generate the data table
+
+Running in Docker:
+
 
 ## Contributors 
 
